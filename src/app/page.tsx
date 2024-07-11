@@ -7,16 +7,18 @@ import { PropsWithChildren, ReactComponentElement, ReactElement, ReactNode } fro
 import Docteur from "../components/svgs/Docteur";
 import MobileMessaging from "@/components/svgs/MobileMessaging";
 import TwoDoctors from "@/components/svgs/TwoDoctors";
+import { stringify } from "querystring";
 
 function NavBar() {
   return (
-    <nav className="sticky px-12 py-6 flex justify-between w-full items-center">
+    <nav className="sticky px-12 py-4 flex justify-between w-full items-center top-0 bg-white z-30">
       <h1 className="font-bold text-xl text-primary">SoigneMoi</h1>
-      <ul >
+      <ul>
         <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Accueil</Link>
         <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">A Propos</Link>
         <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Préstations</Link>
         <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Nos Docteurs</Link>
+        <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Contactez nous</Link>
       </ul>
       <div>
         <Link href="/signup" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">S&apos;inscrire</Link>
