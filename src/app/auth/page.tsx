@@ -1,9 +1,11 @@
+"use client"
+
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import React from 'react'
+import React, { useState } from 'react'
 
 function SignupForm() {
     return (
@@ -16,7 +18,7 @@ function SignupForm() {
             <Input type="text" placeholder="Adresse" />
             <div className='flex gap-2'>
                 <Input type="password" placeholder="Mot de passe" />
-                <Input type="password" placeholder="Confirmer mdp" />
+                <Input type="password" placeholder="Répéter mot de passe"  />
             </div>
             <Button className='mt-2'>S&apos;inscrire</Button>
         </div>
@@ -38,11 +40,13 @@ function LoginForm() {
 }
 
 export default function AuthPage() {
+    const [tab, setTab] = useState("login")
+
     return (
         <main className='flex justify-center items-center flex-col h-screen'>
             <h1 className='text-2xl font-bold'>Bienvenue !</h1>
-            <h3 className='opacity-80 text-center'>Heureux de vus revoir<br />parmi nous !</h3>
-            <Tabs defaultValue="login" className='flex flex-col justify-center items-center gap-5 m-5 w-[300px]'>
+            <h3 className='opacity-80 text-center'>Heureux de vous {tab === "login" ? "revoir" : "accueillir"}<br />parmi nous !</h3>
+            <Tabs defaultValue="login" onValueChange={value => setTab(value)} className='flex flex-col justify-center items-center gap-5 m-5 w-[350px]'>
                 <TabsList className='w-[200px]'>
                     <TabsTrigger value="login">Connexion</TabsTrigger>
                     <TabsTrigger value="signup">Inscription</TabsTrigger>
