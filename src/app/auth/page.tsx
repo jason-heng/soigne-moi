@@ -18,7 +18,7 @@ function SignupForm() {
             <Input type="text" placeholder="Adresse" />
             <div className='flex gap-2'>
                 <Input type="password" placeholder="Mot de passe" />
-                <Input type="password" placeholder="Répéter mot de passe"  />
+                <Input type="password" placeholder="Répéter mot de passe" />
             </div>
             <Button className='mt-2'>S&apos;inscrire</Button>
         </div>
@@ -43,21 +43,23 @@ export default function AuthPage() {
     const [tab, setTab] = useState("login")
 
     return (
-        <main className='flex justify-center items-center flex-col h-screen'>
-            <h1 className='text-2xl font-bold'>Bienvenue !</h1>
-            <h3 className='opacity-80 text-center'>Heureux de vous {tab === "login" ? "revoir" : "accueillir"}<br />parmi nous !</h3>
-            <Tabs defaultValue="login" onValueChange={value => setTab(value)} className='flex flex-col justify-center items-center gap-5 m-5 w-[350px]'>
-                <TabsList className='w-[200px]'>
-                    <TabsTrigger value="login">Connexion</TabsTrigger>
-                    <TabsTrigger value="signup">Inscription</TabsTrigger>
-                </TabsList>
-                <TabsContent value="login">
-                    <LoginForm />
-                </TabsContent>
-                <TabsContent value="signup">
-                    <SignupForm />
-                </TabsContent>
-            </Tabs>
+        <main className='flex justify-center items-center  h-screen'>
+            <div className='flex flex-col items-center shadow-2xl rounded-lg p-2 py-10'>
+            <h1 className='text-primary text-xl font-bold mb-5'>SoigneMoi</h1>
+                <h1 className='text-2xl font-bold'>Bienvenue !</h1>
+                <h3 className='opacity-80 text-center'>Heureux de vous {tab === "login" ? "revoir" : "accueillir"}<br />parmi nous !</h3>
+                <Tabs defaultValue="login" onValueChange={value => setTab(value)} className='flex flex-col justify-center items-center gap-5 m-5 w-[350px]'>
+                    <TabsList className='w-[200px]'>
+                        <TabsTrigger value="login">Connexion</TabsTrigger>
+                        <TabsTrigger value="signup">Inscription</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="login">
+                        <LoginForm />
+                    </TabsContent>
+                    <TabsContent value="signup">
+                        <SignupForm />
+                    </TabsContent>
+                </Tabs></div>
         </main>
     )
 }
