@@ -16,8 +16,8 @@ function NavBar() {
         <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Nos Docteurs</Link>
       </ul>
       <div>
-        <Link href="/signup" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">S&apos;inscrire</Link>
-        <Link href="/login" className={buttonVariants({ variant: "default" })}>Se Connecter</Link>
+        <Link href="/auth?tab=signup" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">S&apos;inscrire</Link>
+        <Link href="/auth" className={buttonVariants({ variant: "default" })}>Se Connecter</Link>
       </div>
     </nav>
   )
@@ -41,7 +41,7 @@ function Hero() {
           Chez SoigneMoi, nous croyons que chaque patient mérite une attention exceptionnelle et des traitements avancés pour un rétablissement rapide et durable.
           Votre santé, notre priorité.
         </p>
-        <Link href="/login" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Se Connecter</Link>
+        <Link href="/auth" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Se Connecter</Link>
       </div>
       <div className="shadow-lg absolute bottom-0 left-[43%] bg-secondary p-2 rounded-sm flex flex-col items-center">
         <h3 className="font-bold text-primary">312+</h3>
