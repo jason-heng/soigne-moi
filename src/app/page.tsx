@@ -3,33 +3,43 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { PropsWithChildren, ReactNode } from "react";
+import { ComponentPropsWithoutRef, ReactNode } from "react";
 import Docteur from "../components/svgs/Docteur";
 import MobileMessaging from "@/components/svgs/MobileMessaging";
 import TwoDoctors from "@/components/svgs/TwoDoctors";
+import { SessionUser, getSession } from "@/lib/auth";
+import NavBarLink from "@/components/home/NavBarLink";
 
-function NavBar() {
+async function NavBar() {
+  const session = await getSession()
+
   return (
     <nav className="sticky px-12 py-4 flex justify-between w-full items-center top-0 bg-white z-30">
       <h1 className="font-bold text-xl text-primary">SoigneMoi</h1>
       <ul>
-        <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Accueil</Link>
-        <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">A Propos</Link>
-        <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Préstations</Link>
-        <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Nos Docteurs</Link>
-        <Link href="#" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">Contactez nous</Link>
+        <NavBarLink href="#home">Accueil</NavBarLink>
+        <NavBarLink href="#about">A Propos</NavBarLink>
+        <NavBarLink href="#services">Préstations</NavBarLink>
+        <NavBarLink href="#doctors">Nos Docteurs</NavBarLink>
       </ul>
       <div>
-        <Link href="/auth?tab=signup" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">S&apos;inscrire</Link>
-        <Link href="/auth" className={buttonVariants({ variant: "default" })}>Se Connecter</Link>
+        {session ?
+          (session.user as SessionUser).isAdmin ?
+            <Link href="/admin" className={buttonVariants({ variant: "default" })}>Espace Admin</Link> :
+            <Link href="/patient" className={buttonVariants({ variant: "default" })}>Espace Patient</Link>
+          :
+          <>
+            <Link href="/auth?tab=signup" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">S&apos;inscrire</Link>
+            <Link href="/auth" className={buttonVariants({ variant: "default" })}>Se Connecter</Link>
+          </>}
       </div>
     </nav>
   )
 }
 
-function Section({ children, className }: PropsWithChildren<{ className?: string }>) {
+function Section({ children, className, ...props }: ComponentPropsWithoutRef<"section">) {
   return (
-    <section className={cn('max-w-5xl m-auto my-[50px]', className)}>
+    <section className={cn('max-w-5xl m-auto my-[50px] scroll-mt-24', className)} {...props}>
       {children}
     </section>
   )
@@ -37,19 +47,19 @@ function Section({ children, className }: PropsWithChildren<{ className?: string
 
 function Hero() {
   return (
-    <Section className="flex relative gap-2 items-center">
-      <div className="flex flex-col gap-7 w-fit">
+    <Section className="flex relative gap-5 items-center" id="home">
+      <div className="flex flex-col gap-5 w-fit">
         <h1 className="font-bold text-2xl">Votre bien-etre<br />est entre nos mains</h1>
-        <p>
+        <p className="text-muted-foreground">
           Nous mettons à votre disposition une équipe de professionnels de la santé dévoués et compétents, prêts à vous offrir des soins personnalisés de la plus haute qualité.
           Chez SoigneMoi, nous croyons que chaque patient mérite une attention exceptionnelle et des traitements avancés pour un rétablissement rapide et durable.
           Votre santé, notre priorité.
         </p>
-        <Link href="/auth" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Se Connecter</Link>
+        <Link href="/auth" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Connectez vous</Link>
       </div>
       <div className="shadow-lg absolute bottom-0 left-[43%] bg-secondary p-2 rounded-sm flex flex-col items-center">
         <h3 className="font-bold text-primary">312+</h3>
-        <h3>Patients Satisfaits</h3>
+        <h4>Patients Satisfaits</h4>
       </div>
       <Medecine className="text-primary" />
     </Section>
@@ -58,11 +68,11 @@ function Hero() {
 
 function About() {
   return (
-    <Section className="flex gap-5 items-center">
+    <Section className="flex gap-5 items-center" id="about">
       <Image src="/SoigneMoi.jpg" alt="Image de l'établissement" height={325} width={487} className="rounded-md" />
       <div className="flex flex-col gap-7 w-fit">
         <h2 className="text-3xl font-bold">A Propos de Nous</h2>
-        <p className="text-sm">
+        <p className="text-sm text-muted-foreground">
           L&apos;Hôpital SoigneMoi est un établissement public de santé situé au cœur de l&apos;Île. Reconnu pour ses services de proximité et de spécialité, cet hôpital est également un centre d&apos;enseignement et de recherche médicale de premier plan.
           <br />
           <br />
@@ -84,7 +94,7 @@ function Card(props: { title: string, text: string, img: ReactNode }) {
         {props.title}
       </h3>
 
-      <p className="text-[13px] opacity-80">
+      <p className="text-[13px] text-muted-foreground">
         {props.text}
       </p>
     </div>
@@ -93,7 +103,7 @@ function Card(props: { title: string, text: string, img: ReactNode }) {
 
 function Services() {
   return (
-    <Section className="flex flex-col gap-12 items-center mb-[100px]">
+    <Section className="flex flex-col gap-12 items-center mb-[100px]" id="services">
       <h2 className="text-3xl font-bold">Ce Qu’on Vous Offre</h2>
       <div className="flex w-full justify-between h-[350px]">
         <Card title="Meilleurs Soins" text="Nous offrons des soins de haute qualité avec des technologies médicales avancées et des protocoles à jour, en prenant en compte le bien-être physique, émotionnel et mental de nos patients." img={<Docteur className="text-primary mx-auto" height={100} width={110} />} />
@@ -106,7 +116,7 @@ function Services() {
 
 function Doctors() {
   return (
-    <Section className="flex flex-col gap-12 items-center">
+    <Section className="flex flex-col gap-12 items-center" id="doctors">
       <h2 className="text-3xl font-bold">Nos Docteurs Renommés</h2>
       <div className="flex w-full justify-between h-[350px]">
         <Card title="Dr. Thomas Lefevre" text="Chirurgien" img={<Image className="rounded-lg mb-2 mx-auto" src="/ThomasLefevre.jpg" alt="Dr. Thomas Lefevre" width={190} height={237} />} />
@@ -131,14 +141,14 @@ function Footer() {
           </p>
         </div>
 
-        <div>
+        <div className="text-nowrap">
           <p className="text-white font-bold mb-2">Télephone:</p>
           <p className="text-white opacity-75">06 42 68 75 39</p>
           <p className="text-white opacity-75">07 97 45 63 21</p>
           <p className="text-white opacity-75">01 80 32 48 57</p>
         </div>
 
-        <div>
+        <div className="text-nowrap">
           <p className="text-white font-bold mb-2">Email:</p>
           <p className="text-white opacity-75">contact@soignemoi-lille.fr</p>
           <p className="text-white opacity-75">info@hopital-sante-lille.fr</p>

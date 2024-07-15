@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "./db";
 import bcrypt from "bcrypt";
 import { env } from "./config";
+import { redirect } from "next/navigation";
 
 const key = new TextEncoder().encode(env.AUTH_SECRET)
 
@@ -13,7 +14,7 @@ export async function encrypt(payload: any) {
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
-        .setExpirationTime('30 sec from now')
+        .setExpirationTime('30 min from now')
         .sign(key)
 }
 
@@ -31,6 +32,13 @@ export async function getSession() {
     return await decrypt(session)
 }
 
+export interface SessionUser {
+    id: number
+    firstName: string
+    lastName: string
+    isAdmin: boolean
+}
+
 export async function login(email: string, password: string) {
     const user = await prisma.user.findUnique({
         where: {
@@ -38,17 +46,20 @@ export async function login(email: string, password: string) {
         }
     })
 
-    if (!user) throw new Error("Utilisateur non trouvé !")
+    if (!user) throw new Error("Utilisateur introuvable !")
 
     const correctPassword = await bcrypt.compare(password, user.password)
     if (!correctPassword) throw new Error("Mot de passe incorrect !")
 
-    const expires = new Date(Date.now() + (1e3 * 30))
-    const session = await encrypt({ user: {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-    }, expires })
+    const expires = new Date(Date.now() + (1e3 * 60 * 30))
+    const session = await encrypt({
+        user: {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            isAdmin: user.isAdmin
+        }, expires
+    })
 
     cookies().set('session', session, { expires, httpOnly: true })
 }
@@ -81,6 +92,7 @@ export async function signup(firstName: string, lastName: string, email: string,
 
 export async function logout() {
     cookies().set('session', '', { expires: new Date(0) })
+    redirect("/auth")
 }
 
 export async function updateSession(request: NextRequest) {
@@ -88,7 +100,7 @@ export async function updateSession(request: NextRequest) {
     if (!session) return
 
     const parsed = await decrypt(session)
-    parsed.expires = new Date(Date.now() + (1e3 * 30))
+    parsed.expires = new Date(Date.now() + (1e3 * 60 * 30))
 
     const res = NextResponse.next()
 

@@ -16,9 +16,9 @@ export default function Docteur(props: ComponentPropsWithoutRef<"svg">) {
                     y2="135.69"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop offset="0" stop-color="gray" stop-opacity="0.25" />
-                    <stop offset="0.54" stop-color="gray" stop-opacity="0.12" />
-                    <stop offset="1" stop-color="gray" stop-opacity="0.1" />
+                    <stop offset="0" stopColor="gray" stopOpacity="0.25" />
+                    <stop offset="0.54" stopColor="gray" stopOpacity="0.12" />
+                    <stop offset="1" stopColor="gray" stopOpacity="0.1" />
                 </linearGradient>
                 <linearGradient
                     id="687fba3e-05bb-4edc-91c2-f87a79b2e810-54"
@@ -40,8 +40,8 @@ export default function Docteur(props: ComponentPropsWithoutRef<"svg">) {
                 transform="translate(-56.94 -58.66)"
                 fill="none"
                 stroke="#535461"
-                stroke-miterlimit="10"
-                stroke-width="2"
+                strokeMiterlimit="10"
+                strokeWidth="2"
             />
             <path
                 d="M169.09,579c4.82,6.52,7,34.15,7,34.15S150.32,603,145.49,596.49A14.68,14.68,0,0,1,169.09,579Z"
@@ -83,8 +83,8 @@ export default function Docteur(props: ComponentPropsWithoutRef<"svg">) {
                 transform="translate(-56.94 -58.66)"
                 fill="none"
                 stroke="#535461"
-                stroke-miterlimit="10"
-                stroke-width="2"
+                strokeMiterlimit="10"
+                strokeWidth="2"
             />
             <path
                 d="M1019.08,268c-5.82,5.64-32.91,11.48-32.91,11.48s6.65-26.9,12.47-32.55A14.68,14.68,0,0,1,1019.08,268Z"
@@ -161,8 +161,8 @@ export default function Docteur(props: ComponentPropsWithoutRef<"svg">) {
                 transform="translate(-56.94 -58.66)"
                 fill="none"
                 stroke="#535461"
-                stroke-miterlimit="10"
-                stroke-width="2"
+                strokeMiterlimit="10"
+                strokeWidth="2"
             />
             <path
                 d="M941.85,204.94c-3,7.52-25.44,23.84-25.44,23.84s-4.82-27.29-1.79-34.81a14.68,14.68,0,0,1,27.23,11Z"

@@ -73,29 +73,29 @@ function SignupForm({ setTab }: { setTab: Dispatch<SetStateAction<string>> }) {
         <form className='flex flex-col gap-4' action={handleSubmit}>
             <div className='flex gap-2'>
                 <div>
-                    <Input type="text" placeholder="Nom" name='firstName' />
+                    <Input type="text" placeholder="Nom" name='firstName' id='firstName' />
                     {firstNameError && <p className='text-sm text-destructive'>{firstNameError}</p>}
                 </div>
                 <div>
-                    <Input type="text" placeholder="Prénom" name='lastName' />
+                    <Input type="text" placeholder="Prénom" name='lastName' id='lastName' />
                     {lastNameError && <p className='text-sm text-destructive'>{lastNameError}</p>}
                 </div>
             </div>
             <div >
-                <Input type="email" placeholder="Email" name='email' />
+                <Input type="email" placeholder="Email" name='email' id='email' />
                 {emailError && <p className='text-sm text-destructive'>{emailError}</p>}
             </div >
             <div>
-                <Input type="text" placeholder="Adresse" name='address' />
+                <Input type="text" placeholder="Adresse" name='address' id='address' />
                 {addressError && <p className='text-sm text-destructive'>{addressError}</p>}
             </div>
             <div className='flex gap-2'>
                 <div>
-                    <Input type="password" placeholder="Mot de passe" name='password' />
+                    <Input type="password" placeholder="Mot de passe" name='password' id='password' />
                     {passwordError && <p className='text-sm text-destructive'>{passwordError}</p>}
                 </div>
                 <div >
-                    <Input type="password" placeholder="Répéter mot de passe" name='repeatPassword' />
+                    <Input type="password" placeholder="Répéter mot de passe" name='repeatPassword' id='repeatPassword' />
                     {repeatPasswordError && <p className='text-xs text-destructive'>{repeatPasswordError}</p>}
                 </div>
             </div>
@@ -135,7 +135,7 @@ function LoginForm() {
 
             toast.success("Connecté !")
 
-            router.push('/dashboard');
+            router.push('/patient');
         } catch (error) {
             toast.error((error as Error).message)
         }
@@ -144,16 +144,12 @@ function LoginForm() {
     return (
         <form className='flex flex-col gap-4' action={handleSubmit}>
             <div>
-                <Input type="email" placeholder="Email" name="email" />
+                <Input type="email" placeholder="Email" name="email" id='email' />
                 {emailError && <p className='text-sm text-destructive'>{emailError}</p>}
             </div>
             <div>
-                <Input type="password" placeholder="Mot de passe" name="password" />
+                <Input type="password" placeholder="Mot de passe" name="password" id='password' />
                 {passwordError && <p className='text-sm text-destructive'>{passwordError}</p>}
-            </div>
-            <div className="flex items-center space-x-2">
-                <Checkbox id="stay-connected" name='stayLogged' />
-                <Label htmlFor="stay-connected">Rester Connecter</Label>
             </div>
             <Button className='mt-2'>Se Connecter</Button>
         </form>
@@ -178,7 +174,7 @@ export default function AuthPage() {
                         <TabsTrigger value="signup">Inscription</TabsTrigger>
                     </TabsList>
                     <TabsContent value="login">
-                        <LoginForm/>
+                        <LoginForm />
                     </TabsContent>
                     <TabsContent value="signup">
                         <SignupForm setTab={setTab} />

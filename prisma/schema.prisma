@@ -12,10 +12,78 @@ datasource db {
 
 model User {
   id        Int     @id @default(autoincrement())
-  email     String  @unique
   firstName String
   lastName  String
+  email     String  @unique
   address   String
   password  String
   isAdmin   Boolean @default(false)
+  stays     Stay[]
+}
+
+model Doctor {
+  id                 Int       @id @default(autoincrement())
+  registrationNumber Int
+  firstName          String
+  lastName           String
+  speciality         String
+  email              String
+  password           String
+  worksSunday        Boolean
+  worksMonday        Boolean
+  worksTuesday       Boolean
+  worksWednesday     Boolean
+  worksThursday      Boolean
+  worksFriday        Boolean
+  worksSaturday      Boolean
+  stays              Stay[]
+  Opinion            Opinion[]
+}
+
+model Stay {
+  id             Int           @id @default(autoincrement())
+  patient        User          @relation(fields: [patientId], references: [id])
+  patientId      Int
+  start          DateTime
+  end            DateTime
+  doctor         Doctor        @relation(fields: [doctorId], references: [id])
+  doctorId       Int
+  reason         String
+  prescription   Prescription?
+  prescriptionId Int?
+  opinions       Opinion[]
+}
+
+model Opinion {
+  id          Int      @id @default(autoincrement())
+  stay        Stay     @relation(fields: [stayId], references: [id])
+  doctor      Doctor   @relation(fields: [doctorId], references: [id])
+  title       String
+  description String
+  created     DateTime @default(now())
+  stayId      Int
+  doctorId    Int
+}
+
+model Prescription {
+  id     Int      @id @default(autoincrement())
+  stayId Int      @unique
+  Stay   Stay     @relation(fields: [stayId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  start  DateTime
+  end    DateTime
+  drugs  Drug[]
+}
+
+model Drug {
+  id             Int          @id @default(autoincrement())
+  name           String
+  dosage         String
+  prescription   Prescription @relation(fields: [prescriptionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  prescriptionId Int
+}
+
+model Secretary {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
 }
