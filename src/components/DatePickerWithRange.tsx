@@ -4,7 +4,7 @@ import { CalendarIcon } from "@radix-ui/react-icons"
 import { addDays, format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/_lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -24,8 +24,8 @@ export function DatePickerWithRange({
 }) {
     return (
         <div className={cn("grid gap-2", className)}>
-            <input type="text" value={dateRange?.from?.toISOString()} className="hidden" name="start"/>
-            <input type="text" value={dateRange?.to?.toISOString()} className="hidden" name="end"/>
+            <input type="text" value={dateRange?.from?.toISOString()} className="hidden" name="start" />
+            <input type="text" value={dateRange?.to?.toISOString()} className="hidden" name="end" />
             <Popover>
                 <PopoverTrigger asChild>
                     <Button
@@ -47,7 +47,7 @@ export function DatePickerWithRange({
                                 format(dateRange.from, "LLL dd, y")
                             )
                         ) : (
-                            <span>Pick a date</span>
+                            <span>Choisissez une plage de temps</span>
                         )}
                     </Button>
                 </PopoverTrigger>

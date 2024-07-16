@@ -1,7 +1,7 @@
 "use client"
 
 import { z } from 'zod';
-import { createStay } from '@/lib/stays';
+import { createStay } from '@/_data/stays';
 import { toast } from 'react-hot-toast';
 import { Card } from '@/components/ui/card';
 import { CardHeader } from '@/components/ui/card';
@@ -12,20 +12,19 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Combobox, ComboboxOption } from '@/components/Combobox';
 import { DatePickerWithRange } from '@/components/DatePickerWithRange';
-import { getDoctors } from '@/lib/doctors';
-import { Button } from '../../ui/button';
+import { getDoctors } from '@/_data/doctors';
+import { Button } from '../../components/ui/button';
 import { useRef, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
 
-export function NewStay({ userId, doctors, disabled }: { userId: number, doctors: Awaited<ReturnType<typeof getDoctors>>, disabled: boolean }) {
+export function NewStay({ doctors, disabled }: { doctors: Awaited<ReturnType<typeof getDoctors>>, disabled: boolean }) {
     const [dateRange, setDateRange] = useState<DateRange | undefined>()
     const [selectedDoctor, setSelectedDoctor] = useState<ComboboxOption>()
 
     const formRef = useRef<HTMLFormElement>(null);
 
     const doctorOptions = doctors.map(doctor => ({ label: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`, value: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`.toLowerCase(), id: doctor.id }))
-
 
     async function handleSubmit(formData: FormData) {
         const newStaySchema = z.object({
@@ -43,7 +42,7 @@ export function NewStay({ userId, doctors, disabled }: { userId: number, doctors
                 doctorId: formData.get('doctorId'),
             });
 
-            await createStay({ ...data, patientId: userId })
+            await createStay(data)
 
             formRef.current?.reset()
             setDateRange(undefined)
@@ -66,12 +65,12 @@ export function NewStay({ userId, doctors, disabled }: { userId: number, doctors
                         <Input type="text" id="reason" placeholder="Le motif de votre séjour" name='reason' />
                     </div>
                     <div>
-                        <Label htmlFor="doctor">Docteur</Label>
-                        <Combobox options={doctorOptions} selected={selectedDoctor} setSelected={setSelectedDoctor} />
-                    </div>
-                    <div>
                         <Label htmlFor="duration">Durée</Label>
                         <DatePickerWithRange dateRange={dateRange} setDateRange={setDateRange} />
+                    </div>
+                    <div>
+                        <Label htmlFor="doctor">Docteur</Label>
+                        <Combobox options={doctorOptions} selected={selectedDoctor} setSelected={setSelectedDoctor} />
                     </div>
                 </CardContent>
                 <CardFooter className='absolute w-full flex justify-end bottom-0'>

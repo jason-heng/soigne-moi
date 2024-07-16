@@ -1,10 +1,10 @@
-import { NewStay } from '@/components/patient/home/NewStay'
+import { NewStay } from '@/app/patient/NewStay'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { SessionUser, getSession } from '@/lib/auth'
-import { getDoctors } from '@/lib/doctors'
-import { getCurrentStay, getIncomingStay } from '@/lib/stays'
-import { formatDate } from '@/lib/utils'
-import { redirect } from 'next/navigation'
+import { getDoctors } from '@/_data/doctors'
+import { getCurrentStay, getIncomingStay } from '@/_data/stays'
+import { formatDate } from '@/_lib/utils'
+import { verifySession } from '@/_lib/session'
+import { getUser } from '@/_data/user'
 
 function CurrentStay({ stay }: { stay: Awaited<ReturnType<typeof getCurrentStay>> }) {
     return (
@@ -81,15 +81,11 @@ function CurrentPrescription({ stay }: { stay: Awaited<ReturnType<typeof getCurr
     )
 }
 
-export default async function Dashboard() {
-    const session = await getSession()
+export default async function PatientHome() {
+    const user = await getUser()
 
-    if (!session) redirect('/auth')
-
-    const user = (session.user as SessionUser)
-
-    const currentStay = await getCurrentStay(user.id)
-    const incomingStay = await getIncomingStay(user.id)
+    const currentStay = await getCurrentStay()
+    const incomingStay = await getIncomingStay()
     const doctors = await getDoctors()
 
     return (
@@ -101,7 +97,7 @@ export default async function Dashboard() {
                     <IncomingStay stay={incomingStay} />
                 </div>
                 <CurrentPrescription stay={currentStay} />
-                <NewStay userId={user.id} doctors={doctors} disabled={!!currentStay && !!incomingStay} />
+                <NewStay doctors={doctors} disabled={!!currentStay && !!incomingStay} />
             </div >
         </div >
     )

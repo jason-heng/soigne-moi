@@ -1,9 +1,9 @@
 "use client"
 
-import { getStays } from "@/lib/stays"
+import { getStays } from "@/_data/stays"
 import { Dispatch, SetStateAction, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { cn, formatDate } from '@/lib/utils'
+import { cn, formatDate } from '@/_lib/utils'
 import { Input } from "@/components/ui/input"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 
@@ -21,7 +21,11 @@ export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getSta
     )
 }
 
-function Stays({ stays, selected, setSelected }: { stays: Awaited<ReturnType<typeof getStays>>, selected: Awaited<ReturnType<typeof getStays>>[0] | undefined, setSelected: Dispatch<SetStateAction<Awaited<ReturnType<typeof getStays>>[0] | undefined>> }) {
+function Stays({ stays, selected, setSelected }: {
+    stays: Awaited<ReturnType<typeof getStays>>,
+    selected: Awaited<ReturnType<typeof getStays>>[0] | undefined,
+    setSelected: Dispatch<SetStateAction<Awaited<ReturnType<typeof getStays>>[0] | undefined>>
+}) {
     const [search, setSearch] = useState("")
 
     const visibleStays = stays.filter(stay => stay.reason.toLowerCase().includes(search.toLowerCase()))
@@ -39,21 +43,31 @@ function Stays({ stays, selected, setSelected }: { stays: Awaited<ReturnType<typ
             <CardContent className='space-y-3' >
                 {visibleStays.length ?
                     visibleStays.map(stay => (
-                        <Card className={cn('shadow-xl', {
-                            "bg-secondary": selected?.id === stay.id
-                        })} key={stay.id} onClick={() => setSelected(stay)} >
-                            <CardHeader className='pb-2 space-y-0'>
-                                <CardTitle className='text-xl'>{stay.reason}</CardTitle>
-                                <CardDescription>{formatDate(stay.start)} - {formatDate(stay.end)}</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <p><span className='font-semibold'>Docteur:</span> <span className='text-muted-foreground'>{stay.doctor.firstName} {stay.doctor.lastName}</span></p>
-                                <p><span className='font-semibold'>Spécialité:</span> <span className='text-muted-foreground'>{stay.doctor.speciality}</span></p>
-                            </CardContent>
-                        </Card>
+                        <Stay key={stay.id} selected={selected} setSelected={setSelected} stay={stay} />
                     )) :
                     <p className='text-muted-foreground text-center'>Aucun séjour</p>
                 }
+            </CardContent>
+        </Card>
+    )
+}
+
+function Stay({ selected, setSelected, stay }: {
+    selected: Awaited<ReturnType<typeof getStays>>[0] | undefined,
+    setSelected: Dispatch<SetStateAction<Awaited<ReturnType<typeof getStays>>[0] | undefined>>,
+    stay: Awaited<ReturnType<typeof getStays>>[0]
+}) {
+    return (
+        <Card className={cn('shadow-xl hover:bg-secondary cursor-pointer', {
+            "bg-secondary": selected?.id === stay.id
+        })} onClick={() => setSelected(stay)} >
+            <CardHeader className='pb-2 space-y-0'>
+                <CardTitle className='text-xl'>{stay.reason}</CardTitle>
+                <CardDescription>{formatDate(stay.start)} - {formatDate(stay.end)}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <p><span className='font-semibold'>Docteur:</span> <span className='text-muted-foreground'>{stay.doctor.firstName} {stay.doctor.lastName}</span></p>
+                <p><span className='font-semibold'>Spécialité:</span> <span className='text-muted-foreground'>{stay.doctor.speciality}</span></p>
             </CardContent>
         </Card>
     )
