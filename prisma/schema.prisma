@@ -17,7 +17,7 @@ model User {
   email     String  @unique
   address   String
   password  String
-  isAdmin   Boolean @default(false)
+  admin   Boolean @default(false)
   stays     Stay[]
 }
 

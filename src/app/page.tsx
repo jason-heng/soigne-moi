@@ -1,17 +1,19 @@
-import Medecine from "@/components/svgs/Medecine";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import Medecine from "@/_components/svgs/Medecine";
+import { buttonVariants } from "@/_components/ui/button";
+import { cn } from "@/_lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { ComponentPropsWithoutRef, ReactNode } from "react";
-import Docteur from "../components/svgs/Docteur";
-import MobileMessaging from "@/components/svgs/MobileMessaging";
-import TwoDoctors from "@/components/svgs/TwoDoctors";
-import { SessionUser, getSession } from "@/lib/auth";
-import NavBarLink from "@/components/home/NavBarLink";
+import Docteur from "../_components/svgs/Docteur";
+import MobileMessaging from "@/_components/svgs/MobileMessaging";
+import TwoDoctors from "@/_components/svgs/TwoDoctors";
+import NavBarLink from "@/_components/NavBarLink";
+import { cookies } from "next/headers";
+import { decrypt } from "@/_lib/session";
 
 async function NavBar() {
-  const session = await getSession()
+  const cookie = cookies().get('session')?.value
+  const session = await decrypt(cookie || '')
 
   return (
     <nav className="sticky px-12 py-4 flex justify-between w-full items-center top-0 bg-white z-30">
@@ -24,7 +26,7 @@ async function NavBar() {
       </ul>
       <div>
         {session ?
-          (session.user as SessionUser).isAdmin ?
+          session.user.admin ?
             <Link href="/admin" className={buttonVariants({ variant: "default" })}>Espace Admin</Link> :
             <Link href="/patient" className={buttonVariants({ variant: "default" })}>Espace Patient</Link>
           :

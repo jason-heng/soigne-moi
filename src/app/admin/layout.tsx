@@ -1,5 +1,5 @@
-import { SideBarLink } from "@/components/patient/SideBarLink";
-import { logout } from "@/lib/auth";
+import { deleteSession } from "@/_lib/session";
+import { SideBarLink } from "@/_components/SideBarLink";
 import { faArrowRightFromBracket, faGears, faHospital, faHouse, faUser, faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropsWithChildren } from "react";
@@ -18,7 +18,7 @@ async function SideBar() {
                     <SideBarLink text="Parametres" href="/admin/settings" icon={faGears} />
                 </ul>
             </div>
-            <form action={logout}>
+            <form action={deleteSession}>
                 <button className='flex items-center gap-3 px-5 hover:text-primary'>
                     <FontAwesomeIcon icon={faArrowRightFromBracket} height={20} width={20} />
                     Déconnexion
@@ -28,7 +28,7 @@ async function SideBar() {
     )
 }
 
-export default function DashboardLayout({ children }: Readonly<PropsWithChildren>) {
+export default function AdminDashboardLayout({ children }: Readonly<PropsWithChildren>) {
     return (
         <main className="flex">
             <SideBar />
