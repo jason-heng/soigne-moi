@@ -1,3 +1,5 @@
+"use server"
+
 import prisma from "./db";
 
 export async function getDoctors() {
@@ -7,6 +9,8 @@ export async function getDoctors() {
             firstName: true,
             lastName: true,
             speciality: true,
+            password : true,
+            registrationNumber : true,
         }
     })
 }
