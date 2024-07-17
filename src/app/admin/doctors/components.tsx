@@ -32,9 +32,9 @@ function DoctorCard({ firstName, lastName, speciality, registrationNumber } : { 
           </div>
 
           <div className='flex flex-col gap-2'>
-            <Button className='bg-white border-[2px] shadow-md text-gray-600 font-semibold h-7 hover:bg-gray-100 hover:text-blue-400 mt-auto mx-auto w-36'>Emploi du temps</Button>
-            <Button className='bg-white rounded-sm h-7 mx-auto w-36 text-xs hover:bg-blue-500 text-gray-600 hover:text-white border-[2px] shadow-md'>Changer mot de passe</Button>
-            <Button className=' border-[2px] shadow-md rounded-sm h-7 mx-auto w-36 bg-white hover:bg-red-500 text-gray-600 hover:text-white'>Supprimer</Button>
+            <Button className='bg-white border-[2px] shadow-md text-gray-600 font-semibold h-7 hover:bg-gray-100 hover:text-blue-400 mt-auto mx-auto w-36 hover:border-none'>Emploi du temps</Button>
+            <Button className='bg-white rounded-sm h-7 mx-auto w-36 text-xs hover:bg-blue-500 text-blue-500 hover:text-white border-[2px] shadow-md font-semibold hover:border-none'>Changer mot de passe</Button>
+            <Button className=' border-[2px] shadow-md rounded-sm h-7 mx-auto w-36 bg-white hover:bg-red-500 text-red-500 hover:text-white font-semibold hover:border-none'>Supprimer</Button>
           </div>
 
       </div>
