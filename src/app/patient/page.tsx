@@ -62,14 +62,15 @@ function CurrentPrescription({ stay }: { stay: Awaited<ReturnType<typeof getCurr
             <CardContent className='space-y-3' >
                 {stay ?
                     stay.prescription ?
-                        stay.prescription.drugs.length ? stay.prescription.drugs.map(drug => (
-                            <Card className='shadow-xl' key={drug.id} >
-                                <CardHeader>
-                                    <CardTitle className='text-xl'>{drug.name}</CardTitle>
-                                    <CardDescription>{drug.dosage}</CardDescription>
-                                </CardHeader>
-                            </Card>
-                        )) :
+                        stay.prescription.drugs.length ?
+                            stay.prescription.drugs.map(drug => (
+                                <Card className='shadow-xl' key={drug.id} >
+                                    <CardHeader>
+                                        <CardTitle className='text-xl'>{drug.name}</CardTitle>
+                                        <CardDescription>{drug.dosage}</CardDescription>
+                                    </CardHeader>
+                                </Card>
+                            )) :
                             <p className='text-muted-foreground text-center'>Aucun medicament pour l&apos;instant</p>
                         :
                         <p className='text-muted-foreground text-center'>Aucune prescription en cours</p>
