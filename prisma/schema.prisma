@@ -27,15 +27,14 @@ model Doctor {
   firstName          String
   lastName           String
   speciality         String
-  email              String
   password           String
-  worksSunday        Boolean
-  worksMonday        Boolean
-  worksTuesday       Boolean
-  worksWednesday     Boolean
-  worksThursday      Boolean
-  worksFriday        Boolean
-  worksSaturday      Boolean
+  worksSunday        Boolean   @default(false)
+  worksMonday        Boolean   @default(false)
+  worksTuesday       Boolean   @default(false)
+  worksWednesday     Boolean   @default(false)
+  worksThursday      Boolean   @default(false)
+  worksFriday        Boolean   @default(false)
+  worksSaturday      Boolean   @default(false)
   stays              Stay[]
   Opinion            Opinion[]
 }
