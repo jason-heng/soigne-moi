@@ -1,6 +1,6 @@
 import { deleteSession } from "@/_lib/session";
 import { SideBarLink } from "@/_components/SideBarLink";
-import { faArrowRightFromBracket, faGears, faHospital, faHouse, faUser, faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faGears, faHouse, faUser, faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropsWithChildren } from "react";
 

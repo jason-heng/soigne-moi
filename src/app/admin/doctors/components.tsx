@@ -1,14 +1,14 @@
 "use client"
 
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Input } from "@/components/ui/input"
+import { Card, CardHeader, CardTitle, CardDescription } from '@/_components/ui/card';
+import { Input } from "@/_components/ui/input"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import { getDoctors } from '@/lib/doctors';
-import { Label } from '@/components/ui/label'
+import { getDoctors } from '@/_data/doctors';
+import { Label } from '@/_components/ui/label'
 import { z } from 'zod'
 import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/_components/ui/button'
 import { doctorAdd } from './actions';
 
 

@@ -11,7 +11,6 @@ export default async function PatientSettings() {
             <h1 className='text-xl'>Vos paramètres</h1>
             <div className='flex flex-1 flex-col gap-6'>
                 <EditInfoForm user={user} />
-
                 <EditPasswordForm />
             </div >
         </div >

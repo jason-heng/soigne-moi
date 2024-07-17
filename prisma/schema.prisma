@@ -41,11 +41,11 @@ model Doctor {
 
 model Stay {
   id             Int           @id @default(autoincrement())
-  patient        User          @relation(fields: [patientId], references: [id])
+  patient        User          @relation(fields: [patientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   patientId      Int
   start          DateTime
   end            DateTime
-  doctor         Doctor        @relation(fields: [doctorId], references: [id])
+  doctor         Doctor        @relation(fields: [doctorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   doctorId       Int
   reason         String
   prescription   Prescription?

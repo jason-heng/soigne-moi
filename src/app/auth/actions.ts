@@ -4,8 +4,6 @@ import { z } from "zod"
 import bcrypt from "bcrypt"
 import prisma from "@/_lib/db"
 import { createSession } from "@/_lib/session"
-import { redirect } from "next/navigation"
-import { sleep } from "@/_lib/utils"
 
 const SignupFormSchema = z.object({
     firstName: z.string().min(1, "Prénom invalide !"),
@@ -31,7 +29,7 @@ export async function signup(_: any, formData: FormData) {
             errors: validationResult.error.flatten().fieldErrors
         }
     }
-
+    
     const { firstName, lastName, address, email, password, repeatPassword } = validationResult.data
 
     if (password !== repeatPassword) return {

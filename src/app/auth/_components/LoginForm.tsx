@@ -3,7 +3,7 @@
 import { useFormState } from "react-dom"
 import { login } from "../actions"
 import { Input } from "@/_components/ui/input"
-import { Button } from "react-day-picker"
+import { Button } from "@/_components/ui/button"
 
 export function LoginForm() {
     const [state, action] = useFormState(login, null)

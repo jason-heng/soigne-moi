@@ -1,6 +1,6 @@
 import React from 'react'
 import { AddDoctorForm, DoctorsListCard } from './components'
-import { getDoctors } from '@/lib/doctors'
+import { getDoctors } from '@/_data/doctors'
 
 
 export default async function page() {
