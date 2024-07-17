@@ -115,7 +115,7 @@ export function AddDoctorForm() {
     }
   
   return (
-    <Card className='w-2/5 shadow-2xl px-6 border-gray-300 rounded-xl border-[1px] h-'>
+    <Card className='w-2/5 shadow-2xl px-6 border-gray-300 rounded-xl border-[1px] relative overflow-scroll'>
       <CardHeader className='pb-2 px-1'>
         <CardTitle className='text-xl text-primary mb-4'>Ajouter un médecin</CardTitle>
 
@@ -150,7 +150,7 @@ export function AddDoctorForm() {
             <Input placeholder='Entrez un mot de passe...' name='password' type='password'/>
             {passwordError && <p className='text-sm text-destructive'>{passwordError}</p>}
           </div>
-          <Button className='mt-16 px-20 w-fit mx-auto text-md'>Ajouter</Button>
+          <Button className='mt-0 mx-auto px-20 w-fit text-md bottom-[90%] tall:left-[50%] tall:translate-x-[-50%] tall:absolute tall:bottom-[10%]'>Ajouter</Button>
         </form>
 
       </CardHeader>

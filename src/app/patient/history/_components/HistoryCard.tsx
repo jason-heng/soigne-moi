@@ -10,7 +10,7 @@ export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getSta
 
     return (
         <div className='flex-1 p-8 h-screen'>
-            <h1 className='text-xl'>L&apos;historique de vos séjour</h1>
+            <h1 className='text-xl font-semibold'>L&apos;historique de vos séjours</h1>
             <div className='flex flex-1 gap-5 h-[90%] mt-5'>
                 <Stays stays={stays} selected={selectedStay} setSelected={setSelectedStay} />
                 <SelectedPrescription stay={selectedStay} />
