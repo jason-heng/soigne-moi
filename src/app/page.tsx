@@ -1,13 +1,13 @@
-import Medecine from "@/components/svgs/Medecine";
-import { buttonVariants } from "@/components/ui/button";
+import Medecine from "@/_components/svgs/Medecine";
+import { buttonVariants } from "@/_components/ui/button";
 import { cn } from "@/_lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { ComponentPropsWithoutRef, ReactNode } from "react";
-import Docteur from "../components/svgs/Docteur";
-import MobileMessaging from "@/components/svgs/MobileMessaging";
-import TwoDoctors from "@/components/svgs/TwoDoctors";
-import NavBarLink from "@/components/NavBarLink";
+import Docteur from "../_components/svgs/Docteur";
+import MobileMessaging from "@/_components/svgs/MobileMessaging";
+import TwoDoctors from "@/_components/svgs/TwoDoctors";
+import NavBarLink from "@/_components/NavBarLink";
 import { cookies } from "next/headers";
 import { decrypt } from "@/_lib/session";
 

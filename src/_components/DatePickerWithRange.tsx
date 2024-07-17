@@ -5,27 +5,31 @@ import { addDays, format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
 import { cn } from "@/_lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { Button } from "@/_components/ui/button"
+import { Calendar } from "@/_components/ui/calendar"
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/_components/ui/popover"
 import { Dispatch, HTMLAttributes, SetStateAction, useState } from "react"
 
 export function DatePickerWithRange({
     className,
     dateRange,
-    setDateRange
+    setDateRange,
+    startName,
+    endName
 }: HTMLAttributes<HTMLDivElement> & {
     dateRange: DateRange | undefined
     setDateRange: Dispatch<SetStateAction<DateRange | undefined>>
+    startName: string
+    endName: string
 }) {
     return (
         <div className={cn("grid gap-2", className)}>
-            <input type="text" value={dateRange?.from?.toISOString()} className="hidden" name="start" />
-            <input type="text" value={dateRange?.to?.toISOString()} className="hidden" name="end" />
+            <input type="text" value={dateRange?.from?.toISOString()} className="hidden" name={startName} />
+            <input type="text" value={dateRange?.to?.toISOString()} className="hidden" name={endName} />
             <Popover>
                 <PopoverTrigger asChild>
                     <Button

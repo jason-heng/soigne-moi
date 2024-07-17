@@ -2,19 +2,19 @@
 
 import { Check, ChevronsUpDown } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/_components/ui/button"
 import {
     Command,
     CommandEmpty,
     CommandGroup,
     CommandInput,
     CommandItem,
-} from "@/components/ui/command"
+} from "@/_components/ui/command"
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/_components/ui/popover"
 import { cn } from "@/_lib/utils"
 import { Dispatch, SetStateAction, useState } from "react"
 
@@ -24,12 +24,17 @@ export interface ComboboxOption {
     id: number
 }
 
-export function Combobox({ options, selected, setSelected }: { options: ComboboxOption[], selected: ComboboxOption | undefined, setSelected: Dispatch<SetStateAction<ComboboxOption | undefined>> }) {
+export function Combobox({ options, selected, setSelected, name }: {
+    options: ComboboxOption[],
+    selected: ComboboxOption | undefined,
+    setSelected: Dispatch<SetStateAction<ComboboxOption | undefined>>
+    name: string
+}) {
     const [open, setOpen] = useState(false)
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <input type="text" className="hidden" name="doctorId" value={selected?.id} />
+            <input type="text" className="hidden" name={name} value={selected?.id} />
             <PopoverTrigger asChild>
                 <Button
                     variant="outline"

@@ -1,11 +1,11 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useEffect, useRef, useState } from "react"
+import { Button } from "@/_components/ui/button"
+import { Input } from "@/_components/ui/input"
+import { Label } from "@/_components/ui/label"
+import { useEffect, useRef } from "react"
 import toast from "react-hot-toast"
-import { editPassword } from "./actions"
+import { editPassword } from "../actions"
 import { useFormState } from "react-dom"
 
 export default function EditPasswordForm() {

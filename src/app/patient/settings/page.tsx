@@ -1,9 +1,9 @@
 import { getUser } from '@/_data/user'
 import React from 'react'
-import EditPasswordForm from './EditPasswordForm'
-import EditInfoForm from './EditInfoForm'
+import EditPasswordForm from './_components/EditPasswordForm'
+import EditInfoForm from './_components/EditInfoForm'
 
-export default async function page() {
+export default async function PatientSettings() {
     const user = await getUser()
 
     return (

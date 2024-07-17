@@ -1,4 +1,4 @@
-import { SideBarLink } from "@/components/SideBarLink";
+import { SideBarLink } from "@/_components/SideBarLink";
 import { faArrowRightFromBracket, faGears, faHospital, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropsWithChildren } from "react";
@@ -25,7 +25,7 @@ async function SideBar() {
     )
 }
 
-export default function DashboardLayout({ children }: Readonly<PropsWithChildren>) {
+export default function PatientDashboardLayout({ children }: Readonly<PropsWithChildren>) {
     return (
         <main className="flex">
             <SideBar />

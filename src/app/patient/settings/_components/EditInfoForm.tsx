@@ -1,12 +1,12 @@
 "use client"
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@/_components/ui/button'
+import { Input } from '@/_components/ui/input'
+import { Label } from '@/_components/ui/label'
 import { getUser } from '@/_data/user'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
-import { editInfo } from './actions'
+import { editInfo } from '../actions'
 import { useFormState } from 'react-dom'
 
 export default function EditInfoForm({ user }: { user: Awaited<ReturnType<typeof getUser>> }) {
