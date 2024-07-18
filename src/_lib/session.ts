@@ -8,11 +8,10 @@ const key = new TextEncoder().encode(process.env.AUTH_SECRET)
 
 const cookieHelper = {
     name: 'session',
-    options: { httpOnly: true, secure: true },
-    duration: 1000 * 60 * 60 * 24 // 24 heures
+    options: { httpOnly: true, secure: true }
 }
 
-interface Session extends JWTPayload {
+interface UserSession extends JWTPayload {
     user: {
         id: number;
         firstName: string;
@@ -20,21 +19,39 @@ interface Session extends JWTPayload {
     }
 }
 
-export async function encrypt(payload: Session) {
+interface DoctorSession extends JWTPayload {
+    doctor: {
+        id: number;
+        firstName: string;
+    }
+}
+
+export async function encrypt(payload: UserSession | DoctorSession) {
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
-        .setExpirationTime('1day')
         .sign(key)
 }
 
-export async function decrypt(cookie: string) {
+export async function decryptUserCookie(cookie: string) {
     try {
         const { payload } = await jwtVerify(cookie, key, {
             algorithms: ['HS256']
         })
 
-        return payload as Session
+        return payload as UserSession
+    } catch (error) {
+        return null
+    }
+}
+
+export async function decryptDoctorCookie(cookie: string) {
+    try {
+        const { payload } = await jwtVerify(cookie, key, {
+            algorithms: ['HS256']
+        })
+
+        return payload as DoctorSession
     } catch (error) {
         return null
     }
@@ -42,16 +59,15 @@ export async function decrypt(cookie: string) {
 
 
 export async function createSession(user: { id: number, firstName: string, admin: boolean }, redirectUrl: string) {
-    const expires = new Date(Date.now() + cookieHelper.duration)
-    const cookie = await encrypt({ user, expires })
+    const cookie = await encrypt({ user })
 
-    cookies().set(cookieHelper.name, cookie, { ...cookieHelper.options, expires })
+    cookies().set(cookieHelper.name, cookie, { ...cookieHelper.options })
     redirect(redirectUrl)
 }
 
 export async function verifySession() {
     const cookie = cookies().get(cookieHelper.name)?.value
-    const session = await decrypt(cookie || '')
+    const session = await decryptUserCookie(cookie || '')
 
     if (!session?.user) redirect('/auth')
 
