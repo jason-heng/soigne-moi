@@ -1,4 +1,4 @@
-import { getUser } from '@/_data/user'
+import { getUser } from '@/_data/users'
 import React from 'react'
 import EditPasswordForm from './_components/EditPasswordForm'
 import EditInfoForm from './_components/EditInfoForm'

@@ -1,6 +1,6 @@
 "use server"
 
-import { getUser } from "@/_data/user";
+import { getUser } from "@/_data/users";
 import prisma from "@/_lib/db";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
