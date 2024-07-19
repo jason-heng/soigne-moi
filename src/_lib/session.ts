@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 const key = new TextEncoder().encode(process.env.AUTH_SECRET)
 
-const cookieHelper = {
+export const cookieHelper = {
     name: 'session',
     options: { httpOnly: true, secure: true }
 }
@@ -75,8 +75,12 @@ export async function verifySession() {
 }
 
 export async function deleteSession() {
+    cookies().delete(cookieHelper.name)
+}
+
+export async function logout() {
     "use server"
 
-    cookies().delete(cookieHelper.name)
+    deleteSession()
     redirect('/auth')
 }

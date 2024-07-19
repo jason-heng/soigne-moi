@@ -1,7 +1,7 @@
 import { NewStay } from '@/app/patient/_components/NewStay'
 import { getDoctors } from '@/_data/doctors'
 import { getCurrentStay, getIncomingStay } from '@/_data/stays'
-import { getUser } from '@/_data/user'
+import { getUser } from '@/_data/users'
 import { CurrentStay } from './_components/CurrentStay'
 import { IncomingStay } from './_components/IncomingStay'
 import { CurrentPrescription } from './_components/CurrentPrescription'
