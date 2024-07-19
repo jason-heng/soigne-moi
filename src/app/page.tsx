@@ -9,11 +9,11 @@ import MobileMessaging from "@/_components/svgs/MobileMessaging";
 import TwoDoctors from "@/_components/svgs/TwoDoctors";
 import NavBarLink from "@/_components/NavBarLink";
 import { cookies } from "next/headers";
-import { decrypt } from "@/_lib/session";
+import { decryptUserCookie } from "@/_lib/session";
 
 async function NavBar() {
   const cookie = cookies().get('session')?.value
-  const session = await decrypt(cookie || '')
+  const session = await decryptUserCookie(cookie || '')
 
   return (
     <nav className="sticky px-12 py-4 flex justify-between w-full items-center top-0 bg-white z-30">
