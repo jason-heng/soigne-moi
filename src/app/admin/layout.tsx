@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropsWithChildren } from "react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/_components/ui/sheet";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 
 function SideBar() {
@@ -12,7 +13,7 @@ function SideBar() {
         <>
             <nav className='h-screen hidden lg:flex py-8 bg-foreground flex-col justify-between text-white text-opacity-80'>
                 <div>
-                    <h1 className='text-2xl font-bold text-white text-center'>SoigneMoi</h1>
+                    <Link href="/"><h1 className='text-2xl font-bold text-white text-center'>SoigneMoi</h1></Link>
                     <ul className='my-6 flex flex-col'>
                         <SideBarLink text="Accueil" href="/admin" icon={faHouse} />
                         <SideBarLink text="Docteurs" href="/admin/doctors" icon={faUserDoctor} />
@@ -30,7 +31,7 @@ function SideBar() {
             </nav>
             <Sheet>
                 <nav className="bg-foreground flex lg:hidden justify-between items-center px-3">
-                    <h1 className='text-xl font-bold text-white text-center'>SoigneMoi</h1>
+                    <Link href="/"><h1 className='text-xl font-bold text-white text-center'>SoigneMoi</h1></Link>
                     <SheetTrigger className="p-3"><HamburgerMenuIcon color="white" height={20} width={20} /></SheetTrigger>
                 </nav>
                 <SheetContent className="bg-foreground text-white p-0 pt-5 w-[200px]">
