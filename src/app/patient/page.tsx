@@ -23,7 +23,7 @@ export default async function PatientHome() {
                 </div>
                 <CurrentPrescription stay={currentStay} />
                 <NewStay doctors={doctors} disabled={!!currentStay || !!incomingStay} />
-            </div >
+            </div>
         </div >
     )
 }

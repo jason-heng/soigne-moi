@@ -61,8 +61,11 @@ export function NewStay({ doctors, disabled }: { doctors: Awaited<ReturnType<typ
                         {state?.errors?.doctorId && <p className='text-sm text-destructive'>{state.errors.doctorId}</p>}
                     </div>
                 </CardContent>
-                <CardFooter className='absolute w-full flex justify-end bottom-0'>
-                    <Button disabled={disabled} >Ajouter</Button>
+                <CardFooter className='absolute w-full flex justify-center bottom-0'>
+                    <div className='flex flex-col w-fit'>
+                        <Button disabled={disabled} >Ajouter</Button>
+                        {disabled && <p className='text-muted-foreground text-sm'>Vous avez déja un séjour en cours ou a venir</p>}
+                    </div>
                 </CardFooter>
             </form>
         </Card>

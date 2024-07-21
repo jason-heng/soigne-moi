@@ -2,7 +2,6 @@ import 'server-only'
 
 import prisma from "../_lib/db";
 import { verifySession } from "../_lib/session";
-import { Prisma, PrismaClient } from '@prisma/client';
 
 export async function getDoctors() {
     await verifySession()

@@ -33,7 +33,7 @@ export const columns: ColumnDef<Awaited<ReturnType<typeof getUsers>>[0] & { me: 
     {
         accessorKey: "admin",
         header: "Admin",
-        cell: async ({ row }) => {
+        cell: ({ row }) => {
             const user = row.original
 
             return (

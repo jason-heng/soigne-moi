@@ -29,7 +29,7 @@ export async function signup(_: any, formData: FormData) {
             errors: validationResult.error.flatten().fieldErrors
         }
     }
-    
+
     const { firstName, lastName, address, email, password, repeatPassword } = validationResult.data
 
     if (password !== repeatPassword) return {
