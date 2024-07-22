@@ -1,3 +1,5 @@
+import 'server-only'
+
 import prisma from "@/_lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
