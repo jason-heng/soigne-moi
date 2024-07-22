@@ -22,37 +22,41 @@ export async function POST(req: NextRequest) {
 
     const { registrationNumber, password } = validationResult.data
 
-    const doctor = await prisma.doctor.findUnique({
-        where: {
-            registrationNumber
-        }
-    })
+    try {
+        const doctor = await prisma.doctor.findUnique({
+            where: {
+                registrationNumber
+            }
+        })
 
-    if (!doctor) return NextResponse.json({
-        errors: {
-            registrationNumber: 'Docteur introuvable !'
-        }
-    }, {
-        status: 400
-    });
+        if (!doctor) return NextResponse.json({
+            errors: {
+                registrationNumber: 'Docteur introuvable !'
+            }
+        }, {
+            status: 400
+        });
 
-    const correctPassword = await bcrypt.compare(password, doctor.password)
-    if (!correctPassword) return NextResponse.json({
-        errors: {
-            password: 'Mot de passe incorrect !'
-        }
-    }, {
-        status: 400
-    });
+        const correctPassword = await bcrypt.compare(password, doctor.password)
+        if (!correctPassword) return NextResponse.json({
+            errors: {
+                password: 'Mot de passe incorrect !'
+            }
+        }, {
+            status: 400
+        });
 
-    const cookie = await encrypt({
-        doctor: {
-            id: doctor.id,
-            firstName: doctor.firstName
-        }
-    })
+        const cookie = await encrypt({
+            doctor: {
+                id: doctor.id,
+                firstName: doctor.firstName
+            }
+        })
 
-    return NextResponse.json({
-        token: cookie
-    });
+        return NextResponse.json({
+            token: cookie
+        });
+    } catch (error) {
+        return NextResponse.json({}, { status: 500 })
+    }
 }
