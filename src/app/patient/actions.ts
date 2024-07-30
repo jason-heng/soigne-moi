@@ -22,10 +22,8 @@ export async function createStay(_: any, formData: FormData) {
         doctorId: formData.get('doctor-id'),
     })
 
-    if (!validationResult.success) {
-        return {
-            errors: { start: formData.get('start') === formData.get('end') ? "Durée invalide !" : undefined, ...validationResult.error.flatten().fieldErrors }
-        }
+    if (!validationResult.success) return {
+        errors: { start: formData.get('start') === formData.get('end') ? "Durée invalide !" : undefined, ...validationResult.error.flatten().fieldErrors }
     }
 
     const { reason, start, end, doctorId } = validationResult.data

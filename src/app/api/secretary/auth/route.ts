@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import { encrypt } from "@/_lib/session";
 
 const DoctorLoginFormSchema = z.object({
-    registrationNumber: z.coerce.number().min(1, 'Matricule invalide !'),
+    email: z.string().email('Email invalide !'),
     password: z.string().min(1, 'Mot de passe invalide !')
 })
 
@@ -20,24 +20,24 @@ export async function POST(req: NextRequest) {
         status: 400
     });
 
-    const { registrationNumber, password } = validationResult.data
+    const { email, password } = validationResult.data
 
     try {
-        const doctor = await prisma.doctor.findUnique({
+        const secretary = await prisma.secretary.findUnique({
             where: {
-                registrationNumber
+                email
             }
         })
 
-        if (!doctor) return NextResponse.json({
+        if (!secretary) return NextResponse.json({
             errors: {
-                registrationNumber: 'Docteur introuvable !'
+                email: 'Secrétaire introuvable !'
             }
         }, {
             status: 404
         });
 
-        const correctPassword = await bcrypt.compare(password, doctor.password)
+        const correctPassword = await bcrypt.compare(password, secretary.password)
         if (!correctPassword) return NextResponse.json({
             errors: {
                 password: 'Mot de passe incorrect !'
@@ -48,8 +48,8 @@ export async function POST(req: NextRequest) {
 
         const cookie = await encrypt({
             doctor: {
-                id: doctor.id,
-                firstName: doctor.firstName
+                id: secretary.id,
+                firstName: secretary.firstName
             }
         })
 
