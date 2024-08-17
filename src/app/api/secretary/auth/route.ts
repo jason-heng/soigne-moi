@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         const secretary = await prisma.secretary.findUnique({
             where: {
                 email
-            }
+            },
         })
 
         if (!secretary) return NextResponse.json({
@@ -52,9 +52,12 @@ export async function POST(req: NextRequest) {
                 firstName: secretary.firstName
             }
         })
+        const secretrayInfo = { id: secretary.id, firstName: secretary.firstName, lastName: secretary.lastName }
 
         return NextResponse.json({
-            token: cookie
+            token: cookie,
+            secretary: secretrayInfo
+
         });
     } catch (error) {
         return NextResponse.json({}, { status: 500 })
