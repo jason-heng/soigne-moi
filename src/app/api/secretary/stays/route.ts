@@ -40,23 +40,10 @@ export async function GET(req: NextRequest) {
                     select: {
                         id: true,
                         firstName: true,
-                        lastName: true,
-                        opinions: {
-                            select: {
-                                id: true,
-                                title: true,
-                                created: true,
-                                description: true,
-                                doctor: {
-                                    select: {
-                                        firstName: true,
-                                        lastName: true
-                                    }
-                                }
-                            },
-                        }
+                        lastName: true
                     }
                 }
+                
             }
         })
 
@@ -69,6 +56,7 @@ export async function GET(req: NextRequest) {
         reason: stay.reason,
         start: stay.start,
         end: stay.end,
+        prescription: stay.prescription
     }))
 
     return NextResponse.json({ stays: staysList })
