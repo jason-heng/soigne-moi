@@ -16,6 +16,8 @@ export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getSta
                 &&
                 !(event.target as any).closest('#stay')
                 &&
+                !(event.target as any).closest('nav')
+                &&
                 !(event.target as any).id.includes("search")
             ) {
                 setSelectedStay(undefined);
