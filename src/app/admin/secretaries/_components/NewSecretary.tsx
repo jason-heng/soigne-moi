@@ -35,7 +35,7 @@ export function NewSecretary() {
                 <CardContent className='space-y-3'>
                     <div>
                         <Label htmlFor="lastName">Nom</Label>
-                        <Input type="text" placeholder="L'email de la secrétaire" autoComplete='off' name='lastName' />
+                        <Input type="text" placeholder="Le nom de la secrétaire" autoComplete='off' name='lastName' />
                         {state?.errors?.lastName && <p className='text-sm text-destructive'>{state.errors.lastName}</p>}
                     </div>
                     <div>

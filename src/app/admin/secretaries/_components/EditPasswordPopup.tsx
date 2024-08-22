@@ -1,17 +1,16 @@
 "use client"
 
 import { Button } from '@/_components/ui/button'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/_components/ui/dialog'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/_components/ui/dialog'
 import { Input } from '@/_components/ui/input'
 import { Label } from '@/_components/ui/label'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useFormState } from 'react-dom'
-import { editDoctorPassword } from '../actions'
+import { editSecretaryPassword } from '../actions'
 import toast from 'react-hot-toast'
 
-export default function EditPasswordPopup({ doctorId }: { doctorId: number }) {
-    const [state, action] = useFormState(editDoctorPassword, null)
-    const [open, setOpen] = useState(false)
+export default function EditPasswordPopup({ secretaryId, open, setOpen }: { secretaryId: number, open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
+    const [state, action] = useFormState(editSecretaryPassword, null)
 
     useEffect(() => {
         if (state?.success) {
@@ -22,16 +21,13 @@ export default function EditPasswordPopup({ doctorId }: { doctorId: number }) {
 
     return (
         <Dialog open={open}>
-            <DialogTrigger onClick={() => setOpen(true)} asChild>
-                <Button className='bg-white rounded-sm h-7 mx-auto w-36 text-xs hover:bg-blue-500 text-blue-500 hover:text-white border-[2px] shadow-md font-semibold hover:border-none'>Changer mot de passe</Button>
-            </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Changer le mot de passe</DialogTitle>
                 </DialogHeader>
                 <form action={action}>
                     <div className="grid gap-2 py-4">
-                        <input type="text" className='hidden' name='doctor-id' value={doctorId} />
+                        <input type="text" className='hidden' name='secretary-id' value={secretaryId} />
                         <Label htmlFor="name" >
                             Nouveau mot de passe
                         </Label>

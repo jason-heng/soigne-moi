@@ -7,10 +7,11 @@ import { Button } from "@/_components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { removeSecretary } from "../actions"
 import { useFormState } from "react-dom"
-import { useEffect } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import toast from "react-hot-toast"
+import EditPasswordPopup from "./EditPasswordPopup"
 
-function Dropdown({ secretary}: { secretary: Awaited<ReturnType<typeof getSecretaries>>[0] }) {
+function Dropdown({ secretary, setEditPasswordOpen }: { secretary: Awaited<ReturnType<typeof getSecretaries>>[0], setEditPasswordOpen: Dispatch<SetStateAction<boolean>> }) {
     const [removeState, removeAction] = useFormState(removeSecretary, null)
 
     useEffect(() => {
@@ -29,7 +30,7 @@ function Dropdown({ secretary}: { secretary: Awaited<ReturnType<typeof getSecret
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem>Changer le mot de passe</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setEditPasswordOpen(true)}>Changer le mot de passe</DropdownMenuItem>
                 <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => removeAction(secretary.id)}>Retirer</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
@@ -59,9 +60,16 @@ export const columns: ColumnDef<Awaited<ReturnType<typeof getSecretaries>>[0]>[]
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
+            const [editPasswordOpen, setEditPasswordOpen] = useState(false)
+
             const secretary = row.original
 
-            return <Dropdown secretary={secretary} />
+            return (
+                <>
+                    <EditPasswordPopup secretaryId={secretary.id} open={editPasswordOpen} setOpen={setEditPasswordOpen} />
+                    <Dropdown secretary={secretary} setEditPasswordOpen={setEditPasswordOpen} />
+                </>
+            )
         }
     }
 ]

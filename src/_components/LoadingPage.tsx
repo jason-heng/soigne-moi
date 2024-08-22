@@ -4,7 +4,7 @@ import { TailSpin } from "react-loader-spinner"
 
 export default function LoadingPage() {
     return (
-        <div className="h-[100svh] w-[100svw] flex justify-center items-center">
+        <div className="h-[100%] w-[100%] flex justify-center items-center">
             <TailSpin
                 visible={true}
                 height="50"

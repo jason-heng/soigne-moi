@@ -3,9 +3,8 @@
 import { getUser } from "@/_data/users";
 import prisma from "@/_lib/db";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { z } from "zod";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import { logout } from "@/_lib/session";
 
 const NewSecretaryFormSchema = z.object({
@@ -74,6 +73,44 @@ export async function removeSecretary(_: any, id: number) {
     return { success: true }
 }
 
-export async function editSecretaryPassword(_: any, formData: FormData) {
+const EditSecretaryPasswordFormSchema = z.object({
+    password: z.string().min(1, "Mot de passe invalide !"),
+    secretaryId: z.coerce.number().min(1, "Identifiant invalide !")
+})
 
+export async function editSecretaryPassword(_: any, formData: FormData) {
+    const user = await getUser()
+    if (!user.admin) logout()
+
+    const validationResult = EditSecretaryPasswordFormSchema.safeParse({
+        password: formData.get('password'),
+        secretaryId: formData.get('secretary-id')
+    });
+
+
+    if (!validationResult.success) return {
+        errors: validationResult.error.flatten().fieldErrors
+    }
+
+    const { password, secretaryId } = validationResult.data
+
+    if (!(await prisma.secretary.count({ where: { id: secretaryId } }))) return {
+        errors: {
+            doctorId: "Secrétaire introuvable !",
+            password: undefined,
+        }
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    await prisma.secretary.update({
+        where: { id: secretaryId },
+        data: { password: hashedPassword },
+    })
+
+    revalidatePath("/admin/secretaries")
+
+    return {
+        success: true
+    }
 }
