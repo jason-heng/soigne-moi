@@ -81,7 +81,7 @@ const EditTimeTableFormSchema = z.object({
     worksSaturday: z.boolean(),
 });
 
-export async function setTimeTable(_: any, formData: FormData) {
+export async function editTimeTable(_: any, formData: FormData) {
     const user = await getUser()
     if (!user.admin) logout()
 
@@ -122,7 +122,7 @@ export async function setTimeTable(_: any, formData: FormData) {
     }
 }
 
-export async function deleteDoctor(doctorId: number) {
+export async function removeDoctor(doctorId: number) {
     const user = await getUser()
     if (!user.admin) logout()
 
@@ -139,7 +139,7 @@ const EditDoctorPasswordFormSchema = z.object({
 })
 
 export async function editDoctorPassword(_: any, formData: FormData) {
-    
+
     const user = await getUser()
     if (!user.admin) logout()
 

@@ -1,10 +1,12 @@
 import { getCurrentStay } from "@/_data/stays";
-import { formatDate } from "@/_lib/utils";
+import { cn, formatDate } from "@/_lib/utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card";
 
 export function CurrentStay({ stay }: { stay: Awaited<ReturnType<typeof getCurrentStay>> }) {
     return (
-        <Card className='shadow-xl'>
+        <Card className={cn('col-span-1 row-span-2 shadow-xl', {
+            'row-span-3': !!stay
+        })}>
             <CardHeader className='pb-2 space-y-0'>
                 <CardTitle className='text-xl text-primary'>Séjour actuel</CardTitle>
                 {stay && <CardDescription>{formatDate(stay.start)} - {formatDate(stay.end)}</CardDescription>}

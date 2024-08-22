@@ -14,6 +14,9 @@ export async function getSecretaries() {
             firstName: true,
             lastName: true,
             email: true,
+        },
+        orderBy: {
+            id: "asc"
         }
     })
 }

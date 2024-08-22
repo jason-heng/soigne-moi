@@ -3,7 +3,7 @@ import { SideBarLink } from "@/_components/SideBarLink";
 import { faArrowRightFromBracket, faGears, faHouse, faUser, faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropsWithChildren } from "react";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/_components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/_components/ui/sheet";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
@@ -60,11 +60,9 @@ function SideBar() {
 
 export default function AdminDashboardLayout({ children }: Readonly<PropsWithChildren>) {
     return (
-        <main className="flex flex-col lg:flex-row">
+        <main className="flex flex-col lg:flex-row h-screen w-screen">
             <SideBar />
-            <div className="flex flex-1">
-                {children}
-            </div>
+            {children}
         </main>
     );
 }

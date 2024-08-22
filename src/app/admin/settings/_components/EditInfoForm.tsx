@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { editInfo } from '../actions'
 import { useFormState } from 'react-dom'
+import SubmitButton from '@/_components/SubmitButton'
 
 export default function EditInfoForm({ user }: { user: Awaited<ReturnType<typeof getUser>> }) {
     const [state, action] = useFormState(editInfo, null)
@@ -46,7 +47,7 @@ export default function EditInfoForm({ user }: { user: Awaited<ReturnType<typeof
                 </div>
             </div>
 
-            <Button className='max-w-[200px] mt-4'>Sauvegarder</Button>
+            <SubmitButton text='Sauvegarder' className='max-w-[200px] mt-4' />
         </form>
     )
 }

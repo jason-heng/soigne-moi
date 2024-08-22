@@ -20,7 +20,9 @@ export async function getDoctors() {
             worksThursday: true,
             worksFriday: true,
             worksSaturday: true,
-
+        },
+        orderBy: {
+            id: "asc"
         }
     })
 }

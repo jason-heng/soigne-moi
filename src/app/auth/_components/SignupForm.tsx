@@ -4,6 +4,7 @@ import { useFormState } from "react-dom"
 import { signup } from "../actions"
 import { Input } from "@/_components/ui/input"
 import { Button } from "@/_components/ui/button"
+import SubmitButton from "@/_components/SubmitButton"
 
 export function SignupForm() {
     const [state, action] = useFormState(signup, null)
@@ -38,7 +39,7 @@ export function SignupForm() {
                     {state?.errors.repeatPassword && <p className='text-sm text-destructive'>{state.errors.repeatPassword}</p>}
                 </div>
             </div>
-            <Button className='mt-2'>{"S'inscrire"}</Button>
+            <SubmitButton text="S'inscrire" className='mt-2'/>
         </form>
     )
 }

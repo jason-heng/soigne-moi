@@ -35,7 +35,10 @@ export async function getIncomingStay() {
                 gt: new Date()
             }
         },
-        include: { doctor: true }
+        include: { doctor: true },
+        orderBy: {
+            id: "asc"
+        }
     })
 }
 
@@ -50,7 +53,10 @@ export async function getStays() {
             doctor: true,
             prescription: {
                 include: { drugs: true }
-            },
+            }
+        },
+        orderBy: {
+            id: "asc"
         }
     })
 }

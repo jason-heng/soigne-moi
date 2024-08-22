@@ -8,13 +8,13 @@ import { useState } from 'react';
 import DoctorCard from './DoctorCard';
 
 
-export default function DoctorsListCard({ doctors }: { doctors: Awaited<ReturnType<typeof getDoctors>> }) {
+export default function DoctorsList({ doctors }: { doctors: Awaited<ReturnType<typeof getDoctors>> }) {
   const [search, setSearch] = useState("")
 
   const visibleDoctors = doctors.filter(doctor => `${doctor.firstName.toLowerCase()} ${doctor.firstName.toLowerCase()}`.includes(search.toLowerCase()) || doctor.speciality.toLowerCase().includes(search.toLowerCase()) || doctor.registrationNumber.toString().includes(search.toLowerCase()))
 
   return (
-    <Card className='w-3/5 shadow-2xl px-6 border-gray-300 rounded-xl border-[1px] overflow-y-auto'>
+    <Card className='flex-1 shadow-2xl px-6 border-gray-300 rounded-xl border-[1px] overflow-y-auto min-h-0'>
       <CardHeader className='pb-2 px-1'>
         <CardTitle className='text-xl text-primary'>Liste des médecins</CardTitle>
         <CardDescription className="relative">

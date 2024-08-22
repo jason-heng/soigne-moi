@@ -16,9 +16,10 @@ import { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { useFormState } from 'react-dom';
 import { createStay } from '../actions';
+import SubmitButton from '@/_components/SubmitButton';
 
 
-export function NewStay({ doctors, disabled }: { doctors: Awaited<ReturnType<typeof getDoctors>>, disabled: boolean }) {
+export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType<typeof getDoctors>>, disabled: boolean }) {
     const [state, action] = useFormState(createStay, null)
 
     const [dateRange, setDateRange] = useState<DateRange>()
@@ -38,7 +39,7 @@ export function NewStay({ doctors, disabled }: { doctors: Awaited<ReturnType<typ
     }, [state])
 
     return (
-        <Card className='min-w-[350px] flex-grow overflow-y-auto relative space-y-3 w-[300px]'>
+        <Card className='col-span-1 row-span-8 overflow-y-auto relative space-y-3'>
             <CardHeader className='pb-2 sticky top-0 bg-background'>
                 <CardTitle className='text-xl text-primary'>Nouveau séjour</CardTitle>
             </CardHeader>
@@ -61,11 +62,8 @@ export function NewStay({ doctors, disabled }: { doctors: Awaited<ReturnType<typ
                         {state?.errors?.doctorId && <p className='text-sm text-destructive'>{state.errors.doctorId}</p>}
                     </div>
                 </CardContent>
-                <CardFooter className='absolute w-full flex justify-center bottom-0'>
-                    <div className='flex flex-col w-fit'>
-                        <Button disabled={disabled} >Ajouter</Button>
-                        {disabled && <p className='text-muted-foreground text-sm'>Vous avez déja un séjour en cours ou a venir</p>}
-                    </div>
+                <CardFooter className='absolute right-0 bottom-0'>
+                    <SubmitButton text={disabled ? "Séjour en cours ou a venir" : "Ajouter"} disabled={disabled}/>
                 </CardFooter>
             </form>
         </Card>

@@ -16,15 +16,15 @@ import {
     TableRow,
 } from "@/_components/ui/table"
 
-interface DataTableProps<TData, TValue> {
+interface SecretariesTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function SecretariesTable<TData, TValue>({
     columns,
     data,
-}: DataTableProps<TData, TValue>) {
+}: SecretariesTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
@@ -32,8 +32,8 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div className="rounded-md border overflow-auto flex-1">
-            <Table >
+        <div className="relative rounded-md border  overflow-y-scroll flex-1">
+            <Table>
                 <TableHeader className="sticky top-0 bg-white shadow-md z-50">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>

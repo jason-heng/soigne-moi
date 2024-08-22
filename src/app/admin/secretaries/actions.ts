@@ -58,7 +58,7 @@ export async function addSecretary(_: any, formData: FormData) {
     }
 }
 
-export async function removeSecretary(_: any, id: number) {
+export async function removeSecretary(id: number) {
     const user = await getUser()
     if (!user.admin) logout()
 

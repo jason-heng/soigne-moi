@@ -4,10 +4,11 @@ import { useFormState } from "react-dom";
 import { addDoctor } from "../actions";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-import { Card, CardHeader, CardTitle } from "@/_components/ui/card";
-import { Label } from "recharts";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/_components/ui/card";
 import { Input } from "@/_components/ui/input";
 import { Button } from "@/_components/ui/button";
+import { Label } from "@/_components/ui/label";
+import SubmitButton from "@/_components/SubmitButton";
 
 export default function AddDoctorForm() {
     const [state, action] = useFormState(addDoctor, null)
@@ -21,43 +22,42 @@ export default function AddDoctorForm() {
     }, [state])
 
     return (
-        <Card className='w-2/5 shadow-2xl px-6 border-gray-300 rounded-xl border-[1px] relative overflow-y-auto'>
-            <CardHeader className='pb-2 px-1'>
-                <CardTitle className='text-xl text-primary mb-4'>Ajouter un médecin</CardTitle>
-
-                <form className='px-0 flex-col flex gap-4' action={action} ref={formRef}>
-                    <div className='w-full'>
-                        <Label>Nom:</Label>
-                        <Input placeholder='Entrez le nom du médecin...' name='lastName' />
+        <Card className='max-w-[350px] flex-grow overflow-y-auto relative w-[300px]'>
+            <CardHeader className='pb-1 sticky top-0 bg-background'>
+                <CardTitle className='text-xl text-primary'>Ajouter un docteur</CardTitle>
+            </CardHeader>
+            <form action={action} ref={formRef}>
+                <CardContent>
+                    <div>
+                        <Label htmlFor="lastName">Nom</Label>
+                        <Input type="text" placeholder="Le nom du docteur" autoComplete='off' name='lastName' />
                         {state?.errors?.lastName && <p className='text-sm text-destructive'>{state.errors.lastName}</p>}
                     </div>
-
-                    <div className='w-full'>
-                        <Label>Prénom:</Label>
-                        <Input placeholder='Entrez le prénom du médecin...' name='firstName' />
+                    <div>
+                        <Label htmlFor="firstName">Prénom</Label>
+                        <Input type="text" placeholder="Le prénom du docteur" autoComplete='off' name='firstName' />
                         {state?.errors?.firstName && <p className='text-sm text-destructive'>{state.errors.firstName}</p>}
                     </div>
-
-                    <div className='w-full'>
-                        <Label>Spécialité:</Label>
-                        <Input placeholder='Entrez la spécialité du médecin...' name='speciality' />
+                    <div>
+                        <Label htmlFor="speciality">Specialité</Label>
+                        <Input type="text" placeholder="La specialité du docteur" autoComplete='off' name='speciality' />
                         {state?.errors?.speciality && <p className='text-sm text-destructive'>{state.errors.speciality}</p>}
                     </div>
-
-                    <div className='w-full'>
-                        <Label className='mb-10'>Matricule:</Label>
-                        <Input placeholder='Entrez le matricule du médecin...' name='registrationNumber' type='number' />
+                    <div>
+                        <Label htmlFor="registrationNumber">Matricule</Label>
+                        <Input type="number" placeholder="Le matricule du docteur" autoComplete='off' name='registrationNumber' />
                         {state?.errors?.registrationNumber && <p className='text-sm text-destructive'>{state.errors.registrationNumber}</p>}
                     </div>
-
-                    <div className='w-full'>
-                        <Label>Mot de passe:</Label>
-                        <Input placeholder='Entrez un mot de passe...' name='password' type='password' />
+                    <div>
+                        <Label htmlFor="password">Mot de passe</Label>
+                        <Input type="password" autoComplete='off' placeholder="Le mot de passe du docteur" name='password' />
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
-                    <Button className='mt-0 mx-auto px-20 w-fit text-md bottom-[90%] tall:left-[50%] tall:translate-x-[-50%] tall:absolute tall:bottom-[10%]'>Ajouter</Button>
-                </form>
-            </CardHeader>
+                </CardContent>
+                <CardFooter className='absolute right-0 bottom-0'>
+                    <SubmitButton text='Ajouter' />
+                </CardFooter>
+            </form>
         </Card>
     )
 }

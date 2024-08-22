@@ -1,10 +1,12 @@
 import { getIncomingStay } from "@/_data/stays";
-import { formatDate } from "@/_lib/utils";
+import { cn, formatDate } from "@/_lib/utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card";
 
 export function IncomingStay({ stay }: { stay: Awaited<ReturnType<typeof getIncomingStay>> }) {
     return (
-        <Card className='shadow-xl'>
+        <Card className={cn('col-span-1 row-span-2 shadow-xl', {
+            'row-span-4': !!stay
+        })}>
             <CardHeader className='pb-2'>
                 <CardTitle className='text-xl text-primary'>Séjours a venir</CardTitle>
             </CardHeader>

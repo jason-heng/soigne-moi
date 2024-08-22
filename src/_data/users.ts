@@ -1,9 +1,8 @@
-import 'server-only'
+import 'server-only';
 
 import prisma from "@/_lib/db";
-import { cookieHelper, logout, verifySession } from "@/_lib/session";
+import { logout, verifySession } from "@/_lib/session";
 import { redirect } from "next/navigation";
-import { cookies } from 'next/headers';
 
 export async function getUser() {
     const session = await verifySession()
@@ -11,7 +10,7 @@ export async function getUser() {
     const user = await prisma.user.findUnique({
         where: {
             id: session.user.id
-        },
+        }
     })
 
     if (!user) {
@@ -35,6 +34,9 @@ export async function getUsers() {
             email: true,
             address: true,
             admin: true,
+        },
+        orderBy: {
+            id: "asc"
         }
     })
 }

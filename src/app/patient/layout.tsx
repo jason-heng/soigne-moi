@@ -56,11 +56,9 @@ async function SideBar() {
 
 export default function PatientDashboardLayout({ children }: Readonly<PropsWithChildren>) {
     return (
-        <main className="flex flex-col lg:flex-row overflow-clip">
+        <main className="flex flex-col lg:flex-row overflow-clip h-screen w-screen">
             <SideBar />
-            <div className="flex flex-1">
-                {children}
-            </div>
+            {children}
         </main>
     );
 }

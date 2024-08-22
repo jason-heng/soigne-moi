@@ -1,16 +1,16 @@
 import React from 'react'
 import { getDoctors } from '@/_data/doctors'
 import AddDoctorForm from './_components/AddDoctorForm'
-import DoctorsListCard from './_components/DoctorsListCard'
+import DoctorsList from './_components/DoctorsList'
 
 export default async function page() {
   const doctors = await getDoctors()
-  return (
-    <div className='flex-1 p-8 h-screen'>
-      <h1 className='text-xl font-semibold'>Gestion de docteurs</h1>
 
-      <div className='flex h-[90%] gap-5 mt-5'>
-        <DoctorsListCard doctors={doctors} />
+  return (
+    <div className="flex-1 flex p-5 flex-col gap-5">
+      <h1 className='text-xl'>Géstion des docteurs</h1>
+      <div className="flex flex-1 gap-5 min-h-0">
+        <DoctorsList doctors={doctors} />
         <AddDoctorForm />
       </div>
     </div>

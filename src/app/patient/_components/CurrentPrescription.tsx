@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_co
 
 export function CurrentPrescription({ stay }: { stay: Awaited<ReturnType<typeof getCurrentStay>> }) {
     return (
-        <Card className='flex-grow min-w-[350px] overflow-y-auto relative space-y-3 shadow-xl'>
+        <Card className='col-span-1 row-span-8 overflow-y-auto relative space-y-3 shadow-xl'>
             <CardHeader className='pb-2 sticky top-0 bg-background'>
                 <CardTitle className='text-xl text-primary'>Préscription actuelle</CardTitle>
                 {stay?.prescription && <CardDescription>{formatDate(stay.prescription.start)} - {formatDate(stay.prescription.end)}</CardDescription>}

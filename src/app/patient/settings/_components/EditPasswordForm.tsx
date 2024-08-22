@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react"
 import toast from "react-hot-toast"
 import { editPassword } from "../actions"
 import { useFormState } from "react-dom"
+import SubmitButton from "@/_components/SubmitButton"
 
 export default function EditPasswordForm() {
     const [state, action] = useFormState(editPassword, null)
@@ -37,7 +38,7 @@ export default function EditPasswordForm() {
                 <Input type="password" placeholder='Entrez votre mot de passe actuel...' name='password' id="password" />
                 {state?.errors?.password && <p className='text-sm text-destructive'>{state?.errors.password}</p>}
             </div>
-            <Button className='w-full mt-4'>Changer mot de passe</Button>
+            <SubmitButton text="Changer mot de passe" className='w-full mt-4'/>
         </form>
     )
 }

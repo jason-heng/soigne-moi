@@ -23,7 +23,7 @@ export function Stays({ stays, selected, setSelected }: {
                 <CardDescription>{stays.length} séjour{stays.length !== 1 && "s"}</CardDescription>
                 <CardDescription className="relative">
                     <MagnifyingGlassIcon className="absolute top-[50%] translate-y-[-50%] right-2" />
-                    <Input placeholder="Rechercher..." onChange={e => setSearch(e.target.value)} />
+                    <Input placeholder="Rechercher..." onChange={e => setSearch(e.target.value)} id="search" />
                 </CardDescription>
             </CardHeader>
             <CardContent className='space-y-3' >
@@ -44,7 +44,7 @@ function Stay({ selected, setSelected, stay }: {
     stay: Awaited<ReturnType<typeof getStays>>[0]
 }) {
     return (
-        <Card className={cn('shadow-xl hover:bg-secondary cursor-pointer', {
+        <Card id="stay" className={cn('shadow-xl hover:bg-secondary cursor-pointer', {
             "bg-secondary": selected?.id === stay.id
         })} onClick={() => setSelected(stay)} >
             <CardHeader className='pb-2 space-y-0'>

@@ -4,6 +4,7 @@ import { useFormState } from "react-dom"
 import { login } from "../actions"
 import { Input } from "@/_components/ui/input"
 import { Button } from "@/_components/ui/button"
+import SubmitButton from "@/_components/SubmitButton"
 
 export function LoginForm() {
     const [state, action] = useFormState(login, null)
@@ -18,7 +19,7 @@ export function LoginForm() {
                 <Input type="password" placeholder="Mot de passe" name="password" id='password' />
                 {state?.errors?.password && <p className='text-sm text-destructive'>{state?.errors.password}</p>}
             </div>
-            <Button className='mt-2'>Se Connecter</Button>
+            <SubmitButton text="Se Connecter" className='mt-2'/>
         </form>
     )
 }

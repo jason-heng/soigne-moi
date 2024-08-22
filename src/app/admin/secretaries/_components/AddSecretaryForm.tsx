@@ -8,15 +8,13 @@ import { CardContent } from '@/_components/ui/card';
 import { CardFooter } from '@/_components/ui/card';
 import { Label } from '@/_components/ui/label';
 import { Input } from '@/_components/ui/input';
-import { Button } from '@/_components/ui/button';
 import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 import { addSecretary } from '../actions';
+import SubmitButton from '@/_components/SubmitButton';
 
-
-export function NewSecretary() {
+export default function AddSecretaryForm() {
     const [state, action] = useFormState(addSecretary, null)
-
     const formRef = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
@@ -54,8 +52,8 @@ export function NewSecretary() {
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
                 </CardContent>
-                <CardFooter className='absolute w-full flex justify-end bottom-0'>
-                    <Button>Ajouter</Button>
+                <CardFooter className='absolute right-0 bottom-0'>
+                    <SubmitButton text='Ajouter'/>
                 </CardFooter>
             </form>
         </Card>
