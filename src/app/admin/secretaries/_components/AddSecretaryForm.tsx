@@ -48,7 +48,7 @@ export default function AddSecretaryForm() {
                     </div>
                     <div>
                         <Label htmlFor="password">Mot de passe</Label>
-                        <Input type="password" autoComplete='off' placeholder="Le mot de passe de la secrétaire" name='password' />
+                        <Input type="password"  placeholder="Le mot de passe de la secrétaire" autoComplete='new-password' name='password' />
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
                 </CardContent>
