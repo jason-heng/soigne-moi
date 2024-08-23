@@ -4,7 +4,7 @@ import toast from "react-hot-toast"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/_components/ui/alert-dialog"
 import { useState } from "react"
 import { removeDoctor } from "../actions"
-import { Button } from "@/_components/ui/button"
+import { Button, buttonVariants } from "@/_components/ui/button"
 
 export function RemoveAlertDialog({ doctorId }: { doctorId: number }) {
     const [open, setOpen] = useState(false)
@@ -28,7 +28,7 @@ export function RemoveAlertDialog({ doctorId }: { doctorId: number }) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleConfirm}>Confirmer</AlertDialogAction>
+                    <AlertDialogAction className={buttonVariants({ variant: "destructive" })} onClick={handleConfirm}>Confirmer</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
