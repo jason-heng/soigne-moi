@@ -28,12 +28,8 @@ export default function DoctorCard({ doctor }: { doctor: NonNullable<Awaited<Ret
                     <EditTimeTableDialog doctor={doctor} />
                     <EditPasswordDialog doctorId={doctor.id} />
                     <RemoveAlertDialog doctorId={doctor.id} />
-                    {/* <Button className='bg-white border-[2px] shadow-md text-gray-600 font-semibold h-7 hover:bg-gray-100 hover:text-blue-400 mt-auto mx-auto w-36 hover:border-none' onClick={toggleTimeTable}>Emploi du temps</Button>
-                    <EditPasswordPopup doctorId={doctor.id} />
-                    <Button className=' border-[2px] shadow-md rounded-sm h-7 mx-auto w-36 bg-white hover:bg-red-500 text-red-500 hover:text-white font-semibold hover:border-none' onClick={toggleDeleteAlert}>Supprimer</Button> */}
                 </div>
             </div>
         </div>
-
     )
 }
