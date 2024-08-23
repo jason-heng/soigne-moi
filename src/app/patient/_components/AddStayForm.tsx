@@ -39,7 +39,7 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
     }, [state])
 
     return (
-        <Card className='col-span-1 row-span-8 overflow-y-auto relative space-y-3'>
+        <Card className='overflow-y-auto relative space-y-3'>
             <CardHeader className='pb-2 sticky top-0 bg-background'>
                 <CardTitle className='text-xl text-primary'>Nouveau séjour</CardTitle>
             </CardHeader>

@@ -4,9 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_co
 
 export function IncomingStay({ stay }: { stay: Awaited<ReturnType<typeof getIncomingStay>> }) {
     return (
-        <Card className={cn('col-span-1 row-span-2 shadow-xl', {
-            'row-span-4': !!stay
-        })}>
+        <Card className='col-span-1 shadow-xl'>
             <CardHeader className='pb-2'>
                 <CardTitle className='text-xl text-primary'>Séjours a venir</CardTitle>
             </CardHeader>

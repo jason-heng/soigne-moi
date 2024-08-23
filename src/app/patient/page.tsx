@@ -17,11 +17,13 @@ export default async function PatientHome() {
     return (
         <div className='flex-1 p-5'>
             <h1 className='text-xl'>Bonjour, {user.firstName} !</h1>
-            <div className='grid grid-cols-3 grid-rows-8 flex-1 gap-5 h-[90%] mt-5'>
-                <CurrentStay stay={currentStay} />
+            <div className='grid grid-cols-3 grid-rows-1 flex-1 gap-5 h-[90%] mt-5'>
+                <div className='flex flex-col gap-5'>
+                    <CurrentStay stay={currentStay} />
+                    <IncomingStay stay={incomingStay} />
+                </div>
                 <CurrentPrescription stay={currentStay} />
                 <AddStayForm doctors={doctors} disabled={!!currentStay || !!incomingStay} />
-                <IncomingStay stay={incomingStay} />
             </div>
         </div >
     )

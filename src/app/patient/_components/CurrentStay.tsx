@@ -4,9 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_co
 
 export function CurrentStay({ stay }: { stay: Awaited<ReturnType<typeof getCurrentStay>> }) {
     return (
-        <Card className={cn('col-span-1 row-span-2 shadow-xl', {
-            'row-span-3': !!stay
-        })}>
+        <Card className='col-span-1 shadow-xl'>
             <CardHeader className='pb-2 space-y-0'>
                 <CardTitle className='text-xl text-primary'>Séjour actuel</CardTitle>
                 {stay && <CardDescription>{formatDate(stay.start)} - {formatDate(stay.end)}</CardDescription>}
