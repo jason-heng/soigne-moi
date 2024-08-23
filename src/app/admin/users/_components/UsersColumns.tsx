@@ -2,16 +2,32 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/_components/ui/checkbox"
-import { setAdmin } from "../actions"
 import { getUsers } from "@/_data/users"
 import { useState } from "react"
 import { ToggleAdminAlertDialog } from "./ToggleAdminAlertDialog"
 
+type Column = Awaited<ReturnType<typeof getUsers>>[0] & { me: boolean }
+
+export default function UserCell({ user }: { user: Column }) {
+    const [isToggleAdminAlertOpen, setIsToggleAdminAlertOpen] = useState(false)
+
+    return (
+        <>
+            <Checkbox
+                className="ml-3"
+                checked={user.admin}
+                disabled={user.me}
+                onCheckedChange={() => setIsToggleAdminAlertOpen(true)}
+                aria-label="Select row"
+            />
+
+            <ToggleAdminAlertDialog open={isToggleAdminAlertOpen} setOpen={setIsToggleAdminAlertOpen} userId={user.id} isAdmin={user.admin} />
+        </>
+    )
+}
 
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export const usersColumns: ColumnDef<Awaited<ReturnType<typeof getUsers>>[0] & { me: boolean }>[] = [
+export const usersColumns: ColumnDef<Column>[] = [
     {
         accessorKey: 'id',
         header: 'Id'
@@ -36,23 +52,7 @@ export const usersColumns: ColumnDef<Awaited<ReturnType<typeof getUsers>>[0] & {
         accessorKey: "admin",
         header: "Admin",
         cell: ({ row }) => {
-            const [isToggleAdminAlertOpen, setIsToggleAdminAlertOpen] = useState(false)
-
-            const user = row.original
-
-            return (
-                <>
-                <Checkbox
-                    className="ml-3"
-                    checked={user.admin}
-                    disabled={user.me}
-                    onCheckedChange={() => setIsToggleAdminAlertOpen(true)}
-                    aria-label="Select row"
-                />
-                
-                <ToggleAdminAlertDialog open={isToggleAdminAlertOpen} setOpen={setIsToggleAdminAlertOpen} userId={user.id} isAdmin={user.admin}/>
-                </>
-            )
+            return <UserCell user={row.original} />
         },
     },
 ]

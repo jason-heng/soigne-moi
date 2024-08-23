@@ -22,7 +22,6 @@ export function EditTimeTableDialog({ doctor }: { doctor: NonNullable<Awaited<Re
             setOpen(false)
         }
 
-        console.log(state);
     }, [state])
 
     return (

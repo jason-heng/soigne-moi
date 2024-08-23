@@ -13,8 +13,6 @@ export default function EditPasswordDialog({ secretaryId, open, setOpen }: { sec
     const [state, action] = useFormState(editSecretaryPassword, null)
 
     useEffect(() => {
-        console.log(state);
-
         if (state?.success) {
             toast.success('Mot de passe modifié !')
             setOpen(false)
