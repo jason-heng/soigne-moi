@@ -6,13 +6,13 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 import { encrypt } from "@/_lib/session";
 
-const DoctorLoginFormSchema = z.object({
+const SecretaryLoginFormSchema = z.object({
     email: z.string().email('Email invalide !'),
     password: z.string().min(1, 'Mot de passe invalide !')
 })
 
 export async function POST(req: NextRequest) {
-    const validationResult = DoctorLoginFormSchema.safeParse(await req.json())
+    const validationResult = SecretaryLoginFormSchema.safeParse(await req.json())
 
     if (!validationResult.success) return NextResponse.json({
         errors: validationResult.error.flatten().fieldErrors,
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         const secretary = await prisma.secretary.findUnique({
             where: {
                 email
-            }
+            },
         })
 
         if (!secretary) return NextResponse.json({
@@ -47,14 +47,17 @@ export async function POST(req: NextRequest) {
         });
 
         const cookie = await encrypt({
-            doctor: {
+            secretary: {
                 id: secretary.id,
                 firstName: secretary.firstName
             }
         })
+        const secretrayInfo = { id: secretary.id, firstName: secretary.firstName, lastName: secretary.lastName }
 
         return NextResponse.json({
-            token: cookie
+            token: cookie,
+            secretary: secretrayInfo
+
         });
     } catch (error) {
         return NextResponse.json({}, { status: 500 })

@@ -26,7 +26,14 @@ interface DoctorSession extends JWTPayload {
     }
 }
 
-export async function encrypt(payload: UserSession | DoctorSession) {
+interface SecretarySession extends JWTPayload {
+    secretary: {
+        id: number;
+        firstName: string;
+    }
+}
+
+export async function encrypt(payload: UserSession | DoctorSession | SecretarySession) {
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
@@ -52,6 +59,18 @@ export async function decryptDoctorCookie(cookie: string) {
         })
 
         return payload as DoctorSession
+    } catch (error) {
+        return null
+    }
+}
+
+export async function decryptSecretaryCookie(cookie: string) {
+    try {
+        const { payload } = await jwtVerify(cookie, key, {
+            algorithms: ['HS256']
+        })
+
+        return payload as SecretarySession
     } catch (error) {
         return null
     }
