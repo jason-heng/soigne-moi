@@ -54,7 +54,8 @@ export async function POST(req: NextRequest) {
         })
 
         return NextResponse.json({
-            token: cookie
+            token: cookie,
+            firstName: doctor.firstName
         });
     } catch (error) {
         return NextResponse.json({}, { status: 500 })
