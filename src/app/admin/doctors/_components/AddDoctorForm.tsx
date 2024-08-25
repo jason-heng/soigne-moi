@@ -50,7 +50,7 @@ export default function AddDoctorForm() {
                     </div>
                     <div>
                         <Label htmlFor="password">Mot de passe</Label>
-                        <Input type="password" placeholder="Le mot de passe du docteur" autoComplete='new-password' />
+                        <Input type="password" placeholder="Le mot de passe du docteur" autoComplete='new-password' name="password" />
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
                 </CardContent>

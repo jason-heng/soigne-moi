@@ -22,40 +22,46 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
     const [state, action] = useFormState(createStay, null)
 
     const [dateRange, setDateRange] = useState<DateRange>()
-    const [selectedDoctor, setSelectedDoctor] = useState<ComboboxOption>()
+    const [selectedSpeciality, setSelectedSpeciality] = useState<string>()
+    const [selectedDoctorId, setSelectedDoctorId] = useState<string>()
     const [overbookedDates, setOverbookedDates] = useState<Date[]>([])
+
+    const selectedDoctor = selectedDoctorId ? doctors.find(d => d.id === +selectedDoctorId) : undefined
 
     const formRef = useRef<HTMLFormElement>(null);
 
-    const doctorOptions = doctors.map(doctor => ({
+    const specialityOptions: ComboboxOption[] = []
+
+    for (const doctor of doctors) {
+        if (!specialityOptions.find(speciality => speciality.label === doctor.speciality)) {
+            specialityOptions.push({
+                label: doctor.speciality,
+                value: doctor.speciality.toLowerCase()
+            })
+        }
+    }
+
+    const doctorOptions: ComboboxOption[] = doctors.filter(doctor => doctor.speciality.toLowerCase() === selectedSpeciality).map(doctor => ({
         label: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`,
-        value: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`.toLowerCase(),
-        id: doctor.id,
-        worksSunday: doctor.worksSunday,
-        worksMonday: doctor.worksMonday,
-        worksTuesday: doctor.worksTuesday,
-        worksWednesday: doctor.worksWednesday,
-        worksThursday: doctor.worksThursday,
-        worksFriday: doctor.worksFriday,
-        worksSaturday: doctor.worksSaturday
+        value: '' + doctor.id,
     }))
 
     useEffect(() => {
         if (state?.success) {
             formRef.current?.reset()
             setDateRange(undefined)
-            setSelectedDoctor(undefined)
+            setSelectedDoctorId(undefined)
             toast.success("Séjour ajouté !")
         }
     }, [state])
 
     useEffect(() => {
-        if (selectedDoctor) {
-            getOverbookedDates(selectedDoctor.id).then(setOverbookedDates)
+        if (selectedDoctorId) {
+            getOverbookedDates(+selectedDoctorId).then(setOverbookedDates)
         } else {
             setOverbookedDates([])
         }
-    }, [selectedDoctor])
+    }, [selectedDoctorId])
 
     const workingDays: WeekDay[] = []
 
@@ -80,13 +86,18 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
                         {state?.errors?.reason && <p className='text-sm text-destructive'>{state.errors.reason}</p>}
                     </div>
                     <div>
+                        <Label htmlFor="speciality">Specialité</Label>
+                        <Combobox placeholder='Choisir une specialité' emptyPlaceholder='Aucune specialité trouvée.' options={specialityOptions} selected={selectedSpeciality} setSelected={setSelectedSpeciality} />
+                    </div>
+                    <div>
                         <Label htmlFor="doctor">Docteur</Label>
-                        <Combobox options={doctorOptions} selected={selectedDoctor} setSelected={setSelectedDoctor} name="doctor-id" />
+                        <input type="number" name='doctor-id' value={selectedDoctorId} className='hidden'  />
+                        <Combobox placeholder='Choisir un docteur' emptyPlaceholder='Aucun docteur trouvé.' options={doctorOptions} selected={selectedDoctorId} setSelected={setSelectedDoctorId} disabled={!selectedSpeciality} />
                         {state?.errors?.doctorId && <p className='text-sm text-destructive'>{state.errors.doctorId}</p>}
                     </div>
                     <div>
                         <Label htmlFor="duration">Durée</Label>
-                        <DatePickerWithRange disabled={!selectedDoctor} dateRange={dateRange} setDateRange={setDateRange} startName='start' endName='end' disabledDates={overbookedDates} workingDays={workingDays} />
+                        <DatePickerWithRange disabled={!selectedDoctorId} dateRange={dateRange} setDateRange={setDateRange} startName='start' endName='end' disabledDates={overbookedDates} workingDays={workingDays} />
                         {state?.errors?.start && <p className='text-sm text-destructive'>{state.errors.start}</p>}
                         {state?.errors?.end && <p className='text-sm text-destructive'>{state.errors.end}</p>}
                     </div>

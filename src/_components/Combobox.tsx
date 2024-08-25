@@ -21,56 +21,52 @@ import { Dispatch, SetStateAction, useState } from "react"
 export interface ComboboxOption {
     label: string
     value: string
-    id: number
-    worksSunday: boolean,
-    worksMonday: boolean,
-    worksTuesday: boolean,
-    worksWednesday: boolean,
-    worksThursday: boolean,
-    worksFriday: boolean,
-    worksSaturday: boolean,
 }
 
-export function Combobox({ options, selected, setSelected, name }: {
+export function Combobox({ options, selected, setSelected, placeholder, emptyPlaceholder, disabled }: {
     options: ComboboxOption[],
-    selected: ComboboxOption | undefined,
-    setSelected: Dispatch<SetStateAction<ComboboxOption | undefined>>
-    name: string
+    selected: string | undefined,
+    setSelected: Dispatch<SetStateAction<string | undefined>>
+    placeholder: string
+    emptyPlaceholder: string
+    disabled?: boolean
 }) {
     const [open, setOpen] = useState(false)
 
+    const selectedOption = options.find(option => option.value === selected)
+
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <input type="text" className="hidden" name={name} value={selected?.id} />
             <PopoverTrigger asChild>
                 <Button
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
                     className="w-full justify-between"
+                    disabled={disabled}
                 >
-                    {selected?.label ?? "Chercher un docteur..."}
+                    {selectedOption?.label ?? placeholder}
                     <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="p-0">
                 <Command>
-                    <CommandInput placeholder="Chercher un docteur..." />
-                    <CommandEmpty>Aucun docteur trouvé.</CommandEmpty>
+                    <CommandInput placeholder={placeholder} />
+                    <CommandEmpty>{emptyPlaceholder}</CommandEmpty>
                     <CommandGroup>
                         {options.map((option) => (
                             <CommandItem
                                 key={option.value}
                                 value={option.value}
                                 onSelect={(currentValue) => {
-                                    setSelected(options.find((doctor) => doctor.value === currentValue))
+                                    setSelected(currentValue)
                                     setOpen(false)
                                 }}
                             >
                                 <Check
                                     className={cn(
                                         "mr-2 h-4 w-4",
-                                        selected?.value === option.value ? "opacity-100" : "opacity-0"
+                                        selectedOption?.value === option.value ? "opacity-100" : "opacity-0"
                                     )}
                                 />
                                 {option.label}
