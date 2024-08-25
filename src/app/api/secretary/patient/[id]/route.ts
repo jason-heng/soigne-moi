@@ -11,7 +11,6 @@ export async function GET(req: NextRequest, { params }: { params: UrlParams }) {
     const session = await decryptSecretaryCookie(cookie || '')
 
     if (!session) return NextResponse.json({}, { status: 403 });
-    console.log(params)
 
     const patientId = params.id
 
@@ -63,7 +62,6 @@ export async function GET(req: NextRequest, { params }: { params: UrlParams }) {
     })
 
     if (!patient) return NextResponse.json({}, { status: 404 })
-    console.log(patient.stays)
     return NextResponse.json({
         patient: {
             id: patient.id,
