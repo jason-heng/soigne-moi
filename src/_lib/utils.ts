@@ -13,6 +13,12 @@ export function formatDate(date: Date) {
   return `${day}/${month}/${year}`;
 }
 
+export function parseDate(text: string) {
+  const [day, month, year] = text.split("/")
+
+  return new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
+}
+
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
