@@ -11,19 +11,18 @@ import { Input } from '@/_components/ui/input';
 import { Combobox, ComboboxOption } from '@/_components/Combobox';
 import { DatePickerWithRange } from '@/_components/DatePickerWithRange';
 import { getDoctors } from '@/_data/doctors';
-import { Button } from '@/_components/ui/button';
 import { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { useFormState } from 'react-dom';
-import { createStay } from '../actions';
+import { createStay, getOverbookedDates } from '../actions';
 import SubmitButton from '@/_components/SubmitButton';
-
 
 export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType<typeof getDoctors>>, disabled: boolean }) {
     const [state, action] = useFormState(createStay, null)
 
     const [dateRange, setDateRange] = useState<DateRange>()
     const [selectedDoctor, setSelectedDoctor] = useState<ComboboxOption>()
+    const [overbookedDates, setOverbookedDates] = useState<Date[]>([])
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -38,6 +37,14 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
         }
     }, [state])
 
+    useEffect(() => {
+        if (selectedDoctor) {
+            getOverbookedDates(selectedDoctor.id).then(setOverbookedDates)
+        } else {
+            setOverbookedDates([])
+        }
+    }, [selectedDoctor])
+
     return (
         <Card className='overflow-y-auto relative space-y-3'>
             <CardHeader className='pb-2 sticky top-0 bg-background'>
@@ -51,19 +58,19 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
                         {state?.errors?.reason && <p className='text-sm text-destructive'>{state.errors.reason}</p>}
                     </div>
                     <div>
-                        <Label htmlFor="duration">Durée</Label>
-                        <DatePickerWithRange dateRange={dateRange} setDateRange={setDateRange} startName='start' endName='end' />
-                        {state?.errors?.start && <p className='text-sm text-destructive'>{state.errors.start}</p>}
-                        {state?.errors?.end && <p className='text-sm text-destructive'>{state.errors.end}</p>}
-                    </div>
-                    <div>
                         <Label htmlFor="doctor">Docteur</Label>
                         <Combobox options={doctorOptions} selected={selectedDoctor} setSelected={setSelectedDoctor} name="doctor-id" />
                         {state?.errors?.doctorId && <p className='text-sm text-destructive'>{state.errors.doctorId}</p>}
                     </div>
+                    <div>
+                        <Label htmlFor="duration">Durée</Label>
+                        <DatePickerWithRange disabled={!selectedDoctor} dateRange={dateRange} setDateRange={setDateRange} startName='start' endName='end' disabledDates={overbookedDates} />
+                        {state?.errors?.start && <p className='text-sm text-destructive'>{state.errors.start}</p>}
+                        {state?.errors?.end && <p className='text-sm text-destructive'>{state.errors.end}</p>}
+                    </div>
                 </CardContent>
                 <CardFooter className='absolute right-0 bottom-0'>
-                    <SubmitButton text={disabled ? "Séjour en cours ou a venir" : "Ajouter"} disabled={disabled}/>
+                    <SubmitButton text={disabled ? "Séjour en cours ou a venir" : "Ajouter"} disabled={disabled} />
                 </CardFooter>
             </form>
         </Card>

@@ -2,9 +2,9 @@
 
 import * as React from "react"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { DayPicker } from "react-day-picker"
+import { DayPicker, DayPickerRangeProps } from "react-day-picker"
 
-import { cn } from "@/_lib/utils"
+import { cn, formatDate } from "@/_lib/utils"
 import { buttonVariants } from "@/_components/ui/button"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
@@ -13,8 +13,41 @@ function Calendar({
   className,
   classNames,
   showOutsideDays = true,
+  disabledDates,
   ...props
-}: CalendarProps) {
+}: DayPickerRangeProps & { disabledDates?: Date[] }) {
+  const {selected} = props
+
+  let prevDisabledDate: Date | null = null
+  let nextDisabledDate: Date | null = null
+
+  if (disabledDates && selected?.from) {
+    for (const disabledDate of disabledDates) {
+      if (disabledDate < selected.from) {
+        if (!prevDisabledDate || disabledDate > prevDisabledDate) {
+          prevDisabledDate = disabledDate
+        }
+      }
+
+      if (disabledDate > selected.from) {
+        if (!nextDisabledDate || disabledDate < nextDisabledDate) {
+          nextDisabledDate = disabledDate
+        }
+      }
+    }
+  }
+
+  function handleDisabledDates(day: Date) {
+    if (!disabledDates) return false
+
+    if (disabledDates.find(date => formatDate(date) === formatDate(day))) return true
+
+    if (prevDisabledDate && day < prevDisabledDate) return true
+    if (nextDisabledDate && day > nextDisabledDate) return true
+
+    return false
+  }
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -52,7 +85,7 @@ function Calendar({
           "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
         day_today: "bg-accent text-accent-foreground",
         day_outside:
-          "day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
+          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
         day_disabled: "text-muted-foreground opacity-50",
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
@@ -63,6 +96,7 @@ function Calendar({
         IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
       }}
+      disabled={handleDisabledDates}
       {...props}
     />
   )
