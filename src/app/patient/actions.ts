@@ -2,6 +2,7 @@
 
 import { getUser } from "@/_data/users";
 import prisma from "@/_lib/db";
+import { formatDate, parseDate } from "@/_lib/utils";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -60,4 +61,33 @@ export async function createStay(_: any, formData: FormData) {
     return {
         success: true
     }
+}
+
+export async function getOverbookedDates(doctorId: number) {
+    const stays = await prisma.stay.findMany({
+        where: { doctorId, end: { gte: new Date() } },
+        select: { start: true, end: true },
+    });
+
+    const dates: { [key: string]: number } = {}
+
+    for (const stay of stays) {
+        for (var day = stay.start; day <= stay.end; day.setDate(day.getDate() + 1)) {            
+            if (dates[formatDate(day)]) {
+                dates[formatDate(day)]++
+            } else {
+                dates[formatDate(day)] = 1
+            }
+        }
+    }
+
+    const overbookedDates = []
+
+    for (const day in dates) {
+        if (dates[day] >= 5) {
+            overbookedDates.push(parseDate(day))
+        }
+    }
+
+    return overbookedDates
 }
