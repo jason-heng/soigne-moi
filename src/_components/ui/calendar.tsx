@@ -4,7 +4,7 @@ import * as React from "react"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 import { DayPicker, DayPickerRangeProps } from "react-day-picker"
 
-import { cn, formatDate } from "@/_lib/utils"
+import { cn, formatDate, getWeekday, WeekDay } from "@/_lib/utils"
 import { buttonVariants } from "@/_components/ui/button"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
@@ -14,24 +14,40 @@ function Calendar({
   classNames,
   showOutsideDays = true,
   disabledDates,
+  workingDays,
   ...props
-}: DayPickerRangeProps & { disabledDates?: Date[] }) {
-  const {selected} = props
+}: DayPickerRangeProps & { disabledDates?: Date[], workingDays?: WeekDay[] }) {
+  const { selected } = props
 
   let prevDisabledDate: Date | null = null
   let nextDisabledDate: Date | null = null
+  let nextNotWorkingDate: Date | null = null
 
-  if (disabledDates && selected?.from) {
-    for (const disabledDate of disabledDates) {
-      if (disabledDate < selected.from) {
-        if (!prevDisabledDate || disabledDate > prevDisabledDate) {
-          prevDisabledDate = disabledDate
+  if (selected?.from) {
+    if (disabledDates) {
+      for (const disabledDate of disabledDates) {
+        if (disabledDate < selected.from) {
+          if (!prevDisabledDate || disabledDate > prevDisabledDate) {
+            prevDisabledDate = disabledDate
+          }
+        }
+
+        if (disabledDate > selected.from) {
+          if (!nextDisabledDate || disabledDate < nextDisabledDate) {
+            nextDisabledDate = disabledDate
+          }
         }
       }
+    }
 
-      if (disabledDate > selected.from) {
-        if (!nextDisabledDate || disabledDate < nextDisabledDate) {
-          nextDisabledDate = disabledDate
+    if (workingDays) {
+      for (let i = 1; i <= 7; i++) {
+        const date = new Date(selected.from)
+        date.setDate(date.getDate() + i)
+        
+        if (!workingDays.includes(getWeekday(date))) {
+          nextNotWorkingDate = date
+          break
         }
       }
     }
@@ -40,10 +56,15 @@ function Calendar({
   function handleDisabledDates(day: Date) {
     if (!disabledDates) return false
 
+    if (workingDays) {
+      if (!workingDays.includes(getWeekday(day))) return true
+    }
+
     if (disabledDates.find(date => formatDate(date) === formatDate(day))) return true
 
     if (prevDisabledDate && day < prevDisabledDate) return true
     if (nextDisabledDate && day > nextDisabledDate) return true
+    if (nextNotWorkingDate && day > nextNotWorkingDate) return true
 
     return false
   }

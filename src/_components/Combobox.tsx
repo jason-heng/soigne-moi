@@ -22,6 +22,13 @@ export interface ComboboxOption {
     label: string
     value: string
     id: number
+    worksSunday: boolean,
+    worksMonday: boolean,
+    worksTuesday: boolean,
+    worksWednesday: boolean,
+    worksThursday: boolean,
+    worksFriday: boolean,
+    worksSaturday: boolean,
 }
 
 export function Combobox({ options, selected, setSelected, name }: {
@@ -56,7 +63,7 @@ export function Combobox({ options, selected, setSelected, name }: {
                                 key={option.value}
                                 value={option.value}
                                 onSelect={(currentValue) => {
-                                    setSelected(options.find((framework) => framework.value === currentValue))
+                                    setSelected(options.find((doctor) => doctor.value === currentValue))
                                     setOpen(false)
                                 }}
                             >

@@ -4,7 +4,7 @@ import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
-import { cn } from "@/_lib/utils"
+import { cn, WeekDay } from "@/_lib/utils"
 import { Button } from "@/_components/ui/button"
 import { Calendar } from "@/_components/ui/calendar"
 import {
@@ -21,14 +21,16 @@ export function DatePickerWithRange({
     startName,
     endName,
     disabled,
-    disabledDates
+    disabledDates,
+    workingDays
 }: HTMLAttributes<HTMLDivElement> & {
     dateRange: DateRange | undefined
     setDateRange: Dispatch<SetStateAction<DateRange | undefined>>
     startName: string
     endName: string,
     disabled?: boolean,
-    disabledDates?: Date[]
+    disabledDates?: Date[],
+    workingDays?: WeekDay[]
 }) {
     return (
         <div className={cn("grid gap-2", className)}>
@@ -71,6 +73,7 @@ export function DatePickerWithRange({
                         onSelect={setDateRange}
                         numberOfMonths={1}
                         disabledDates={disabledDates}
+                        workingDays={workingDays}
                     />
                 </PopoverContent>
             </Popover>

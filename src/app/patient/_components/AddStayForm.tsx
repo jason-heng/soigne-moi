@@ -16,6 +16,7 @@ import { DateRange } from 'react-day-picker';
 import { useFormState } from 'react-dom';
 import { createStay, getOverbookedDates } from '../actions';
 import SubmitButton from '@/_components/SubmitButton';
+import { getWeekday, WeekDay } from '@/_lib/utils';
 
 export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType<typeof getDoctors>>, disabled: boolean }) {
     const [state, action] = useFormState(createStay, null)
@@ -26,7 +27,18 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
 
     const formRef = useRef<HTMLFormElement>(null);
 
-    const doctorOptions = doctors.map(doctor => ({ label: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`, value: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`.toLowerCase(), id: doctor.id }))
+    const doctorOptions = doctors.map(doctor => ({
+        label: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`,
+        value: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`.toLowerCase(),
+        id: doctor.id,
+        worksSunday: doctor.worksSunday,
+        worksMonday: doctor.worksMonday,
+        worksTuesday: doctor.worksTuesday,
+        worksWednesday: doctor.worksWednesday,
+        worksThursday: doctor.worksThursday,
+        worksFriday: doctor.worksFriday,
+        worksSaturday: doctor.worksSaturday
+    }))
 
     useEffect(() => {
         if (state?.success) {
@@ -44,6 +56,16 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
             setOverbookedDates([])
         }
     }, [selectedDoctor])
+
+    const workingDays: WeekDay[] = []
+
+    if (selectedDoctor?.worksSunday) workingDays.push("Sunday");
+    if (selectedDoctor?.worksMonday) workingDays.push("Monday");
+    if (selectedDoctor?.worksTuesday) workingDays.push("Tuesday");
+    if (selectedDoctor?.worksWednesday) workingDays.push("Wednesday");
+    if (selectedDoctor?.worksThursday) workingDays.push("Thursday");
+    if (selectedDoctor?.worksFriday) workingDays.push("Friday");
+    if (selectedDoctor?.worksSaturday) workingDays.push("Saturday");
 
     return (
         <Card className='overflow-y-auto relative space-y-3'>
@@ -64,7 +86,7 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
                     </div>
                     <div>
                         <Label htmlFor="duration">Durée</Label>
-                        <DatePickerWithRange disabled={!selectedDoctor} dateRange={dateRange} setDateRange={setDateRange} startName='start' endName='end' disabledDates={overbookedDates} />
+                        <DatePickerWithRange disabled={!selectedDoctor} dateRange={dateRange} setDateRange={setDateRange} startName='start' endName='end' disabledDates={overbookedDates} workingDays={workingDays} />
                         {state?.errors?.start && <p className='text-sm text-destructive'>{state.errors.start}</p>}
                         {state?.errors?.end && <p className='text-sm text-destructive'>{state.errors.end}</p>}
                     </div>
