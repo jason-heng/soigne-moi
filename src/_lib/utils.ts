@@ -19,6 +19,13 @@ export function parseDate(text: string) {
   return new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
 }
 
+export function getWeekday(date: Date) {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const;
+  return days[date.getDay()]
+}
+
+export type WeekDay = ReturnType<typeof getWeekday>
+
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
