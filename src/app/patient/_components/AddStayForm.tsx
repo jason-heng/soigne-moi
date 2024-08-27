@@ -10,36 +10,29 @@ import { Label } from '@/_components/ui/label';
 import { Input } from '@/_components/ui/input';
 import { Combobox, ComboboxOption } from '@/_components/Combobox';
 import { DatePickerWithRange } from '@/_components/DatePickerWithRange';
-import { getDoctors } from '@/_data/doctors';
 import { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { useFormState } from 'react-dom';
-import { createStay, getOverbookedDates } from '../actions';
+import { getDoctors, createStay } from '../actions';
 import SubmitButton from '@/_components/SubmitButton';
-import { getWeekday, WeekDay } from '@/_lib/utils';
 
 export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType<typeof getDoctors>>, disabled: boolean }) {
-    const [state, action] = useFormState(createStay, null)
-
-    const [dateRange, setDateRange] = useState<DateRange>()
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>()
     const [selectedDoctorId, setSelectedDoctorId] = useState<string>()
-    const [overbookedDates, setOverbookedDates] = useState<Date[]>([])
+    const [dateRange, setDateRange] = useState<DateRange>()
+
+    const [state, action] = useFormState(createStay, null)
 
     const selectedDoctor = selectedDoctorId ? doctors.find(d => d.id === +selectedDoctorId) : undefined
 
     const formRef = useRef<HTMLFormElement>(null);
 
-    const specialityOptions: ComboboxOption[] = []
+    const specialities = doctors.reduce((specialities, doctor) => specialities.includes(doctor.speciality) ? specialities : specialities.concat(doctor.speciality), [] as string[])
 
-    for (const doctor of doctors) {
-        if (!specialityOptions.find(speciality => speciality.label === doctor.speciality)) {
-            specialityOptions.push({
-                label: doctor.speciality,
-                value: doctor.speciality.toLowerCase()
-            })
-        }
-    }
+    const specialityOptions: ComboboxOption[] = specialities.map(speciality => ({
+        label: speciality,
+        value: speciality.toLowerCase()
+    }))
 
     const doctorOptions: ComboboxOption[] = doctors.filter(doctor => doctor.speciality.toLowerCase() === selectedSpeciality).map(doctor => ({
         label: `${doctor.firstName} ${doctor.lastName} (${doctor.speciality})`,
@@ -54,24 +47,6 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
             toast.success("Séjour ajouté !")
         }
     }, [state])
-
-    useEffect(() => {
-        if (selectedDoctorId) {
-            getOverbookedDates(+selectedDoctorId).then(setOverbookedDates)
-        } else {
-            setOverbookedDates([])
-        }
-    }, [selectedDoctorId])
-
-    const workingDays: WeekDay[] = []
-
-    if (selectedDoctor?.worksSunday) workingDays.push("Sunday");
-    if (selectedDoctor?.worksMonday) workingDays.push("Monday");
-    if (selectedDoctor?.worksTuesday) workingDays.push("Tuesday");
-    if (selectedDoctor?.worksWednesday) workingDays.push("Wednesday");
-    if (selectedDoctor?.worksThursday) workingDays.push("Thursday");
-    if (selectedDoctor?.worksFriday) workingDays.push("Friday");
-    if (selectedDoctor?.worksSaturday) workingDays.push("Saturday");
 
     return (
         <Card className='overflow-y-auto relative space-y-3'>
@@ -91,13 +66,15 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
                     </div>
                     <div>
                         <Label htmlFor="doctor">Docteur</Label>
-                        <input type="number" name='doctor-id' value={selectedDoctorId} className='hidden'  />
+                        <input type="number" name='doctor-id' value={selectedDoctorId} className='hidden' />
                         <Combobox placeholder='Choisir un docteur' emptyPlaceholder='Aucun docteur trouvé.' options={doctorOptions} selected={selectedDoctorId} setSelected={setSelectedDoctorId} disabled={!selectedSpeciality} />
                         {state?.errors?.doctorId && <p className='text-sm text-destructive'>{state.errors.doctorId}</p>}
                     </div>
                     <div>
                         <Label htmlFor="duration">Durée</Label>
-                        <DatePickerWithRange disabled={!selectedDoctorId} dateRange={dateRange} setDateRange={setDateRange} startName='start' endName='end' disabledDates={overbookedDates} workingDays={workingDays} />
+                        <input type="text" value={dateRange?.from?.toISOString()} className="hidden" name="start" />
+                        <input type="text" value={dateRange?.to?.toISOString()} className="hidden" name="end" />
+                        <DatePickerWithRange disabled={!selectedDoctorId} selected={dateRange} setSelected={setDateRange} disabledDates={selectedDoctor?.overbookedDates} availableDays={selectedDoctor?.workingDays} />
                         {state?.errors?.start && <p className='text-sm text-destructive'>{state.errors.start}</p>}
                         {state?.errors?.end && <p className='text-sm text-destructive'>{state.errors.end}</p>}
                     </div>

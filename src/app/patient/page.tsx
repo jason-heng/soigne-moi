@@ -1,11 +1,10 @@
 import { AddStayForm } from '@/app/patient/_components/AddStayForm'
-import { getDoctors } from '@/_data/doctors'
 import { getCurrentStay, getIncomingStay } from '@/_data/stays'
 import { getUser } from '@/_data/users'
 import { CurrentStay } from './_components/CurrentStay'
 import { IncomingStay } from './_components/IncomingStay'
 import { CurrentPrescription } from './_components/CurrentPrescription'
-import prisma from '@/_lib/db'
+import { getDoctors } from './actions'
 
 export default async function PatientHome() {
     const user = await getUser()
