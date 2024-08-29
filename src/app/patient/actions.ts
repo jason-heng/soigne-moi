@@ -10,7 +10,7 @@ import { z } from "zod";
 
 
 function calculateOverbookedDates(stays: Pick<Stay, 'start' | 'end'>[]) {
-    const dates: { [key: string]: number } = {}
+    const dates: Record<string, number> = {}
 
     for (const stay of stays) {
         for (var day = stay.start; day <= stay.end; day.setDate(day.getDate() + 1)) {
