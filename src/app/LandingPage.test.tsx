@@ -278,9 +278,10 @@ describe("Footer", () => {
     it("renders the logo", () => {
         render(<Footer />)
 
-        const logo = screen.getByRole("heading", { level: 1, name: "SoigneMoi" })
+        const logo = screen.getByRole("link", { name: "SoigneMoi" })
 
         expect(logo).toBeInTheDocument()
+        expect(logo).toHaveAttribute("href", "/")
     })
 
     it("renders the columns", () => {

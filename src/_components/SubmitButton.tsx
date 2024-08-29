@@ -5,13 +5,13 @@ import { ComponentPropsWithoutRef } from 'react'
 import { useFormStatus } from 'react-dom'
 import { Button } from './ui/button'
 
-export default function SubmitButton({ text, className, disabled }: { text: string } & ComponentPropsWithoutRef<"button">) {
+export default function SubmitButton({ disabled, children, ...props }: ComponentPropsWithoutRef<"button">) {
     const { pending } = useFormStatus()
 
     return (
-        <Button disabled={pending || disabled} className={className}>
+        <Button disabled={pending || disabled} {...props}>
             {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {pending ? "Chargement..." : text}
+            {pending ? "Chargement..." : children}
         </Button>
     )
 }

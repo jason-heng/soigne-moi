@@ -13,7 +13,7 @@ import { getSession, UserSession } from "@/_lib/session";
 export function NavBar({ session }: { session: UserSession | null }) {
   return (
     <nav className="sticky px-12 py-4 flex justify-between w-full items-center top-0 bg-white z-30">
-      <Link className="font-bold text-xl text-primary" href="/">SoigneMoi</Link>
+      <Link className="font-bold text-xl text-primary" href="/"><h1>SoigneMoi</h1></Link>
       <ul>
         <NavBarLink href="#home">Accueil</NavBarLink>
         <NavBarLink href="#about">A Propos</NavBarLink>
@@ -133,9 +133,7 @@ export function Doctors() {
 export function Footer() {
   return (
     <footer className="w-full bg-primary px-24 opacity-90 py-5">
-      <h1 className="text-white font-semibold text-2xl">
-        SoigneMoi
-      </h1>
+      <Link href="/" className="text-white font-semibold text-2xl"><h1>SoigneMoi</h1></Link>
       <div className="flex gap-[300px] mt-6 w-fit">
         <div>
           <p className="text-white font-bold mb-2">Adresse:</p>
@@ -161,7 +159,7 @@ export function Footer() {
   )
 }
 
-export default async function Home() {
+export default async function LandingPage() {
   const session = await getSession()
 
   return (
