@@ -1,8 +1,6 @@
-import '@testing-library/jest-dom'
-import { render, screen } from "@testing-library/react"
-import AuthPage from "./page"
-import { useSearchParams } from "next/navigation";
-import { LoginForm } from './_components/LoginForm';
+import '@testing-library/jest-dom';
+import { render, screen } from "@testing-library/react";
+import AuthPage from "./page";
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
@@ -11,7 +9,7 @@ jest.mock("react-dom", () => ({
 }));
 
 jest.mock("./actions", () => ({
-    login: async (_: any, formData: FormData) => null
+    login: () => null
 }));
 
 jest.mock("next/navigation", () => ({

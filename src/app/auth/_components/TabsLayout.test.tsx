@@ -1,6 +1,5 @@
-import '@testing-library/jest-dom'
-import { render, screen } from "@testing-library/react"
-import { useSearchParams } from "next/navigation";
+import '@testing-library/jest-dom';
+import { render, screen } from "@testing-library/react";
 import TabsLayout from './TabsLayout';
 
 jest.mock("react-dom", () => ({
@@ -10,7 +9,7 @@ jest.mock("react-dom", () => ({
 }));
 
 jest.mock("../actions", () => ({
-    login: async (_: any, formData: FormData) => null
+    login: () => null
 }));
 
 jest.mock("next/navigation", () => ({
@@ -35,7 +34,7 @@ describe("Login Tab", () => {
     it("renders the form", () => {
         render(<TabsLayout tab='login' />)
 
-        const loginButton = screen.getByRole("button", { name: "Se Connecter"})
+        const loginButton = screen.getByRole("button", { name: "Se Connecter" })
 
         expect(loginButton).toBeInTheDocument()
     })
@@ -57,7 +56,7 @@ describe("Signup Tab", () => {
     it("renders the form", () => {
         render(<TabsLayout tab='signup' />)
 
-        const signupButton = screen.getByRole("button", { name: "S'inscrire"})
+        const signupButton = screen.getByRole("button", { name: "S'inscrire" })
 
         expect(signupButton).toBeInTheDocument()
     })
