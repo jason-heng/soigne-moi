@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from '@/_components/ui/button'
 import { Input } from '@/_components/ui/input'
 import { Label } from '@/_components/ui/label'
 import { getUser } from '@/_data/users'
@@ -47,7 +46,7 @@ export default function EditInfoForm({ user }: { user: Awaited<ReturnType<typeof
                 </div>
             </div>
 
-            <SubmitButton text='Sauvegarder' className='max-w-[200px] mt-4' />
+            <SubmitButton className='max-w-[200px] mt-4'>Sauvegarder</SubmitButton>
         </form>
     )
 }

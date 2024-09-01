@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/_components/ui/button"
 import { Input } from "@/_components/ui/input"
 import { Label } from "@/_components/ui/label"
 import { useEffect, useRef } from "react"
@@ -38,7 +37,7 @@ export default function EditPasswordForm() {
                 <Input type="password" placeholder='Entrez votre mot de passe actuel...' name='password' id="password" />
                 {state?.errors?.password && <p className='text-sm text-destructive'>{state?.errors.password}</p>}
             </div>
-            <SubmitButton text="Changer mot de passe" className='w-full mt-4'/>
+            <SubmitButton className='w-full mt-4'>Changer le mot de passe</SubmitButton>
         </form>
     )
 }
