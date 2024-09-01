@@ -5,14 +5,12 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { PropsWithChildren } from "react"
 
-interface SideBarLinkProps {
-    text: string
+export default function SideBarLink({ href, icon, children }: PropsWithChildren<{
     href: string
     icon: IconDefinition
-}
-
-export function SideBarLink({ text, href, icon }: SideBarLinkProps) {
+}>) {
     const pathName = usePathname()
 
     return (
@@ -21,7 +19,7 @@ export function SideBarLink({ text, href, icon }: SideBarLinkProps) {
             "hover:text-primary": pathName !== href,
         })}>
             <FontAwesomeIcon icon={icon} height={20} width={20} />
-            {text}
+            {children}
         </Link>
     )
 }

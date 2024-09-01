@@ -1,9 +1,9 @@
-import { SideBarLink } from "@/_components/SideBarLink";
+import SideBarLink from "@/_components/SideBarLink";
 import { faArrowRightFromBracket, faGears, faHospital, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropsWithChildren } from "react";
 import { logout } from "@/_lib/session";
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/_components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/_components/ui/sheet";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
@@ -14,9 +14,9 @@ async function SideBar() {
                 <div>
                     <Link href="/"><h1 className='text-2xl font-bold text-white text-center'>SoigneMoi</h1></Link>
                     <ul className='my-6 flex flex-col'>
-                        <SideBarLink text="Accueil" href="/patient" icon={faHouse} />
-                        <SideBarLink text="Historique" href="/patient/history" icon={faHospital} />
-                        <SideBarLink text="Parametres" href="/patient/settings" icon={faGears} />
+                        <SideBarLink href="/patient" icon={faHouse}>Accueil</SideBarLink>
+                        <SideBarLink href="/patient/history" icon={faHospital}>Historique</SideBarLink>
+                        <SideBarLink href="/patient/settings" icon={faGears}>Parametres</SideBarLink>
                     </ul>
                 </div>
                 <form action={logout}>
@@ -36,9 +36,9 @@ async function SideBar() {
                         <div>
                             <h1 className='text-2xl font-bold text-white text-center'>SoigneMoi</h1>
                             <ul className='my-6 flex flex-col'>
-                                <SideBarLink text="Accueil" href="/patient" icon={faHouse} />
-                                <SideBarLink text="Historique" href="/patient/history" icon={faHospital} />
-                                <SideBarLink text="Parametres" href="/patient/settings" icon={faGears} />
+                                <SideBarLink href="/patient" icon={faHouse}>Accueil</SideBarLink>
+                                <SideBarLink href="/patient/history" icon={faHospital}>Historique</SideBarLink>
+                                <SideBarLink href="/patient/settings" icon={faGears}>Parametres</SideBarLink>
                             </ul>
                         </div>
                         <form action={logout}>
