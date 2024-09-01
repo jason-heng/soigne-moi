@@ -37,7 +37,7 @@ export default function EditPasswordDialog({ secretaryId, open, setOpen }: { sec
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
                     <DialogFooter>
-                        <SubmitButton text='Modifier' />
+                        <SubmitButton>Modifier</SubmitButton>
                     </DialogFooter>
                 </form>
             </DialogContent>

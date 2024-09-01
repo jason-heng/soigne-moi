@@ -55,7 +55,7 @@ export default function AddDoctorForm() {
                     </div>
                 </CardContent>
                 <CardFooter className='absolute right-0 bottom-0'>
-                    <SubmitButton text='Ajouter' />
+                    <SubmitButton>Ajouter</SubmitButton>
                 </CardFooter>
             </form>
         </Card>
