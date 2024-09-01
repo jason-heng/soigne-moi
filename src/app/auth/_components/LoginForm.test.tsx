@@ -25,17 +25,22 @@ describe("Login Form", () => {
         render(<LoginForm />)
 
         const emailInput = screen.getByPlaceholderText("Email")
-        const passwordInput = screen.getByPlaceholderText("Mot de passe")
 
         expect(emailInput).toBeInTheDocument()
+        expect(emailInput).not.toBeDisabled()
+
+        const passwordInput = screen.getByPlaceholderText("Mot de passe")
+
         expect(passwordInput).toBeInTheDocument()
+        expect(passwordInput).not.toBeDisabled()
     })
 
-    it("renders the button", () => {
+    it("renders the submit button", () => {
         render(<LoginForm />)
 
         const loginButton = screen.getByRole("button", { name: "Se Connecter" })
 
         expect(loginButton).toBeInTheDocument()
+        expect(loginButton).not.toBeDisabled()
     })
 })

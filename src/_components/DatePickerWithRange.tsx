@@ -15,13 +15,15 @@ import {
 import { Dispatch, HTMLAttributes, SetStateAction } from "react"
 
 export function DatePickerWithRange({
+    placeholder,
     className,
     selected,
     setSelected,
     disabled,
     disabledDates,
-    availableDays
+    availableDays,
 }: HTMLAttributes<HTMLDivElement> & {
+    placeholder: string
     selected: DateRange | undefined
     setSelected: Dispatch<SetStateAction<DateRange | undefined>>
     disabled?: boolean,
@@ -109,14 +111,13 @@ export function DatePickerWithRange({
                         {selected?.from ? (
                             selected.to ? (
                                 <>
-                                    {format(selected.from, "LLL dd, y")} -{" "}
-                                    {format(selected.to, "LLL dd, y")}
+                                    {formatDate(selected.from)} - {formatDate(selected.to)}
                                 </>
                             ) : (
-                                format(selected.from, "LLL dd, y")
+                                formatDate(selected.from)
                             )
                         ) : (
-                            <span>Choisissez une plage de temps</span>
+                            <>{placeholder}</>
                         )}
                     </Button>
                 </PopoverTrigger>

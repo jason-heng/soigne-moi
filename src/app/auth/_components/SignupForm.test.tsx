@@ -25,25 +25,42 @@ describe("Signup Form", () => {
         render(<SignupForm />)
 
         const firstNameInput = screen.getByPlaceholderText("Prénom")
-        const lastNameInput = screen.getByPlaceholderText("Nom")
-        const emailInput = screen.getByPlaceholderText("Email")
-        const addressInput = screen.getByPlaceholderText("Adresse")
-        const passwordInput = screen.getByPlaceholderText("Mot de passe")
-        const repeatPasswordInput = screen.getByPlaceholderText("Répéter mot de passe")
 
         expect(firstNameInput).toBeInTheDocument()
+        expect(firstNameInput).not.toBeDisabled()
+        
+        const lastNameInput = screen.getByPlaceholderText("Nom")
+    
         expect(lastNameInput).toBeInTheDocument()
+        expect(lastNameInput).not.toBeDisabled()
+        
+        const emailInput = screen.getByPlaceholderText("Email")
+        
         expect(emailInput).toBeInTheDocument()
+        expect(emailInput).not.toBeDisabled()
+        
+        const addressInput = screen.getByPlaceholderText("Adresse")
+
         expect(addressInput).toBeInTheDocument()
+        expect(addressInput).not.toBeDisabled()
+        
+        const passwordInput = screen.getByPlaceholderText("Mot de passe")
+
         expect(passwordInput).toBeInTheDocument()
+        expect(passwordInput).not.toBeDisabled()
+
+        const repeatPasswordInput = screen.getByPlaceholderText("Répéter mot de passe")
+
         expect(repeatPasswordInput).toBeInTheDocument()
+        expect(repeatPasswordInput).not.toBeDisabled()
     })
 
-    it("renders the button", () => {
+    it("renders the submit button", () => {
         render(<SignupForm />)
 
         const signupButton = screen.getByRole("button", { name: "S'inscrire" })
 
         expect(signupButton).toBeInTheDocument()
+        expect(signupButton).not.toBeDisabled()
     })
 })

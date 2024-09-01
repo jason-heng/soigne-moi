@@ -13,10 +13,11 @@ import { DatePickerWithRange } from '@/_components/DatePickerWithRange';
 import { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { useFormState } from 'react-dom';
-import { getDoctors, createStay } from '../actions';
+import { createStay } from '../actions';
 import SubmitButton from '@/_components/SubmitButton';
+import { Doctor } from '../data';
 
-export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType<typeof getDoctors>>, disabled: boolean }) {
+export function AddStayForm({ doctors, disabled }: { doctors: Doctor[], disabled?: boolean }) {
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>()
     const [selectedDoctorId, setSelectedDoctorId] = useState<string>()
     const [dateRange, setDateRange] = useState<DateRange>()
@@ -74,13 +75,13 @@ export function AddStayForm({ doctors, disabled }: { doctors: Awaited<ReturnType
                         <Label htmlFor="duration">Durée</Label>
                         <input type="text" value={dateRange?.from?.toISOString()} className="hidden" name="start" />
                         <input type="text" value={dateRange?.to?.toISOString()} className="hidden" name="end" />
-                        <DatePickerWithRange disabled={!selectedDoctorId} selected={dateRange} setSelected={setDateRange} disabledDates={selectedDoctor?.overbookedDates} availableDays={selectedDoctor?.workingDays} />
+                        <DatePickerWithRange placeholder='Choisir une durée' disabled={!selectedDoctorId} selected={dateRange} setSelected={setDateRange} disabledDates={selectedDoctor?.overbookedDates} availableDays={selectedDoctor?.workingDays} />
                         {state?.errors?.start && <p className='text-sm text-destructive'>{state.errors.start}</p>}
                         {state?.errors?.end && <p className='text-sm text-destructive'>{state.errors.end}</p>}
                     </div>
                 </CardContent>
                 <CardFooter className='absolute right-0 bottom-0'>
-                    <SubmitButton text={disabled ? "Séjour en cours ou a venir" : "Ajouter"} disabled={disabled} />
+                    <SubmitButton disabled={disabled}>{disabled ? "Séjour en cours ou a venir" : "Ajouter"}</SubmitButton>
                 </CardFooter>
             </form>
         </Card>
