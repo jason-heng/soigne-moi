@@ -1,12 +1,11 @@
-import { redirect } from "next/navigation"
 import { getUser } from "./users"
 import prisma from "@/_lib/db"
-import { logout } from "@/_lib/session"
+import { logout } from "@/_lib/actions"
 
 export async function getSecretaries() {
     const user = await getUser()
 
-    if (!user.admin) logout()
+    if (!user?.admin) logout()
 
     return await prisma.secretary.findMany({
         select: {

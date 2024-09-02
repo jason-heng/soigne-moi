@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom';
-import SideBarLink from "./SideBarLink"
+import { SideBarButton } from "./SideBarButton"
 import { render, screen } from "@testing-library/react"
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-describe("Side Bar Link", () => {
+describe("Side Bar Button", () => {
     it("renders the link", () => {
-        render(<SideBarLink href='/test' icon={faUser}>Test link</SideBarLink>)
+        render(<SideBarButton href='/test' icon={faUser}>Test link</SideBarButton>)
 
         const link = screen.getByRole("link", { name: "Test link" })
 
@@ -14,7 +14,7 @@ describe("Side Bar Link", () => {
     })
 
     it("renders the icon", () => {
-        const res = render(<SideBarLink href='/test' icon={faUser}>Test link</SideBarLink>)
+        const res = render(<SideBarButton href='/test' icon={faUser}>Test link</SideBarButton>)
 
         const icon = res.container.querySelector("svg")
 

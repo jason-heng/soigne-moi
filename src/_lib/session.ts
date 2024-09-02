@@ -8,7 +8,7 @@ const key = new TextEncoder().encode(process.env.AUTH_SECRET)
 
 export const cookieHelper = {
     name: 'session',
-    options: { httpOnly: true, secure: true }
+    options: { httpOnly: true, secure: false }
 }
 
 export interface UserSession extends JWTPayload {
@@ -87,7 +87,7 @@ export async function createSession(user: { id: number, firstName: string, admin
 export async function getSession() {
     const cookie = cookies().get(cookieHelper.name)?.value
     const session = await decryptUserCookie(cookie || '')
-    
+
     return session
 }
 
@@ -97,15 +97,4 @@ export async function verifySession() {
     if (!session?.user) redirect('/auth')
 
     return { user: session.user }
-}
-
-export async function deleteSession() {
-    cookies().delete(cookieHelper.name)
-}
-
-export async function logout() {
-    "use server"
-
-    deleteSession()
-    redirect('/auth')
 }

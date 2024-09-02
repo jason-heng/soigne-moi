@@ -1,8 +1,8 @@
 import 'server-only';
 
 import prisma from "@/_lib/db";
-import { logout, verifySession } from "@/_lib/session";
-import { redirect } from "next/navigation";
+import { verifySession } from "@/_lib/session";
+import { logout } from '@/_lib/actions';
 
 export async function getUser() {
     const session = await verifySession()
@@ -13,10 +13,7 @@ export async function getUser() {
         }
     })
 
-    if (!user) {
-        logout()
-        redirect('/auth')
-    }
+    if (!user) logout()
 
     return user
 }
@@ -24,7 +21,7 @@ export async function getUser() {
 export async function getUsers() {
     const user = await getUser()
 
-    if (!user.admin) logout()
+    if (!user?.admin) logout()
 
     return await prisma.user.findMany({
         select: {

@@ -5,7 +5,7 @@ import prisma from "@/_lib/db";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { logout } from "@/_lib/session";
+import { logout } from "@/_lib/actions";
 
 const NewSecretaryFormSchema = z.object({
     lastName: z.string().min(1, "Nom invalide !"),
@@ -16,7 +16,7 @@ const NewSecretaryFormSchema = z.object({
 
 export async function addSecretary(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user.admin) logout()
+    if (!user?.admin) logout()
 
     const validationResult = NewSecretaryFormSchema.safeParse({
         firstName: formData.get('firstName'),
@@ -60,7 +60,7 @@ export async function addSecretary(_: any, formData: FormData) {
 
 export async function removeSecretary(id: number) {
     const user = await getUser()
-    if (!user.admin) logout()
+    if (!user?.admin) logout()
 
     await prisma.secretary.delete({
         where: {
@@ -80,7 +80,7 @@ const EditSecretaryPasswordFormSchema = z.object({
 
 export async function editSecretaryPassword(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user.admin) logout()
+    if (!user?.admin) logout()
 
     const validationResult = EditSecretaryPasswordFormSchema.safeParse({
         password: formData.get('password'),
