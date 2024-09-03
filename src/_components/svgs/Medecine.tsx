@@ -5,6 +5,8 @@ export default function Medecine(props: ComponentPropsWithoutRef<"svg">) {
         <svg
             data-name="Layer 1"
             viewBox="0 0 1105.04 782.74"
+            width="100%"
+            height="100%"
             {...props}
         >
             <defs>

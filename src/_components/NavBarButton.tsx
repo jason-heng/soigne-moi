@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { PropsWithChildren, useEffect, useState } from 'react'
 
-export default function NavBarLink({ href, children }: PropsWithChildren<{ href: string }>) {
+export default function NavBarButton({ href, children }: PropsWithChildren<{ href: string }>) {
     const params = useParams();
     const [currentSection, setCurrentSection] = useState("#home")
 

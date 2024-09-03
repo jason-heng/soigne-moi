@@ -17,8 +17,6 @@ export interface SideBarLink {
     icon: IconDefinition
 }
 
-
-
 export function SideBarLinks({ links, className }: { links: SideBarLink[], className?: string }) {
     return (
         <div className={cn("flex flex-col h-full justify-between", className)}>

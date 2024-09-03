@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
-import NavBarLink from "./NavBarLink"
+import NavBarButton from "./NavBarButton"
 import { render, screen } from "@testing-library/react"
 
 describe("Nav Bar Link", () => {
     it("renders the link", () => {
-        render(<NavBarLink href='/test'>Test link</NavBarLink>)
+        render(<NavBarButton href='/test'>Test link</NavBarButton>)
 
         const link = screen.getByRole("link", { name: "Test link" })
 
