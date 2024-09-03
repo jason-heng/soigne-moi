@@ -7,9 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { logout } from "@/_lib/actions"
 import { faArrowRightFromBracket, IconDefinition } from "@fortawesome/free-solid-svg-icons"
 import { cn } from "@/_lib/utils"
-import { PropsWithChildren } from "react"
-import { usePathname } from "next/navigation"
 import { SideBarButton } from "./SideBarButton"
+import { useFormState } from "react-dom"
 
 export interface SideBarLink {
     text: string
@@ -18,6 +17,8 @@ export interface SideBarLink {
 }
 
 export function SideBarLinks({ links, className }: { links: SideBarLink[], className?: string }) {
+    const [_, action] = useFormState(logout, null)
+
     return (
         <div className={cn("flex flex-col h-full justify-between", className)}>
             <div>
@@ -27,7 +28,7 @@ export function SideBarLinks({ links, className }: { links: SideBarLink[], class
                     )}
                 </ul>
             </div>
-            <form action={logout}>
+            <form action={action}>
                 <button className='flex items-center gap-3 px-5 hover:text-primary'>
                     <FontAwesomeIcon icon={faArrowRightFromBracket} height={20} width={20} />
                     Déconnexion
