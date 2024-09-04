@@ -17,7 +17,7 @@ const AddDoctorFormSchema = z.object({
 
 export async function addDoctor(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user?.admin) logout()
+    if (!user.admin) logout()
 
     const validationResult = AddDoctorFormSchema.safeParse({
         firstName: formData.get('firstName'),
@@ -83,7 +83,7 @@ const EditTimeTableFormSchema = z.object({
 
 export async function editTimeTable(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user?.admin) logout()
+    if (!user.admin) logout()
 
     const validationResult = EditTimeTableFormSchema.safeParse({
         doctorId: formData.get('doctor-id'),
@@ -124,7 +124,7 @@ export async function editTimeTable(_: any, formData: FormData) {
 
 export async function removeDoctor(doctorId: number) {
     const user = await getUser()
-    if (!user?.admin) logout()
+    if (!user.admin) logout()
 
     await prisma.doctor.delete({
         where: { id: doctorId },
@@ -141,7 +141,7 @@ const EditDoctorPasswordFormSchema = z.object({
 export async function editDoctorPassword(_: any, formData: FormData) {
 
     const user = await getUser()
-    if (!user?.admin) logout()
+    if (!user.admin) logout()
 
     const validationResult = EditDoctorPasswordFormSchema.safeParse({
         password: formData.get('password'),

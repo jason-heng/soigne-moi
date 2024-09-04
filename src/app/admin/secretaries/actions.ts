@@ -16,7 +16,7 @@ const NewSecretaryFormSchema = z.object({
 
 export async function addSecretary(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user?.admin) logout()
+    if (!user.admin) logout()
 
     const validationResult = NewSecretaryFormSchema.safeParse({
         firstName: formData.get('firstName'),
@@ -60,7 +60,7 @@ export async function addSecretary(_: any, formData: FormData) {
 
 export async function removeSecretary(id: number) {
     const user = await getUser()
-    if (!user?.admin) logout()
+    if (!user.admin) logout()
 
     await prisma.secretary.delete({
         where: {
@@ -80,7 +80,7 @@ const EditSecretaryPasswordFormSchema = z.object({
 
 export async function editSecretaryPassword(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user?.admin) logout()
+    if (!user.admin) logout()
 
     const validationResult = EditSecretaryPasswordFormSchema.safeParse({
         password: formData.get('password'),

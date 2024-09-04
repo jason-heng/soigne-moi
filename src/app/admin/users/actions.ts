@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 export async function setAdmin(userId: number, value: boolean) {
     const user = await getUser()
 
-    if (user.id === userId) return
+    if (user?.id === userId) return
 
     await prisma.user.update({
         where: {

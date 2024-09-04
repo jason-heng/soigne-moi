@@ -16,15 +16,15 @@ import {
     TableRow,
 } from "@/_components/ui/table"
 
-interface DataTableProps<TData, TValue> {
+interface UsersDataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function UsersDataTable<TData, TValue>({
     columns,
     data,
-}: DataTableProps<TData, TValue>) {
+}: UsersDataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
+                                Aucun utilisateur.
                             </TableCell>
                         </TableRow>
                     )}
