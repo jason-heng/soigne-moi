@@ -10,7 +10,7 @@ export default function DoctorCard({ doctor }: { doctor: NonNullable<Awaited<Ret
         <div className='border-[1px] border-gray-300 shadow-md rounded-lg p-5'>
             <div className='flex flex-row justify-between w-full'>
                 <div className='flex flex-col'>
-                    <p className='font-bold text-lg text-gray-700 w-fit'>{doctor.firstName} {doctor.lastName}</p>
+                    <h4 className='font-bold text-lg text-gray-700 w-fit'>{doctor.firstName} {doctor.lastName}</h4>
                     <div className='mt-1'>
                         <p>
                             <span className='font-semibold rounded-sm text-gray-700'>Spécialité:</span>

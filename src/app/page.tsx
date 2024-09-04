@@ -135,7 +135,7 @@ export function Services() {
       <h2 className="text-[1.67rem] lg:text-3xl font-bold">Ce qu’on vous offre</h2>
       <div className="flex w-full flex-col lg:flex-row justify-between items-center gap-8">
         <Card title="Meilleurs Soins" description="Nous offrons des soins de haute qualité avec des technologies médicales avancées et des protocoles à jour, en prenant en compte le bien-être physique, émotionnel et mental de nos patients." img={<Docteur className="text-primary mx-auto" height={100} width={110} />} />
-        <Card title="Excellent Personnel" description="Notre personnel est notre plus grande force. Composé de médecins, infirmières, techniciens et personnel de soutien hautement qualifiés et expérimentés, notre équipe est dédiée à fournir des soins exceptionnels." img={<TwoDoctors className="text-primary mx-auto" height={100} width={100} />} />
+        <Card title="Excellent Personnel" description="Notre personnel est notre plus grande force. Composé de docteurs, infirmières, techniciens et personnel de soutien hautement qualifiés et expérimentés, notre équipe est dédiée à fournir des soins exceptionnels." img={<TwoDoctors className="text-primary mx-auto" height={100} width={100} />} />
         <Card title="Experience Digitale" description="Nous offrons une expérience digitale pour simplifier le parcours de soins de nos patients. Notre portail patient permet de prendre rendez-vous, accéder aux dossiers médicaux et consulter les résultats pour une gestion de santé efficace." img={<MobileMessaging className="text-primary mx-auto" height={100} width={100} />} />
       </div>
     </Section>
