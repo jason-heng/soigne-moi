@@ -33,7 +33,7 @@ export default function AdminDashboardLayout({ children }: Readonly<PropsWithChi
     ]
 
     return (
-        <main className="flex flex-col lg:flex-row h-screen w-screen">
+        <main className="flex flex-col lg:flex-row h-screen w-screen overflow-hidden">
             <SideBar links={sideBarLinks} />
             {children}
         </main>

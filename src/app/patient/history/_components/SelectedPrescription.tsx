@@ -1,11 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card"
 import { Input } from "@/_components/ui/input"
-import { getStays } from "@/_data/stays"
+import { getMyStays } from "@/_data/stays"
 import { formatDate } from "@/_lib/utils"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { RefObject, useState } from "react"
 
-export function SelectedPrescription({ stay }: { stay: Awaited<ReturnType<typeof getStays>>[0] | undefined }) {
+export function SelectedPrescription({ stay }: { stay: Awaited<ReturnType<typeof getMyStays>>[0] | undefined }) {
     const [search, setSearch] = useState("")
 
     const visibleDrugs = stay?.prescription?.drugs.filter(drug => drug.name.toLowerCase().includes(search.toLowerCase()))

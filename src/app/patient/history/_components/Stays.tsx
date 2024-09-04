@@ -2,15 +2,15 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card"
 import { Input } from "@/_components/ui/input"
-import { getStays } from "@/_data/stays"
+import { getMyStays } from "@/_data/stays"
 import { cn, formatDate } from "@/_lib/utils"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { Dispatch, SetStateAction, useState } from "react"
 
 export function Stays({ stays, selected, setSelected }: {
-    stays: Awaited<ReturnType<typeof getStays>>,
-    selected: Awaited<ReturnType<typeof getStays>>[0] | undefined,
-    setSelected: Dispatch<SetStateAction<Awaited<ReturnType<typeof getStays>>[0] | undefined>>
+    stays: Awaited<ReturnType<typeof getMyStays>>,
+    selected: Awaited<ReturnType<typeof getMyStays>>[0] | undefined,
+    setSelected: Dispatch<SetStateAction<Awaited<ReturnType<typeof getMyStays>>[0] | undefined>>
 }) {
     const [search, setSearch] = useState("")
 
@@ -39,9 +39,9 @@ export function Stays({ stays, selected, setSelected }: {
 }
 
 function Stay({ selected, setSelected, stay }: {
-    selected: Awaited<ReturnType<typeof getStays>>[0] | undefined,
-    setSelected: Dispatch<SetStateAction<Awaited<ReturnType<typeof getStays>>[0] | undefined>>,
-    stay: Awaited<ReturnType<typeof getStays>>[0]
+    selected: Awaited<ReturnType<typeof getMyStays>>[0] | undefined,
+    setSelected: Dispatch<SetStateAction<Awaited<ReturnType<typeof getMyStays>>[0] | undefined>>,
+    stay: Awaited<ReturnType<typeof getMyStays>>[0]
 }) {
     return (
         <Card id="stay" className={cn('shadow-xl hover:bg-secondary cursor-pointer', {

@@ -1,12 +1,12 @@
 "use client"
 
-import { getStays } from "@/_data/stays"
+import { getMyStays } from "@/_data/stays"
 import { useEffect, useRef, useState } from "react"
 import { Stays } from "./Stays"
 import { SelectedPrescription } from "./SelectedPrescription"
 
-export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getStays>> }) {
-    const [selectedStay, setSelectedStay] = useState<Awaited<ReturnType<typeof getStays>>[0]>()
+export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getMyStays>> }) {
+    const [selectedStay, setSelectedStay] = useState<Awaited<ReturnType<typeof getMyStays>>[0]>()
 
     // Handle clicks outside of the stay details or stay items
     useEffect(() => {
