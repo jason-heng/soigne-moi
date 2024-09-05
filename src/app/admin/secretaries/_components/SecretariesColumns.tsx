@@ -9,9 +9,9 @@ import { useState } from "react"
 import EditPasswordDialog from "./EditPasswordDialog"
 import { RemoveAlertDialog } from "./RemoveAlertDialog"
 
-type Column = Awaited<ReturnType<typeof getSecretaries>>[0]
+export type SecretaryColumn = Awaited<ReturnType<typeof getSecretaries>>[0]
 
-function SecretaryCell({ secretary }: { secretary: Column }) {
+function SecretaryCell({ secretary }: { secretary: SecretaryColumn }) {
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
@@ -38,7 +38,7 @@ function SecretaryCell({ secretary }: { secretary: Column }) {
     )
 }
 
-export const secretariesColumns: ColumnDef<Column>[] = [
+export const secretariesColumns: ColumnDef<SecretaryColumn>[] = [
     {
         accessorKey: 'id',
         header: 'Id'

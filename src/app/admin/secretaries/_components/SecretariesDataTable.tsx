@@ -16,15 +16,15 @@ import {
     TableRow,
 } from "@/_components/ui/table"
 
-interface SecretariesTableProps<TData, TValue> {
+interface SecretariesDataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function SecretariesTable<TData, TValue>({
+export function SecretariesDataTable<TData, TValue>({
     columns,
     data,
-}: SecretariesTableProps<TData, TValue>) {
+}: SecretariesDataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
@@ -69,7 +69,7 @@ export function SecretariesTable<TData, TValue>({
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
+                                Aucune secrétaire.
                             </TableCell>
                         </TableRow>
                     )}
