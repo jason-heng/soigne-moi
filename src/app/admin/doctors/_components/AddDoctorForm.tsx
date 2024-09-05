@@ -22,7 +22,7 @@ export default function AddDoctorForm() {
     }, [state])
 
     return (
-        <Card className='max-w-[350px] flex-grow overflow-y-auto relative w-[300px]'>
+        <Card className='overflow-y-auto relative w-[35%]'>
             <CardHeader className='pb-1 sticky top-0 bg-background'>
                 <CardTitle className='text-xl text-primary'>Ajouter un docteur</CardTitle>
             </CardHeader>
