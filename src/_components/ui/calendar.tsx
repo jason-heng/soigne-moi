@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { DayPicker, DayPickerRangeProps } from "react-day-picker"
+import { DayPicker, DayPickerProps, DayPickerRangeProps } from "react-day-picker"
 
 import { cn, formatDate, getWeekday, WeekDay } from "@/_lib/utils"
 import { buttonVariants } from "@/_components/ui/button"
@@ -13,62 +13,8 @@ function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  disabledDates,
-  workingDays,
   ...props
-}: DayPickerRangeProps & { disabledDates?: Date[], workingDays?: WeekDay[] }) {
-  const { selected } = props
-
-  let prevDisabledDate: Date | null = null
-  let nextDisabledDate: Date | null = null
-  let nextNotWorkingDate: Date | null = null
-
-  if (selected?.from) {
-    if (disabledDates) {
-      for (const disabledDate of disabledDates) {
-        if (disabledDate < selected.from) {
-          if (!prevDisabledDate || disabledDate > prevDisabledDate) {
-            prevDisabledDate = disabledDate
-          }
-        }
-
-        if (disabledDate > selected.from) {
-          if (!nextDisabledDate || disabledDate < nextDisabledDate) {
-            nextDisabledDate = disabledDate
-          }
-        }
-      }
-    }
-
-    if (workingDays) {
-      for (let i = 1; i <= 7; i++) {
-        const date = new Date(selected.from)
-        date.setDate(date.getDate() + i)
-        
-        if (!workingDays.includes(getWeekday(date))) {
-          nextNotWorkingDate = date
-          break
-        }
-      }
-    }
-  }
-
-  function handleDisabledDates(day: Date) {
-    if (!disabledDates) return false
-
-    if (workingDays) {
-      if (!workingDays.includes(getWeekday(day))) return true
-    }
-
-    if (disabledDates.find(date => formatDate(date) === formatDate(day))) return true
-
-    if (prevDisabledDate && day < prevDisabledDate) return true
-    if (nextDisabledDate && day > nextDisabledDate) return true
-    if (nextNotWorkingDate && day > nextNotWorkingDate) return true
-
-    return false
-  }
-
+}: DayPickerProps) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -117,7 +63,6 @@ function Calendar({
         IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
       }}
-      disabled={handleDisabledDates}
       {...props}
     />
   )

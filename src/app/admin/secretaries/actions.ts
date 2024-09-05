@@ -5,7 +5,7 @@ import prisma from "@/_lib/db";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { logout } from "@/_lib/session";
+import { logout } from "@/_lib/actions";
 
 const NewSecretaryFormSchema = z.object({
     lastName: z.string().min(1, "Nom invalide !"),

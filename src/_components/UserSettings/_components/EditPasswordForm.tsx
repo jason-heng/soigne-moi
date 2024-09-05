@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/_components/ui/button"
 import { Input } from "@/_components/ui/input"
 import { Label } from "@/_components/ui/label"
 import { useEffect, useRef } from "react"
@@ -25,12 +24,12 @@ export default function EditPasswordForm() {
             <h2 className='text-lg'>Changement de mot de passe</h2>
             <div className='w-full'>
                 <Label>Nouveau mot de passe:</Label>
-                <Input type="password" placeholder='Entrez un mot de passe...' name='new-password' />
+                <Input type="password" placeholder='Entrez un nouveau mot de passe...' name='new-password' />
                 {state?.errors?.newPassword && <p className='text-sm text-destructive'>{state?.errors.newPassword}</p>}
             </div>
             <div className='w-full'>
                 <Label>Confirmer le mot de passe:</Label>
-                <Input type="password" placeholder='Répétez le mot de passe...' name='repeat-new-password' />
+                <Input type="password" placeholder='Répétez le nouveau mot de passe...' name='repeat-new-password' />
                 {state?.errors?.repeatNewPassword && <p className='text-sm text-destructive'>{state?.errors.repeatNewPassword}</p>}
             </div>
             <div className='w-full'>
@@ -38,7 +37,7 @@ export default function EditPasswordForm() {
                 <Input type="password" placeholder='Entrez votre mot de passe actuel...' name='password' id="password" />
                 {state?.errors?.password && <p className='text-sm text-destructive'>{state?.errors.password}</p>}
             </div>
-            <SubmitButton text="Changer mot de passe" className='w-full mt-4'/>
+            <SubmitButton className='w-full mt-4'>Changer le mot de passe</SubmitButton>
         </form>
     )
 }

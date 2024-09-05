@@ -6,10 +6,10 @@ import { getUsers } from "@/_data/users"
 import { useState } from "react"
 import { ToggleAdminAlertDialog } from "./ToggleAdminAlertDialog"
 
-type Column = Awaited<ReturnType<typeof getUsers>>[0] & { me: boolean }
+export type UserColumn = Awaited<ReturnType<typeof getUsers>>[0] & { me: boolean }
 
-export default function UserCell({ user }: { user: Column }) {
-    const [isToggleAdminAlertOpen, setIsToggleAdminAlertOpen] = useState(false)
+export default function UserCell({ user }: { user: UserColumn }) {
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
     return (
         <>
@@ -17,17 +17,16 @@ export default function UserCell({ user }: { user: Column }) {
                 className="ml-3"
                 checked={user.admin}
                 disabled={user.me}
-                onCheckedChange={() => setIsToggleAdminAlertOpen(true)}
+                onCheckedChange={() => setIsDialogOpen(true)}
                 aria-label="Select row"
             />
 
-            <ToggleAdminAlertDialog open={isToggleAdminAlertOpen} setOpen={setIsToggleAdminAlertOpen} userId={user.id} isAdmin={user.admin} />
+            <ToggleAdminAlertDialog open={isDialogOpen} setOpen={setIsDialogOpen} userId={user.id} isAdmin={user.admin} />
         </>
     )
 }
 
-
-export const usersColumns: ColumnDef<Column>[] = [
+export const usersColumns: ColumnDef<UserColumn>[] = [
     {
         accessorKey: 'id',
         header: 'Id'

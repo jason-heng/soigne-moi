@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from '@/_components/ui/button'
 import { Input } from '@/_components/ui/input'
 import { Label } from '@/_components/ui/label'
 import { getUser } from '@/_data/users'
@@ -10,7 +9,12 @@ import { editInfo } from '../actions'
 import { useFormState } from 'react-dom'
 import SubmitButton from '@/_components/SubmitButton'
 
-export default function EditInfoForm({ user }: { user: Awaited<ReturnType<typeof getUser>> }) {
+export default function EditInfoForm({ firstName, lastName, email, address }: { 
+    firstName:string
+    lastName: string
+    email: string
+    address: string
+}) {
     const [state, action] = useFormState(editInfo, null)
 
     useEffect(() => {
@@ -24,30 +28,30 @@ export default function EditInfoForm({ user }: { user: Awaited<ReturnType<typeof
             <h2 className='text-lg'>Informations personnelles</h2>
             <div className='flex gap-5 max-w-[600px]'>
                 <div className='w-full'>
-                    <Label>Votre Nom:</Label>
-                    <Input placeholder='Entrez un nom...' name="last-name" defaultValue={user?.lastName} />
+                    <Label>Votre nom:</Label>
+                    <Input placeholder='Entrez un nom...' name="last-name" defaultValue={lastName} />
                     {state?.errors?.lastName && <p className='text-sm text-destructive'>{state?.errors.lastName}</p>}
                 </div>
                 <div className='w-full'>
-                    <Label>Votre Prénom:</Label>
-                    <Input placeholder='Entrez un prénom' name="first-name" defaultValue={user?.firstName} />
+                    <Label>Votre prénom:</Label>
+                    <Input placeholder='Entrez un prénom...' name="first-name" defaultValue={firstName} />
                     {state?.errors?.firstName && <p className='text-sm text-destructive'>{state?.errors.firstName}</p>}
                 </div>
             </div>
             <div className='flex gap-5 max-w-[600px]'>
                 <div className='w-full'>
-                    <Label>Votre Email:</Label>
-                    <Input placeholder='Email' className='max-w-[600px]' name="email" defaultValue={user?.email} />
+                    <Label>Votre email:</Label>
+                    <Input placeholder='Entrez un email...' className='max-w-[600px]' name="email" defaultValue={email} />
                     {state?.errors?.email && <p className='text-sm text-destructive'>{state?.errors.email}</p>}
                 </div>
                 <div className='w-full'>
-                    <Label>Votre Adresse:</Label>
-                    <Input placeholder='Adresse' className='max-w-[600px]' name="address" defaultValue={user?.address} />
+                    <Label>Votre adresse:</Label>
+                    <Input placeholder='Entrez une adresse...' className='max-w-[600px]' name="address" defaultValue={address} />
                     {state?.errors?.address && <p className='text-sm text-destructive'>{state?.errors.address}</p>}
                 </div>
             </div>
 
-            <SubmitButton text='Sauvegarder' className='max-w-[200px] mt-4' />
+            <SubmitButton className='max-w-[200px] mt-4'>Sauvegarder</SubmitButton>
         </form>
     )
 }

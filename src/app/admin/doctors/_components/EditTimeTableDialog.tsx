@@ -107,7 +107,7 @@ export function EditTimeTableDialog({ doctor }: { doctor: NonNullable<Awaited<Re
                     </div>
                     
                     <AlertDialogFooter>
-                        <SubmitButton text="Sauvegarder" />
+                        <SubmitButton>Sauvegarder</SubmitButton>
                     </AlertDialogFooter>
                 </form>
             </DialogContent>

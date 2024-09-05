@@ -1,17 +1,15 @@
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/_components/ui/tabs"
-import { useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { LoginForm } from "./LoginForm"
 import { SignupForm } from "./SignupForm"
 
-export default function TabsLayout() {
-    const searchParams = useSearchParams()
-    const [tab, setTab] = useState(searchParams.get('tab') === "signup" ? "signup" : "login")
-
+export default function TabsLayout({ tab }: { tab: "signup" | "login" }) {
+    const router = useRouter()
+    
     return (
-        <Tabs value={tab} onValueChange={setTab} className='flex flex-col justify-center items-center gap-5 m-5 w-[350px]'>
+        <Tabs value={tab} onValueChange={tab => router.push(`/auth?tab=${tab}`)} className='flex flex-col justify-center items-center gap-5 m-5 w-[350px]'>
             <TabsList className='w-[200px]'>
                 <TabsTrigger value="login">Connexion</TabsTrigger>
                 <TabsTrigger value="signup">Inscription</TabsTrigger>

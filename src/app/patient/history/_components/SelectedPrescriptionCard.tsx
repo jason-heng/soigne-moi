@@ -1,11 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card"
 import { Input } from "@/_components/ui/input"
-import { getStays } from "@/_data/stays"
+import { getMyStays } from "@/_data/stays"
 import { formatDate } from "@/_lib/utils"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { RefObject, useState } from "react"
 
-export function SelectedPrescription({ stay }: { stay: Awaited<ReturnType<typeof getStays>>[0] | undefined }) {
+export function SelectedPrescriptionCard({ stay }: { stay: Awaited<ReturnType<typeof getMyStays>>[0] | undefined }) {
     const [search, setSearch] = useState("")
 
     const visibleDrugs = stay?.prescription?.drugs.filter(drug => drug.name.toLowerCase().includes(search.toLowerCase()))
@@ -15,7 +15,7 @@ export function SelectedPrescription({ stay }: { stay: Awaited<ReturnType<typeof
             <CardHeader className='pb-2 sticky top-0 bg-background'>
                 <CardTitle className='text-xl text-primary'>Préscription selectionnée</CardTitle>
                 {stay?.prescription && <CardDescription>{formatDate(stay.prescription.start)} - {formatDate(stay.prescription.end)}</CardDescription>}
-                {stay?.prescription && <CardDescription>{stay.prescription.drugs.length} médicament{stay.prescription.drugs.length !== 1 && "s"}</CardDescription>}
+                {stay?.prescription && <CardDescription>{stay.prescription.drugs.length || "Aucun"} médicament{stay.prescription.drugs.length > 1 ? "s" : ""}</CardDescription>}
                 {stay?.prescription && <CardDescription className="relative">
                     <MagnifyingGlassIcon className="absolute top-[50%] translate-y-[-50%] right-2" />
                     <Input placeholder="Rechercher..." onChange={e => setSearch(e.target.value)} />

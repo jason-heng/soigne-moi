@@ -2,7 +2,7 @@
 
 import { getUser } from "@/_data/users";
 import prisma from "@/_lib/db";
-import { logout } from "@/_lib/session";
+import { logout } from "@/_lib/actions";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";

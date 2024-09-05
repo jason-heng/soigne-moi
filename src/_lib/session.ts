@@ -1,17 +1,17 @@
 import 'server-only'
 
-import { cookies } from "next/headers";
+import { cookies } from "next/headers"
 import { JWTPayload, SignJWT, jwtVerify } from "jose"
-import { redirect } from "next/navigation";
+import { redirect } from "next/navigation"
 
 const key = new TextEncoder().encode(process.env.AUTH_SECRET)
 
 export const cookieHelper = {
     name: 'session',
-    options: { httpOnly: true, secure: true }
+    options: { httpOnly: true, secure: false }
 }
 
-interface UserSession extends JWTPayload {
+export interface UserSession extends JWTPayload {
     user: {
         id: number;
         firstName: string;
@@ -19,14 +19,14 @@ interface UserSession extends JWTPayload {
     }
 }
 
-interface DoctorSession extends JWTPayload {
+export interface DoctorSession extends JWTPayload {
     doctor: {
         id: number;
         firstName: string;
     }
 }
 
-interface SecretarySession extends JWTPayload {
+export interface SecretarySession extends JWTPayload {
     secretary: {
         id: number;
         firstName: string;
@@ -84,22 +84,17 @@ export async function createSession(user: { id: number, firstName: string, admin
     redirect(redirectUrl)
 }
 
-export async function verifySession() {
+export async function getSession() {
     const cookie = cookies().get(cookieHelper.name)?.value
     const session = await decryptUserCookie(cookie || '')
+
+    return session
+}
+
+export async function verifySession() {
+    const session = await getSession()
 
     if (!session?.user) redirect('/auth')
 
     return { user: session.user }
-}
-
-export async function deleteSession() {
-    cookies().delete(cookieHelper.name)
-}
-
-export async function logout() {
-    "use server"
-
-    deleteSession()
-    redirect('/auth')
 }

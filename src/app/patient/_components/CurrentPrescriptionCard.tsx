@@ -1,8 +1,8 @@
-import { getCurrentStay } from "@/_data/stays";
 import { formatDate } from "@/_lib/utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card";
+import { CurrentStay } from "../data";
 
-export function CurrentPrescription({ stay }: { stay: Awaited<ReturnType<typeof getCurrentStay>> }) {
+export function CurrentPrescriptionCard({ stay }: { stay: CurrentStay }) {
     return (
         <Card className='overflow-y-auto relative space-y-3 shadow-xl'>
             <CardHeader className='pb-2 sticky top-0 bg-background'>
@@ -20,9 +20,9 @@ export function CurrentPrescription({ stay }: { stay: Awaited<ReturnType<typeof 
                                 </CardHeader>
                             </Card>
                         )) :
-                            <p className='text-muted-foreground text-center'>Aucun medicament pour l&apos;instant</p>
+                            <p className='text-muted-foreground text-center'>Aucun médicament pour l&apos;instant</p>
                         :
-                        <p className='text-muted-foreground text-center'>Aucune prescription en cours</p>
+                        <p className='text-muted-foreground text-center'>Aucune préscription en cours</p>
                     :
                     <p className='text-muted-foreground text-center'>Aucun séjour en cours</p>
                 }

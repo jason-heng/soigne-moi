@@ -1,8 +1,10 @@
 import 'server-only';
 
 import prisma from "@/_lib/db";
-import { logout, verifySession } from "@/_lib/session";
-import { redirect } from "next/navigation";
+import { verifySession } from "@/_lib/session";
+import { logout } from '@/_lib/actions';
+import { redirect } from 'next/navigation';
+import { Prisma } from '@prisma/client';
 
 export async function getUser() {
     const session = await verifySession()
@@ -39,4 +41,12 @@ export async function getUsers() {
             id: "asc"
         }
     })
+}
+
+export async function countUsers(args?: Prisma.UserCountArgs) {
+    const user = await getUser()
+
+    if (!user.admin) logout()
+
+    return await prisma.user.count(args)
 }

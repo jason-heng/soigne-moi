@@ -2,47 +2,11 @@ import 'server-only'
 
 import prisma from "../_lib/db";
 import { verifySession } from "../_lib/session";
+import { Prisma } from '@prisma/client';
+import { getUser } from './users';
+import { logout } from '@/_lib/actions';
 
-export async function getCurrentStay() {
-    const session = await verifySession()
-
-    return await prisma.stay.findFirst({
-        where: {
-            patientId: session.user.id,
-            start: {
-                lte: new Date()
-            },
-            end: {
-                gte: new Date()
-            }
-        },
-        include: {
-            doctor: true,
-            prescription: {
-                include: { drugs: true }
-            },
-        }
-    })
-}
-
-export async function getIncomingStay() {
-    const session = await verifySession()
-
-    return await prisma.stay.findFirst({
-        where: {
-            patientId: session.user.id,
-            start: {
-                gt: new Date()
-            }
-        },
-        include: { doctor: true },
-        orderBy: {
-            id: "asc"
-        }
-    })
-}
-
-export async function getStays() {
+export async function getMyStays() {
     const session = await verifySession()
 
     return await prisma.stay.findMany({
@@ -59,4 +23,12 @@ export async function getStays() {
             id: "asc"
         }
     })
+}
+
+export async function getStays(args?: Prisma.StayFindManyArgs) {
+    const user = await getUser()
+
+    if (!user.admin) logout()
+
+    return await prisma.stay.findMany(args)
 }

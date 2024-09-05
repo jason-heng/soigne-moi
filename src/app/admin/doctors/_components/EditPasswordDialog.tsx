@@ -44,7 +44,7 @@ export default function EditPasswordDialog({ doctorId }: { doctorId: number }) {
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
                     <DialogFooter>
-                        <SubmitButton text='Sauvegarder'/>
+                        <SubmitButton>Sauvegarder</SubmitButton>
                     </DialogFooter>
                 </form>
             </DialogContent>

@@ -4,7 +4,7 @@ import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
-import { cn, WeekDay } from "@/_lib/utils"
+import { cn, formatDate, getWeekday, WeekDay } from "@/_lib/utils"
 import { Button } from "@/_components/ui/button"
 import { Calendar } from "@/_components/ui/calendar"
 import {
@@ -15,27 +15,87 @@ import {
 import { Dispatch, HTMLAttributes, SetStateAction } from "react"
 
 export function DatePickerWithRange({
+    placeholder,
     className,
-    dateRange,
-    setDateRange,
-    startName,
-    endName,
+    selected,
+    setSelected,
     disabled,
     disabledDates,
-    workingDays
+    availableDays,
 }: HTMLAttributes<HTMLDivElement> & {
-    dateRange: DateRange | undefined
-    setDateRange: Dispatch<SetStateAction<DateRange | undefined>>
-    startName: string
-    endName: string,
+    placeholder: string
+    selected: DateRange | undefined
+    setSelected: Dispatch<SetStateAction<DateRange | undefined>>
     disabled?: boolean,
     disabledDates?: Date[],
-    workingDays?: WeekDay[]
+    availableDays?: WeekDay[]
 }) {
+    let prevDisabledDate: Date | null = null
+    let nextDisabledDate: Date | null = null
+
+    let prevUnavailableDate: Date | null = null
+    let nextUnavailableDate: Date | null = null
+
+    if (selected?.from) {
+        if (disabledDates) {
+            for (const disabledDate of disabledDates) {
+                if (disabledDate < selected.from) {
+                    if (!prevDisabledDate || disabledDate > prevDisabledDate) {
+                        prevDisabledDate = disabledDate
+                    }
+                }
+
+                if (disabledDate > selected.from) {
+                    if (!nextDisabledDate || disabledDate < nextDisabledDate) {
+                        nextDisabledDate = disabledDate
+                    }
+                }
+            }
+        }
+
+        if (availableDays) {
+            for (let i = 1; i <= 7; i++) {
+                const date = new Date(selected.from)
+                date.setDate(date.getDate() + i)
+
+                if (!availableDays.includes(getWeekday(date))) {
+                    nextUnavailableDate = date
+                    break
+                }
+            }
+
+            for (let i = 1; i <= 7; i++) {
+                const date = new Date(selected.from)
+                date.setDate(date.getDate() - i)
+
+                if (!availableDays.includes(getWeekday(date))) {
+                    prevUnavailableDate = date
+                    break
+                }
+            }
+        }
+    }
+
+    function handleDisabledDates(day: Date) {
+        if (!disabledDates) return false
+
+        if (availableDays) {
+            if (!availableDays.includes(getWeekday(day))) return true
+        }
+
+        if (disabledDates.find(date => formatDate(date) === formatDate(day))) return true
+
+        if (prevDisabledDate && day < prevDisabledDate) return true
+        if (nextDisabledDate && day > nextDisabledDate) return true
+
+        if (prevUnavailableDate && day < prevUnavailableDate) return true
+        if (nextUnavailableDate && day > nextUnavailableDate) return true
+
+        return false
+    }
+
     return (
         <div className={cn("grid gap-2", className)}>
-            <input type="text" value={dateRange?.from?.toISOString()} className="hidden" name={startName} />
-            <input type="text" value={dateRange?.to?.toISOString()} className="hidden" name={endName} />
             <Popover>
                 <PopoverTrigger asChild>
                     <Button
@@ -44,21 +104,20 @@ export function DatePickerWithRange({
                         variant={"outline"}
                         className={cn(
                             "w-full justify-start text-left font-normal",
-                            !dateRange && "text-muted-foreground"
+                            !selected && "text-muted-foreground"
                         )}
                     >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {dateRange?.from ? (
-                            dateRange.to ? (
+                        {selected?.from ? (
+                            selected.to ? (
                                 <>
-                                    {format(dateRange.from, "LLL dd, y")} -{" "}
-                                    {format(dateRange.to, "LLL dd, y")}
+                                    {formatDate(selected.from)} - {formatDate(selected.to)}
                                 </>
                             ) : (
-                                format(dateRange.from, "LLL dd, y")
+                                formatDate(selected.from)
                             )
                         ) : (
-                            <span>Choisissez une plage de temps</span>
+                            <>{placeholder}</>
                         )}
                     </Button>
                 </PopoverTrigger>
@@ -68,12 +127,11 @@ export function DatePickerWithRange({
                         min={2}
                         fromDate={new Date()}
                         mode="range"
-                        defaultMonth={dateRange?.from}
-                        selected={dateRange}
-                        onSelect={setDateRange}
+                        defaultMonth={selected?.from}
+                        selected={selected}
+                        onSelect={setSelected}
                         numberOfMonths={1}
-                        disabledDates={disabledDates}
-                        workingDays={workingDays}
+                        disabled={handleDisabledDates}
                     />
                 </PopoverContent>
             </Popover>
