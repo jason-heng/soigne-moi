@@ -2,8 +2,8 @@
 
 import { getMyStays } from "@/_data/stays"
 import { useEffect, useRef, useState } from "react"
-import { Stays } from "./Stays"
-import { SelectedPrescription } from "./SelectedPrescription"
+import { StaysCard } from "./StaysCard"
+import { SelectedPrescriptionCard } from "./SelectedPrescriptionCard"
 
 export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getMyStays>> }) {
     const [selectedStay, setSelectedStay] = useState<Awaited<ReturnType<typeof getMyStays>>[0]>()
@@ -35,8 +35,8 @@ export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getMyS
         <div className='flex-1 p-5 h-screen flex flex-col gap-5'>
             <h1 className='text-xl font-semibold'>L&apos;historique de vos séjours</h1>
             <div className='flex flex-1 gap-5 min-h-0'>
-                <Stays stays={stays} selected={selectedStay} setSelected={setSelectedStay} />
-                <SelectedPrescription stay={selectedStay} />
+                <StaysCard stays={stays} selected={selectedStay} setSelected={setSelectedStay} />
+                <SelectedPrescriptionCard stay={selectedStay} />
             </div >
         </div >
     )
