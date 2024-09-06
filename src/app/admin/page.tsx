@@ -8,15 +8,15 @@ import { StaysChart } from './_components/StaysChart'
 
 export function PatientsCard({ patientsNumber }: { patientsNumber: number }) {
     return (
-        <Card className='row-span-2 col-span-1 justify-between flex flex-col'>
-            <CardHeader className='gap-4'>
-                <CardTitle className='text-2xl'>Patients</CardTitle>
-                <CardDescription className='text-xl'>
+        <Card className='row-start-1 row-end-2 col-start-1 col-end-3 lg:row-span-2 lg:col-span-1'>
+            <CardHeader className='lg:gap-4'>
+                <CardTitle className='lg:text-2xl'>Patients</CardTitle>
+                <CardDescription className='lg:text-xl'>
                     {patientsNumber || "Aucun"} patient{patientsNumber > 1 && "s"}
                 </CardDescription>
             </CardHeader>
-            <CardFooter className='self-end'>
-                <Link href={"/admin/users"} className='text-white bg-primary p-2 rounded-md'>Voir plus</Link>
+            <CardFooter className='flex justify-end'>
+                <Link href={"/admin/users"} className='text-white bg-primary p-2 rounded-md text-sm lg:text-md'>Voir plus</Link>
             </CardFooter>
         </Card>
     )
@@ -24,15 +24,15 @@ export function PatientsCard({ patientsNumber }: { patientsNumber: number }) {
 
 export function DoctorsCard({ doctorsNumber }: { doctorsNumber: number }) {
     return (
-        <Card className='row-span-2 col-span-1 justify-between flex flex-col'>
-            <CardHeader className='gap-4'>
-                <CardTitle className='text-2xl'>Docteurs</CardTitle>
-                <CardDescription className='text-xl'>
+        <Card className='row-start-2 row-end-3 col-start-1 col-end-3 lg:row-span-2 lg:col-span-1'>
+            <CardHeader className='lg:gap-4'>
+                <CardTitle className='lg:text-2xl'>Docteurs</CardTitle>
+                <CardDescription className='lg:text-xl'>
                     {doctorsNumber || "Aucun"} docteur{doctorsNumber > 1 && "s"}
                 </CardDescription>
             </CardHeader>
-            <CardFooter className='self-end'>
-                <Link href={"/admin/doctors"} className='text-white bg-primary p-2 rounded-md'>Voir plus</Link>
+            <CardFooter className='flex justify-end'>
+                <Link href={"/admin/doctors"} className='text-white bg-primary p-2 rounded-md text-sm lg:text-md'>Voir plus</Link>
             </CardFooter>
         </Card>
     )
@@ -40,15 +40,15 @@ export function DoctorsCard({ doctorsNumber }: { doctorsNumber: number }) {
 
 export function SecretariesCard({ secretariesNumber }: { secretariesNumber: number }) {
     return (
-        <Card className='row-span-2 col-span-1 justify-between flex flex-col'>
-            <CardHeader className='gap-4'>
-                <CardTitle className='text-2xl'>Secrétaires</CardTitle>
-                <CardDescription className='text-xl'>
+        <Card className='row-start-3 row-end-4 col-start-1 col-end-3 lg:row-span-2 lg:col-span-1'>
+            <CardHeader className='lg:gap-4'>
+                <CardTitle className='lg:text-2xl'>Secrétaires</CardTitle>
+                <CardDescription className='lg:text-xl'>
                     {secretariesNumber || "Aucune"} secrétaire{secretariesNumber > 1 && "s"}
                 </CardDescription>
             </CardHeader>
-            <CardFooter className='self-end'>
-                <Link href={"/admin/secretaries"} className='text-white bg-primary p-2 rounded-md'>Voir plus</Link>
+            <CardFooter className='flex justify-end'>
+                <Link href={"/admin/secretaries"} className='text-white bg-primary p-2 rounded-md text-sm lg:text-md'>Voir plus</Link>
             </CardFooter>
         </Card>
     )
@@ -56,7 +56,7 @@ export function SecretariesCard({ secretariesNumber }: { secretariesNumber: numb
 
 export function StaysEvolutionCard({ stays }: { stays: Stay[] }) {
     return (
-        <Card className='row-span-3 col-span-2'>
+        <Card className='row-span-2 col-span-5 lg:row-span-3 lg:col-span-2'>
             <CardHeader>
                 <CardTitle className='text-2xl mx-auto'>Evolution des séjours</CardTitle>
             </CardHeader>
@@ -75,22 +75,22 @@ export function StaysCard({ stays }: { stays: Stay[] }) {
     const totalStaysNumber = stays.length
 
     return (
-        <Card className='row-span-3 col-span-1'>
-            <CardHeader className='gap-2'>
+        <Card className='row-start-1 row-end-4 col-start-3 col-end-6 lg:row-span-3 lg:col-span-1'>
+            <CardHeader className='gap-5 lg:gap-2'>
                 <CardTitle className='text-2xl'>Séjours</CardTitle>
-                <CardDescription className='text-xl'>
+                <CardDescription className='text-md lg:text-xl'>
                     {`Passés: ${endedStaysNumber || "Aucun"} séjour${endedStaysNumber > 1 ? "s" : ""}`}
                 </CardDescription>
-                <CardDescription className='text-xl'>
+                <CardDescription className='text-md lg:text-xl'>
                     {`En cours: ${ongoingStaysNumber || "Aucun"} séjour${ongoingStaysNumber > 1 ? "s" : ""}`}
                 </CardDescription>
-                <CardDescription className='text-xl'>
+                <CardDescription className='text-md lg:text-xl'>
                     {`A venir: ${upcomingStaysNumber || "Aucun"} séjour${upcomingStaysNumber > 1 ? "s" : ""}`}
                 </CardDescription>
-                <CardDescription className='text-xl'>
+                <CardDescription className='text-md lg:text-xl'>
                     {`Ce mois: ${thisMonthStaysNumber || "Aucun"} séjour${thisMonthStaysNumber > 1 ? "s" : ""}`}
                 </CardDescription>
-                <CardDescription className='text-xl'>
+                <CardDescription className='text-md lg:text-xl'>
                     {`Au total: ${totalStaysNumber || "Aucun"} séjour${totalStaysNumber > 1 ? "s" : ""}`}
                 </CardDescription>
             </CardHeader>
@@ -109,7 +109,7 @@ export default async function AdminHome() {
     return (
         <div className='flex flex-col flex-1 p-5 gap-5'>
             <h1 className='text-xl'>Bonjour, {user?.firstName} !</h1>
-            <div className='grid grid-cols-3 grid-rows-5 gap-5 flex-1'>
+            <div className='grid grid-cols-5 grid-rows-5 lg:grid-cols-3 lg:grid-rows-5 gap-5 flex-1'>
                 <PatientsCard patientsNumber={patientsNumber} />
                 <DoctorsCard doctorsNumber={doctorsNumber} />
                 <SecretariesCard secretariesNumber={secretariesNumber} />

@@ -1,6 +1,6 @@
+import { PropsWithChildren } from "react";
 import { SideBar, SideBarLink } from "@/_components/SideBar";
 import { faGears, faHouse, faUser, faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
-import { PropsWithChildren } from "react";
 
 
 export default function AdminDashboardLayout({ children }: Readonly<PropsWithChildren>) {
@@ -33,7 +33,7 @@ export default function AdminDashboardLayout({ children }: Readonly<PropsWithChi
     ]
 
     return (
-        <main className="flex flex-col lg:flex-row h-screen w-screen overflow-hidden">
+        <main className="flex flex-col lg:flex-row lg:h-screen lg:overflow-hidden">
             <SideBar links={sideBarLinks} />
             {children}
         </main>

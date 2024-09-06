@@ -42,7 +42,7 @@ export function StaysChart({ stays }: { stays: Stay[] }) {
     const chartData = filterStaysPerMonth(stays)
 
     return (
-        <ChartContainer config={chartConfig} className="h-[100%] w-[56%] ">
+        <ChartContainer config={chartConfig} className="w-[100%] lg:w-[55%]">
             <BarChart accessibilityLayer data={chartData}>
                 <CartesianGrid vertical={false} />
                 <XAxis
