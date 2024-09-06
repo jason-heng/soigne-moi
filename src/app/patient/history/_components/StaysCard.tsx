@@ -17,7 +17,7 @@ export function StaysCard({ stays, selected, setSelected }: {
     const visibleStays = stays.filter(stay => stay.reason.toLowerCase().includes(search.toLowerCase()))
 
     return (
-        <Card className='flex-1 overflow-y-auto relative space-y-3 shadow-xl'>
+        <Card className='lg:flex-1 max-h-[500px] lg:max-h-full overflow-y-auto relative space-y-3 shadow-xl'>
             <CardHeader className='pb-2 sticky top-0 bg-background'>
                 <CardTitle className='text-xl text-primary'>Vos séjours</CardTitle>
                 <CardDescription>{stays.length || "Aucun"} séjour{stays.length > 1 && "s"}</CardDescription>

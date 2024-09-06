@@ -32,9 +32,9 @@ export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getMyS
     }, []);
 
     return (
-        <div className='flex-1 p-5 h-screen flex flex-col gap-5'>
+        <div className='flex-1 p-5 lg:h-screen flex flex-col gap-5'>
             <h1 className='text-xl font-semibold'>L&apos;historique de vos séjours</h1>
-            <div className='flex flex-1 gap-5 min-h-0'>
+            <div className='flex flex-col lg:flex-row lg:flex-1 gap-5 lg:min-h-0'>
                 <StaysCard stays={stays} selected={selectedStay} setSelected={setSelectedStay} />
                 <SelectedPrescriptionCard stay={selectedStay} />
             </div >

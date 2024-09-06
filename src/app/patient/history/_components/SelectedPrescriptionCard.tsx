@@ -11,7 +11,7 @@ export function SelectedPrescriptionCard({ stay }: { stay: Awaited<ReturnType<ty
     const visibleDrugs = stay?.prescription?.drugs.filter(drug => drug.name.toLowerCase().includes(search.toLowerCase()))
 
     return (
-        <Card className='flex-1 overflow-y-auto relative space-y-3 shadow-xl' id="prescription">
+        <Card className='lg:flex-1 max-h-[500px] lg:max-h-full overflow-y-auto relative space-y-3 shadow-xl' id="prescription">
             <CardHeader className='pb-2 sticky top-0 bg-background'>
                 <CardTitle className='text-xl text-primary'>Préscription selectionnée</CardTitle>
                 {stay?.prescription && <CardDescription>{formatDate(stay.prescription.start)} - {formatDate(stay.prescription.end)}</CardDescription>}
