@@ -38,7 +38,7 @@ export function SignupForm() {
                     {state?.errors?.repeatPassword && <p className='text-sm text-destructive'>{state.errors.repeatPassword}</p>}
                 </div>
             </div>
-            <SubmitButton className='mt-2'>S'inscrire</SubmitButton>
+            <SubmitButton className='mt-2'>S&apos;inscrire</SubmitButton>
         </form>
     )
 }

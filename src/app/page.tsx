@@ -77,9 +77,9 @@ export function Hero({ session }: { session: UserSession | null }) {
           Votre santé, notre priorité.
         </p>
         {session ? session.user.admin ?
-          <Link href="/admin" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Acceder a l'espace admin</Link>
+          <Link href="/admin" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Acceder a l&apos;espace admin</Link>
           :
-          <Link href="/patient" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Acceder a l'espace patient</Link>
+          <Link href="/patient" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Acceder a l&apos;espace patient</Link>
           :
           <Link href="/auth" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>Connectez vous</Link>
         }
@@ -132,7 +132,7 @@ export function Card({ img, title, description }: { img: ReactNode, title: strin
 export function Services() {
   return (
     <Section className="flex flex-col gap-12 items-center" id="services">
-      <h2 className="text-[1.67rem] lg:text-3xl font-bold">Ce qu’on vous offre</h2>
+      <h2 className="text-[1.67rem] lg:text-3xl font-bold">Ce qu&apos;on vous offre</h2>
       <div className="flex w-full flex-col lg:flex-row justify-between items-center gap-8">
         <Card title="Meilleurs Soins" description="Nous offrons des soins de haute qualité avec des technologies médicales avancées et des protocoles à jour, en prenant en compte le bien-être physique, émotionnel et mental de nos patients." img={<Docteur className="text-primary mx-auto" height={100} width={110} />} />
         <Card title="Excellent Personnel" description="Notre personnel est notre plus grande force. Composé de docteurs, infirmières, techniciens et personnel de soutien hautement qualifiés et expérimentés, notre équipe est dédiée à fournir des soins exceptionnels." img={<TwoDoctors className="text-primary mx-auto" height={100} width={100} />} />
