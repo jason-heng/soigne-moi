@@ -9,7 +9,7 @@ jest.mock("react-dom", () => ({
 }));
 
 jest.mock("../../_data/users", () => ({
-    getUser: () => null
+    getUser: () => ({})
 }))
 
 describe("User Settings", () => {
