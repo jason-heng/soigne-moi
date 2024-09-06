@@ -1,7 +1,6 @@
-import { PropsWithChildren } from "react";
-import { SideBar, SideBarLink } from "@/_components/SideBar";
+import { SideBar, SideBarLink } from "@/_components/side-bar";
 import { faGears, faHouse, faUser, faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
-
+import { PropsWithChildren } from "react";
 
 export default function AdminDashboardLayout({ children }: Readonly<PropsWithChildren>) {
     const sideBarLinks: SideBarLink[] = [

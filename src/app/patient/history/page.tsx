@@ -1,5 +1,5 @@
 import { getMyStays } from '@/_data/stays'
-import { HistoryCard } from '@/app/patient/history/_components/HistoryCard'
+import { HistoryCard } from './history-card'
 
 export default async function PatientHistory() {
     const stays = await getMyStays()

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import TabsLayout from './_components/TabsLayout'
+import { TabsLayout } from './components'
 
 export default function AuthPage({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) {
     const tab = searchParams?.tab === "signup" ? "signup" : "login"

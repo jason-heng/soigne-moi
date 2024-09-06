@@ -1,6 +1,5 @@
 import { getDoctors } from '@/_data/doctors'
-import AddDoctorForm from './_components/AddDoctorForm'
-import DoctorsList from './_components/DoctorsList'
+import { AddDoctorForm, DoctorsList } from './client-components'
 
 export default async function page() {
   const doctors = await getDoctors()

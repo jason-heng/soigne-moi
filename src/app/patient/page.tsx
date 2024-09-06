@@ -1,8 +1,6 @@
 import { getUser } from '@/_data/users'
-import { AddStayForm } from '@/app/patient/_components/AddStayForm'
-import { CurrentPrescriptionCard } from './_components/CurrentPrescriptionCard'
-import { CurrentStayCard } from './_components/CurrentStayCard'
-import { IncomingStayCard } from './_components/IncomingStayCard'
+import { AddStayForm } from './add-stay-form'
+import { CurrentPrescriptionCard, CurrentStayCard, IncomingStayCard } from './components'
 import { getCurrentStay, getDoctors, getIncomingStay } from './data'
 
 export default async function PatientHome() {
