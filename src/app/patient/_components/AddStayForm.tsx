@@ -80,7 +80,7 @@ export function AddStayForm({ doctors, disabled }: { doctors: Doctor[], disabled
                         {state?.errors?.end && <p className='text-sm text-destructive'>{state.errors.end}</p>}
                     </div>
                 </CardContent>
-                <CardFooter className='absolute right-0 bottom-0'>
+                <CardFooter className='flex justify-end lg:absolute lg:right-0 lg:bottom-0'>
                     <SubmitButton disabled={disabled}>{disabled ? "Séjour en cours ou a venir" : "Ajouter"}</SubmitButton>
                 </CardFooter>
             </form>

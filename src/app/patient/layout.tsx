@@ -22,7 +22,7 @@ export default function PatientDashboardLayout({ children }: Readonly<PropsWithC
     ]
 
     return (
-        <main className="flex flex-col lg:flex-row overflow-clip h-screen w-screen">
+        <main className="flex flex-col lg:flex-row h-screen w-screen">
             <SideBar links={sideBarLinks} />
             {children}
         </main>
