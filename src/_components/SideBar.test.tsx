@@ -1,8 +1,8 @@
-import '@testing-library/jest-dom';
-import { SideBarButton } from "./SideBarButton"
-import { render, screen } from "@testing-library/react"
 import { faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
+import '@testing-library/jest-dom';
+import { render, screen } from "@testing-library/react";
 import { SideBar, SideBarLinks } from './SideBar';
+import { SideBarButton } from "./SideBarButton";
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
@@ -34,8 +34,8 @@ describe("Side Bar Button", () => {
 
 describe("Side Bar Links", () => {
     it("renders links", () => {
-        render(<SideBarLinks links={[{href: "/test", icon: faHouse, text: "Test Link"}]} />)
-        
+        render(<SideBarLinks links={[{ href: "/test", icon: faHouse, text: "Test Link" }]} />)
+
         const testLink = screen.getByRole("link", { name: "Test Link" })
 
         expect(testLink).toBeInTheDocument()
@@ -70,8 +70,8 @@ describe("Side Bar", () => {
     })
 
     it("renders links", () => {
-        render(<SideBar links={[{href: "/test", icon: faHouse, text: "Test Link"}]} />)
-        
+        render(<SideBar links={[{ href: "/test", icon: faHouse, text: "Test Link" }]} />)
+
         const testLink = screen.getByRole("link", { name: "Test Link" })
 
         expect(testLink).toBeInTheDocument()

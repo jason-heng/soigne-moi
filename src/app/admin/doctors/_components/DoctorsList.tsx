@@ -1,9 +1,9 @@
 "use client"
 
-import { Card, CardHeader, CardTitle, CardDescription } from '@/_components/ui/card';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card';
 import { Input } from "@/_components/ui/input";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { getDoctors } from '@/_data/doctors';
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useState } from 'react';
 import DoctorCard from './DoctorCard';
 

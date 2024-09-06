@@ -1,10 +1,10 @@
 "use client"
 
-import toast from "react-hot-toast"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/_components/ui/alert-dialog"
-import { Dispatch, SetStateAction } from "react"
-import { removeSecretary } from "../actions"
 import { buttonVariants } from "@/_components/ui/button"
+import { Dispatch, SetStateAction } from "react"
+import toast from "react-hot-toast"
+import { removeSecretary } from "../actions"
 
 export function RemoveAlertDialog({ secretaryId, open, setOpen }: { secretaryId: number, open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
     async function handleConfirm() {

@@ -1,10 +1,8 @@
 "use client"
 
 import { CalendarIcon } from "@radix-ui/react-icons"
-import { format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
-import { cn, formatDate, getWeekday, WeekDay } from "@/_lib/utils"
 import { Button } from "@/_components/ui/button"
 import { Calendar } from "@/_components/ui/calendar"
 import {
@@ -12,6 +10,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/_components/ui/popover"
+import { cn, formatDate, getWeekday, WeekDay } from "@/_lib/utils"
 import { Dispatch, HTMLAttributes, SetStateAction } from "react"
 
 export function DatePickerWithRange({

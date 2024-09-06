@@ -1,6 +1,6 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import AdminDashboardLayout from './layout'
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import AdminDashboardLayout from './layout';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),

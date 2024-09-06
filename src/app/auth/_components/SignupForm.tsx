@@ -12,11 +12,11 @@ export function SignupForm() {
         <form className='flex flex-col gap-4 w-[310px]' action={action}>
             <div className='flex gap-2'>
                 <div>
-                    <Input type="text" placeholder="Nom" name='lastName' className="placeholder:text-xs"/>
+                    <Input type="text" placeholder="Nom" name='lastName' className="placeholder:text-xs" />
                     {state?.errors?.lastName && <p className='text-sm text-destructive'>{state.errors.lastName}</p>}
                 </div>
                 <div>
-                    <Input type="text" placeholder="Prénom" name='firstName' className="placeholder:text-xs"/>
+                    <Input type="text" placeholder="Prénom" name='firstName' className="placeholder:text-xs" />
                     {state?.errors?.firstName && <p className='text-sm text-destructive'>{state.errors.firstName}</p>}
                 </div>
             </div>

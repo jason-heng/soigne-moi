@@ -1,4 +1,3 @@
-import React from 'react'
 import { getDoctors } from '@/_data/doctors'
 import AddDoctorForm from './_components/AddDoctorForm'
 import DoctorsList from './_components/DoctorsList'

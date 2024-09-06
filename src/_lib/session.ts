@@ -1,7 +1,7 @@
 import 'server-only'
 
-import { cookies } from "next/headers"
 import { JWTPayload, SignJWT, jwtVerify } from "jose"
+import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
 const key = new TextEncoder().encode(process.env.AUTH_SECRET)

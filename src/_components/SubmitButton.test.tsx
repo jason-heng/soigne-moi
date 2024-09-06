@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom'
-import { render, screen } from "@testing-library/react"
-import SubmitButton from "./SubmitButton"
+import '@testing-library/jest-dom';
+import { render, screen } from "@testing-library/react";
 import { useFormStatus } from 'react-dom'; // Ensure correct import path if you're using it
+import SubmitButton from "./SubmitButton";
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),

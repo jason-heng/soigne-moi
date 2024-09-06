@@ -1,10 +1,10 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/_components/ui/card'
-import Link from 'next/link'
-import { StaysChart } from './_components/StaysChart'
-import { countUsers, getUser } from '@/_data/users'
 import { countDoctors } from '@/_data/doctors'
 import { getStays } from '@/_data/stays'
+import { countUsers, getUser } from '@/_data/users'
 import { Stay } from '@prisma/client'
+import Link from 'next/link'
+import { StaysChart } from './_components/StaysChart'
 
 export function PatientsCard({ patientsNumber }: { patientsNumber: number }) {
     return (

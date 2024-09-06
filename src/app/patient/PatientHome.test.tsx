@@ -1,6 +1,6 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import PatientHome from './page'
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import PatientHome from './page';
 
 const mockUser = {
     firstName: "Julien"
@@ -26,7 +26,7 @@ describe("Patient Home", () => {
     it("renders the heading", async () => {
         render(await PatientHome())
 
-        const heading = screen.getByRole("heading", { level: 1, name: `Bonjour, ${mockUser.firstName} !`})
+        const heading = screen.getByRole("heading", { level: 1, name: `Bonjour, ${mockUser.firstName} !` })
 
         expect(heading).toBeInTheDocument()
     })

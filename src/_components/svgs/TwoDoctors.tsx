@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 export default function TwoDoctors(props: ComponentPropsWithoutRef<'svg'>) {
     return (

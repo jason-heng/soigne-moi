@@ -3,7 +3,7 @@ import { Input } from "@/_components/ui/input"
 import { getMyStays } from "@/_data/stays"
 import { formatDate } from "@/_lib/utils"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import { RefObject, useState } from "react"
+import { useState } from "react"
 
 export function SelectedPrescriptionCard({ stay }: { stay: Awaited<ReturnType<typeof getMyStays>>[0] | undefined }) {
     const [search, setSearch] = useState("")

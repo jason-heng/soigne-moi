@@ -28,22 +28,22 @@ describe("Signup Form", () => {
 
         expect(firstNameInput).toBeInTheDocument()
         expect(firstNameInput).not.toBeDisabled()
-        
+
         const lastNameInput = screen.getByPlaceholderText("Nom")
-    
+
         expect(lastNameInput).toBeInTheDocument()
         expect(lastNameInput).not.toBeDisabled()
-        
+
         const emailInput = screen.getByPlaceholderText("Email")
-        
+
         expect(emailInput).toBeInTheDocument()
         expect(emailInput).not.toBeDisabled()
-        
+
         const addressInput = screen.getByPlaceholderText("Adresse")
 
         expect(addressInput).toBeInTheDocument()
         expect(addressInput).not.toBeDisabled()
-        
+
         const passwordInput = screen.getByPlaceholderText("Mot de passe")
 
         expect(passwordInput).toBeInTheDocument()

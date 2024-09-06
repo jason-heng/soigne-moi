@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import DoctorCard from './DoctorCard';
 import { getDoctor } from '@/_data/doctors';
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import DoctorCard from './DoctorCard';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
@@ -16,7 +16,7 @@ jest.mock("../actions", () => ({
 }))
 
 const mockDoctor: NonNullable<Awaited<ReturnType<typeof getDoctor>>> = {
-    id:1,
+    id: 1,
     firstName: "Thomas",
     lastName: "Lefevre",
     registrationNumber: 10000234,

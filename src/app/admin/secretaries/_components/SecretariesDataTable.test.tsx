@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom'
-import { render, screen, within } from '@testing-library/react'
-import { SecretariesDataTable } from './SecretariesDataTable';
+import '@testing-library/jest-dom';
+import { render, screen, within } from '@testing-library/react';
 import { SecretaryColumn, secretariesColumns } from './SecretariesColumns';
+import { SecretariesDataTable } from './SecretariesDataTable';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
@@ -59,7 +59,7 @@ describe("Admin Secretaries Page", () => {
             if (row) {
                 const cells = within(row).getAllByRole("cell")
                 expect(cells).toHaveLength(secretariesColumns.length)
-    
+
                 expect(cells[0]).toHaveTextContent(user.id.toString())
                 expect(cells[1]).toHaveTextContent(user.lastName)
                 expect(cells[2]).toHaveTextContent(user.firstName)

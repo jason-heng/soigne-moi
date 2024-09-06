@@ -1,9 +1,9 @@
 "use client"
 
+import SubmitButton from "@/_components/SubmitButton"
+import { Input } from "@/_components/ui/input"
 import { useFormState } from "react-dom"
 import { login } from "../actions"
-import { Input } from "@/_components/ui/input"
-import SubmitButton from "@/_components/SubmitButton"
 
 export function LoginForm() {
     const [state, action] = useFormState(login, null)

@@ -1,9 +1,9 @@
 "use server"
 
-import { z } from "zod"
-import bcrypt from "bcrypt"
 import prisma from "@/_lib/db"
 import { createSession } from "@/_lib/session"
+import bcrypt from "bcrypt"
+import { z } from "zod"
 
 const SignupFormSchema = z.object({
     firstName: z.string().min(1, "Prénom invalide !"),

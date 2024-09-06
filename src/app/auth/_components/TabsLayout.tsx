@@ -7,7 +7,7 @@ import { SignupForm } from "./SignupForm"
 
 export default function TabsLayout({ tab }: { tab: "signup" | "login" }) {
     const router = useRouter()
-    
+
     return (
         <Tabs value={tab} onValueChange={tab => router.push(`/auth?tab=${tab}`)} className='flex flex-col justify-center items-center gap-5 mt-4'>
             <TabsList className='w-[200px]'>

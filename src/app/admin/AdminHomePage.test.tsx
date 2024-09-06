@@ -1,8 +1,8 @@
-import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
-import AdminHome, { DoctorsCard, PatientsCard, SecretariesCard, StaysCard, StaysEvolutionCard } from './page';
 import { getStays } from '@/_data/stays';
 import { Stay } from '@prisma/client';
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import AdminHome, { DoctorsCard, PatientsCard, SecretariesCard, StaysCard } from './page';
 
 jest.mock("../../_data/users", () => ({
     getUser: () => ({ firstName: "John" }),

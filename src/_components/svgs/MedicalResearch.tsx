@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef } from "react";
 
 export default function MedicalResearch(props: ComponentPropsWithoutRef<"svg">) {
     return (

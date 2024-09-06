@@ -1,10 +1,10 @@
 "use client"
 
-import toast from "react-hot-toast"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/_components/ui/alert-dialog"
-import { useState } from "react"
-import { removeDoctor } from "../actions"
 import { Button, buttonVariants } from "@/_components/ui/button"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { removeDoctor } from "../actions"
 
 export function RemoveAlertDialog({ doctorId }: { doctorId: number }) {
     const [open, setOpen] = useState(false)

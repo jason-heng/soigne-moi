@@ -1,16 +1,16 @@
+import NavBarButton from "@/_components/NavBarButton";
 import Medecine from "@/_components/svgs/Medecine";
+import MobileMessaging from "@/_components/svgs/MobileMessaging";
+import TwoDoctors from "@/_components/svgs/TwoDoctors";
 import { buttonVariants } from "@/_components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/_components/ui/sheet";
+import { getSession, UserSession } from "@/_lib/session";
 import { cn } from "@/_lib/utils";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { ComponentPropsWithoutRef, ReactNode } from "react";
 import Docteur from "../_components/svgs/Docteur";
-import MobileMessaging from "@/_components/svgs/MobileMessaging";
-import TwoDoctors from "@/_components/svgs/TwoDoctors";
-import NavBarButton from "@/_components/NavBarButton";
-import { getSession, UserSession } from "@/_lib/session";
-import { Sheet, SheetContent, SheetTrigger } from "@/_components/ui/sheet";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 export function NavBarLinks({ className }: { className?: string }) {
   return (
@@ -85,7 +85,7 @@ export function Hero({ session }: { session: UserSession | null }) {
         }
       </div>
       <div className="flex relative flex-col w50 flex-1">
-        <Medecine className="text-primary "/>
+        <Medecine className="text-primary " />
         <div className="shadow-lg absolute bottom-[-10%] left-[38%] lg:left-[40%] bg-secondary p-2 rounded-sm flex flex-col items-center">
           <h3 className="font-bold text-primary text-xs lg:text-lg">+312</h3>
           <h3 className="text-xs lg:text-lg">Patients satisfaits</h3>

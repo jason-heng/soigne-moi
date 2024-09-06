@@ -1,7 +1,6 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 import { AddStayForm } from './AddStayForm';
-import { CurrentStay } from '../data';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),

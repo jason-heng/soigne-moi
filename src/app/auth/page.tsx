@@ -3,7 +3,7 @@ import TabsLayout from './_components/TabsLayout'
 
 export default function AuthPage({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) {
     const tab = searchParams?.tab === "signup" ? "signup" : "login"
-    
+
     return (
         <main className='flex justify-center items-center h-screen'>
             <div className='flex flex-col items-center shadow-2xl rounded-lg p-5'>

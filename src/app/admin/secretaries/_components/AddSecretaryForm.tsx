@@ -1,17 +1,13 @@
 "use client"
 
-import { toast } from 'react-hot-toast';
-import { Card } from '@/_components/ui/card';
-import { CardHeader } from '@/_components/ui/card';
-import { CardTitle } from '@/_components/ui/card';
-import { CardContent } from '@/_components/ui/card';
-import { CardFooter } from '@/_components/ui/card';
-import { Label } from '@/_components/ui/label';
+import SubmitButton from '@/_components/SubmitButton';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/_components/ui/card';
 import { Input } from '@/_components/ui/input';
+import { Label } from '@/_components/ui/label';
 import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
+import { toast } from 'react-hot-toast';
 import { addSecretary } from '../actions';
-import SubmitButton from '@/_components/SubmitButton';
 
 export default function AddSecretaryForm() {
     const [state, action] = useFormState(addSecretary, null)
@@ -48,7 +44,7 @@ export default function AddSecretaryForm() {
                     </div>
                     <div>
                         <Label htmlFor="password">Mot de passe</Label>
-                        <Input type="password"  placeholder="Le mot de passe de la secrétaire" autoComplete='new-password' name='password' />
+                        <Input type="password" placeholder="Le mot de passe de la secrétaire" autoComplete='new-password' name='password' />
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
                 </CardContent>

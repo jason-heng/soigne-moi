@@ -39,7 +39,7 @@ export function filterStaysPerMonth(stays: Stay[]) {
 }
 
 export function StaysChart({ stays }: { stays: Stay[] }) {
-    const chartData = filterStaysPerMonth(stays)    
+    const chartData = filterStaysPerMonth(stays)
 
     return (
         <ChartContainer config={chartConfig} className="h-[100%] w-[56%] ">

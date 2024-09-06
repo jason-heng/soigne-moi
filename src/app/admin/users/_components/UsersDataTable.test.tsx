@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom'
-import { render, screen, within } from '@testing-library/react'
-import { UsersDataTable } from './UsersDataTable';
+import '@testing-library/jest-dom';
+import { render, screen, within } from '@testing-library/react';
 import { UserColumn, usersColumns } from './UsersColumns';
+import { UsersDataTable } from './UsersDataTable';
 
 jest.mock("../actions", () => ({
     setAdmin: () => null
@@ -61,19 +61,19 @@ describe("Admin Users Page", () => {
             if (row) {
                 const cells = within(row).getAllByRole("cell")
                 expect(cells).toHaveLength(usersColumns.length)
-    
+
                 expect(cells[0]).toHaveTextContent(user.id.toString())
                 expect(cells[1]).toHaveTextContent(user.lastName)
                 expect(cells[2]).toHaveTextContent(user.firstName)
                 expect(cells[3]).toHaveTextContent(user.email)
                 expect(cells[4]).toHaveTextContent(user.address)
-                
+
                 const checkbox = within(cells[5]).getByRole("checkbox")
 
                 expect(checkbox).toBeInTheDocument()
                 if (user.admin) {
                     expect(checkbox).toBeChecked()
-                    
+
                     if (user.me) {
                         expect(checkbox).toBeDisabled()
                     } else {

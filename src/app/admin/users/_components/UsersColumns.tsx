@@ -1,8 +1,8 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/_components/ui/checkbox"
 import { getUsers } from "@/_data/users"
+import { ColumnDef } from "@tanstack/react-table"
 import { useState } from "react"
 import { ToggleAdminAlertDialog } from "./ToggleAdminAlertDialog"
 

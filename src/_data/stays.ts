@@ -1,10 +1,10 @@
-import 'server-only'
+import 'server-only';
 
+import { logout } from '@/_lib/actions';
+import { Prisma } from '@prisma/client';
 import prisma from "../_lib/db";
 import { verifySession } from "../_lib/session";
-import { Prisma } from '@prisma/client';
 import { getUser } from './users';
-import { logout } from '@/_lib/actions';
 
 export async function getMyStays() {
     const session = await verifySession()

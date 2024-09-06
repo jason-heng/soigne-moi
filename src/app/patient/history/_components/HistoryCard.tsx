@@ -1,9 +1,9 @@
 "use client"
 
 import { getMyStays } from "@/_data/stays"
-import { useEffect, useRef, useState } from "react"
-import { StaysCard } from "./StaysCard"
+import { useEffect, useState } from "react"
 import { SelectedPrescriptionCard } from "./SelectedPrescriptionCard"
+import { StaysCard } from "./StaysCard"
 
 export function HistoryCard({ stays }: { stays: Awaited<ReturnType<typeof getMyStays>> }) {
     const [selectedStay, setSelectedStay] = useState<Awaited<ReturnType<typeof getMyStays>>[0]>()

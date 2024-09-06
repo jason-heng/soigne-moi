@@ -71,7 +71,7 @@ describe("Auth Page", () => {
         expect(loginTabTrigger).toBeInTheDocument()
         expect(loginTabTrigger).toHaveAttribute("data-state", "active")
     })
-    
+
     it("reacts to search params: undefined", () => {
         render(<AuthPage />)
 

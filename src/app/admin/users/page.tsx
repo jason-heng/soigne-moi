@@ -1,6 +1,6 @@
+import { getUser, getUsers } from "@/_data/users"
 import { usersColumns } from "./_components/UsersColumns"
 import { UsersDataTable } from "./_components/UsersDataTable"
-import { getUser, getUsers } from "@/_data/users"
 
 export default async function AdminUsersPage() {
   const data = await getUsers()

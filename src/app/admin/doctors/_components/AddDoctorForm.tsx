@@ -1,14 +1,13 @@
 "use client"
 
-import { useFormState } from "react-dom";
-import { addDoctor } from "../actions";
-import { useEffect, useRef } from "react";
-import toast from "react-hot-toast";
+import SubmitButton from "@/_components/SubmitButton";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/_components/ui/card";
 import { Input } from "@/_components/ui/input";
-import { Button } from "@/_components/ui/button";
 import { Label } from "@/_components/ui/label";
-import SubmitButton from "@/_components/SubmitButton";
+import { useEffect, useRef } from "react";
+import { useFormState } from "react-dom";
+import toast from "react-hot-toast";
+import { addDoctor } from "../actions";
 
 export default function AddDoctorForm() {
     const [state, action] = useFormState(addDoctor, null)

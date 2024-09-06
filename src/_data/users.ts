@@ -1,10 +1,10 @@
 import 'server-only';
 
+import { logout } from '@/_lib/actions';
 import prisma from "@/_lib/db";
 import { verifySession } from "@/_lib/session";
-import { logout } from '@/_lib/actions';
-import { redirect } from 'next/navigation';
 import { Prisma } from '@prisma/client';
+import { redirect } from 'next/navigation';
 
 export async function getUser() {
     const session = await verifySession()

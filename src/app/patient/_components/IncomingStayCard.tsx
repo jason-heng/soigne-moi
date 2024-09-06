@@ -1,5 +1,5 @@
-import { formatDate } from "@/_lib/utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card";
+import { formatDate } from "@/_lib/utils";
 import { IncomingStay } from "../data";
 
 export function IncomingStayCard({ stay }: { stay: IncomingStay }) {

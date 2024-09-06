@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 import AddSecretaryForm from './AddSecretaryForm';
 
 jest.mock("react-dom", () => ({

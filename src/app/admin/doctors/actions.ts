@@ -1,8 +1,8 @@
 "use server"
 
 import { getUser } from "@/_data/users";
-import prisma from "@/_lib/db";
 import { logout } from "@/_lib/actions";
+import prisma from "@/_lib/db";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";

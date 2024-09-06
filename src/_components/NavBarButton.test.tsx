@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import NavBarButton from "./NavBarButton"
-import { render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react";
+import NavBarButton from "./NavBarButton";
 
 describe("Nav Bar Link", () => {
     it("renders the link", () => {

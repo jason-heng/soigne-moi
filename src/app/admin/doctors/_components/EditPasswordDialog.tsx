@@ -1,14 +1,14 @@
 "use client"
 
+import SubmitButton from '@/_components/SubmitButton'
 import { Button } from '@/_components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/_components/ui/dialog'
 import { Input } from '@/_components/ui/input'
 import { Label } from '@/_components/ui/label'
 import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
-import { editDoctorPassword } from '../actions'
 import toast from 'react-hot-toast'
-import SubmitButton from '@/_components/SubmitButton'
+import { editDoctorPassword } from '../actions'
 
 export default function EditPasswordDialog({ doctorId }: { doctorId: number }) {
     const [state, action] = useFormState(editDoctorPassword, null)

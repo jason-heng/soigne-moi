@@ -1,16 +1,16 @@
 "use client"
 
+import SubmitButton from "@/_components/SubmitButton"
+import { AlertDialogFooter } from "@/_components/ui/alert-dialog"
+import { Button } from '@/_components/ui/button'
+import { Checkbox } from "@/_components/ui/checkbox"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/_components/ui/dialog"
 import { getDoctor } from "@/_data/doctors"
 import { Label } from "@radix-ui/react-label"
-import { Button } from '@/_components/ui/button'
-import { useEffect, useRef, useState } from "react"
-import toast from "react-hot-toast"
+import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
-import { Checkbox } from "@/_components/ui/checkbox"
+import toast from "react-hot-toast"
 import { editTimeTable } from "../actions"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/_components/ui/dialog"
-import { AlertDialogFooter } from "@/_components/ui/alert-dialog"
-import SubmitButton from "@/_components/SubmitButton"
 
 export function EditTimeTableDialog({ doctor }: { doctor: NonNullable<Awaited<ReturnType<typeof getDoctor>>> }) {
     const [state, action] = useFormState(editTimeTable, null)
@@ -105,7 +105,7 @@ export function EditTimeTableDialog({ doctor }: { doctor: NonNullable<Awaited<Re
                             Dimanche
                         </Label>
                     </div>
-                    
+
                     <AlertDialogFooter>
                         <SubmitButton>Sauvegarder</SubmitButton>
                     </AlertDialogFooter>

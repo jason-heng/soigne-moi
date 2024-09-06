@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import { CurrentPrescriptionCard } from './CurrentPrescriptionCard';
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 import { CurrentStay } from '../data';
+import { CurrentPrescriptionCard } from './CurrentPrescriptionCard';
 
 const mockStay: CurrentStay = {
     start: new Date(2024, 0, 1),

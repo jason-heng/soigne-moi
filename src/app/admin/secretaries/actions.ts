@@ -1,11 +1,11 @@
 "use server"
 
 import { getUser } from "@/_data/users";
+import { logout } from "@/_lib/actions";
 import prisma from "@/_lib/db";
+import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import bcrypt from "bcrypt";
-import { logout } from "@/_lib/actions";
 
 const NewSecretaryFormSchema = z.object({
     lastName: z.string().min(1, "Nom invalide !"),
