@@ -21,12 +21,12 @@ export default function AddDoctorForm() {
     }, [state])
 
     return (
-        <Card className='overflow-y-auto relative w-[35%]'>
-            <CardHeader className='pb-1 sticky top-0 bg-background'>
+        <Card className='overflow-y-auto relative lg:w-[35%]'>
+            <CardHeader className='lg:pb-1 bg-background'>
                 <CardTitle className='text-xl text-primary'>Ajouter un docteur</CardTitle>
             </CardHeader>
             <form action={action} ref={formRef}>
-                <CardContent>
+                <CardContent className="space-y-3 lg:space-y-0">
                     <div>
                         <Label htmlFor="lastName">Nom</Label>
                         <Input type="text" placeholder="Le nom du docteur" autoComplete='off' name='lastName' />
@@ -53,7 +53,7 @@ export default function AddDoctorForm() {
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
                 </CardContent>
-                <CardFooter className='absolute right-0 bottom-0'>
+                <CardFooter className='flex justify-end lg:absolute lg:right-0 lg:bottom-0'>
                     <SubmitButton>Ajouter</SubmitButton>
                 </CardFooter>
             </form>

@@ -29,9 +29,9 @@ export function EditTimeTableDialog({ doctor }: { doctor: NonNullable<Awaited<Re
             <DialogTrigger asChild>
                 <Button variant="secondary" className="shadow-md h-7 hover:text-primary">Emploi du temps</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="max-w-[350px] lg:max-w-[425px] rounded-lg">
                 <DialogHeader>
-                    <DialogTitle>Emploi du temps de Dr. {doctor.firstName} {doctor.lastName}</DialogTitle>
+                    <DialogTitle className="text-left ">Emploi du temps de Dr. {doctor.firstName} {doctor.lastName}</DialogTitle>
                 </DialogHeader>
                 <form action={action} className="flex flex-col gap-2">
                     <input type="text" name="doctor-id" value={doctor.id} className="hidden" />

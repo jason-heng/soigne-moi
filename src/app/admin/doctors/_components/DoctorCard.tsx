@@ -8,7 +8,7 @@ import { RemoveAlertDialog } from "./RemoveAlertDialog"
 export default function DoctorCard({ doctor }: { doctor: NonNullable<Awaited<ReturnType<typeof getDoctor>>> }) {
     return (
         <div className='border-[1px] border-gray-300 shadow-md rounded-lg p-5'>
-            <div className='flex flex-row justify-between w-full'>
+            <div className='flex flex-col lg:flex-row gap-8 justify-between w-full'>
                 <div className='flex flex-col'>
                     <h4 className='font-bold text-lg text-gray-700 w-fit'>{doctor.firstName} {doctor.lastName}</h4>
                     <div className='mt-1'>

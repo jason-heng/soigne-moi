@@ -19,10 +19,10 @@ export function RemoveAlertDialog({ doctorId }: { doctorId: number }) {
             <AlertDialogTrigger asChild>
                 <Button variant="secondary" className="shadow-md h-7 text-destructive hover:bg-destructive hover:text-white">Retirer</Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="max-w-[350px] lg:max-w-[425px] rounded-lg">
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Etes vous sure de continuer ?</AlertDialogTitle>
-                    <AlertDialogDescription>
+                    <AlertDialogTitle className="text-left">Etes vous sure de continuer ?</AlertDialogTitle>
+                    <AlertDialogDescription className="text-left">
                         Cette action est irreversible. Ce docteur et tous ces avis et séjours seront definitivement supprimé des serveurs.
                     </AlertDialogDescription>
                 </AlertDialogHeader>

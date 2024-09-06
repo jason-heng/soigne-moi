@@ -8,7 +8,7 @@ export default async function page() {
   return (
     <div className="flex-1 flex p-5 flex-col gap-5">
       <h1 className='text-xl'>Géstion des docteurs</h1>
-      <div className="flex flex-1 gap-5 min-h-0">
+      <div className="flex flex-1 flex-col lg:flex-row gap-5 min-h-0">
         <DoctorsList doctors={doctors} />
         <AddDoctorForm />
       </div>

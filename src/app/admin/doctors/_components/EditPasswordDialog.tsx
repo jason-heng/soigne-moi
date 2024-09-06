@@ -26,7 +26,7 @@ export default function EditPasswordDialog({ doctorId }: { doctorId: number }) {
             <DialogTrigger asChild>
                 <Button variant="secondary" className=' h-7 text-s hover:bg-primary text-primary hover:text-white shadow-md'>Modifier le mot de passe</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="max-w-[350px] lg:max-w-[425px] rounded-lg">
                 <DialogHeader>
                     <DialogTitle>Changer le mot de passe</DialogTitle>
                 </DialogHeader>
