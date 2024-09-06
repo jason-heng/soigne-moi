@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import EditInfoForm from "./EditInfoForm"
-import { render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react";
+import EditInfoForm from "./EditInfoForm";
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),

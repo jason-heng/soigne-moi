@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import EditPasswordForm from "./EditPasswordForm"
-import { render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react";
+import EditPasswordForm from "./EditPasswordForm";
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
@@ -57,7 +57,7 @@ describe("Edit Password Form", () => {
     it("renders the submit button", () => {
         render(<EditPasswordForm />)
 
-        const submitButton = screen.getByRole("button", {name: "Changer le mot de passe"})
+        const submitButton = screen.getByRole("button", { name: "Changer le mot de passe" })
 
         expect(submitButton).toBeInTheDocument()
     })

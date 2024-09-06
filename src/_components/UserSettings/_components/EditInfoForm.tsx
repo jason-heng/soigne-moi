@@ -1,16 +1,15 @@
 "use client"
 
+import SubmitButton from '@/_components/SubmitButton'
 import { Input } from '@/_components/ui/input'
 import { Label } from '@/_components/ui/label'
-import { getUser } from '@/_data/users'
 import { useEffect } from 'react'
+import { useFormState } from 'react-dom'
 import toast from 'react-hot-toast'
 import { editInfo } from '../actions'
-import { useFormState } from 'react-dom'
-import SubmitButton from '@/_components/SubmitButton'
 
-export default function EditInfoForm({ firstName, lastName, email, address }: { 
-    firstName:string
+export default function EditInfoForm({ firstName, lastName, email, address }: {
+    firstName: string
     lastName: string
     email: string
     address: string

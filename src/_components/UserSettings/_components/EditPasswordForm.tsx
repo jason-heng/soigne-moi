@@ -1,12 +1,12 @@
 "use client"
 
+import SubmitButton from "@/_components/SubmitButton"
 import { Input } from "@/_components/ui/input"
 import { Label } from "@/_components/ui/label"
 import { useEffect, useRef } from "react"
+import { useFormState } from "react-dom"
 import toast from "react-hot-toast"
 import { editPassword } from "../actions"
-import { useFormState } from "react-dom"
-import SubmitButton from "@/_components/SubmitButton"
 
 export default function EditPasswordForm() {
     const [state, action] = useFormState(editPassword, null)
@@ -20,7 +20,7 @@ export default function EditPasswordForm() {
     }, [state])
 
     return (
-        <form className='flex flex-col gap-2 max-w-[300px]' action={action} ref={formRef}>
+        <form className='flex flex-col gap-4 max-w-[260px]' action={action} ref={formRef}>
             <h2 className='text-lg'>Changement de mot de passe</h2>
             <div className='w-full'>
                 <Label>Nouveau mot de passe:</Label>
@@ -37,7 +37,7 @@ export default function EditPasswordForm() {
                 <Input type="password" placeholder='Entrez votre mot de passe actuel...' name='password' id="password" />
                 {state?.errors?.password && <p className='text-sm text-destructive'>{state?.errors.password}</p>}
             </div>
-            <SubmitButton className='w-full mt-4'>Changer le mot de passe</SubmitButton>
+            <SubmitButton className='w-full mt-2'>Changer le mot de passe</SubmitButton>
         </form>
     )
 }
