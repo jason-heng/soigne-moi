@@ -32,7 +32,7 @@ export function UsersDataTable<TData, TValue>({
     })
 
     return (
-        <div className="rounded-md border h-[100%] overflow-auto w-[100%]">
+        <div className="rounded-md border h-[100%] max-h-[600px] lg:max-h-[100%] overflow-auto w-[100%]">
             <Table>
                 <TableHeader className="sticky top-0 bg-white shadow-md z-40">
                     {table.getHeaderGroups().map((headerGroup) => (

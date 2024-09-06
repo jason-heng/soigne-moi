@@ -32,7 +32,7 @@ export function SecretariesDataTable<TData, TValue>({
     })
 
     return (
-        <div className="relative rounded-md border  overflow-y-scroll flex-1">
+        <div className="relative rounded-md border h-[100%] max-h-[500px] lg:max-h-[100%]  overflow-y-scroll flex-1">
             <Table>
                 <TableHeader className="sticky top-0 bg-white shadow-md z-50">
                     {table.getHeaderGroups().map((headerGroup) => (
