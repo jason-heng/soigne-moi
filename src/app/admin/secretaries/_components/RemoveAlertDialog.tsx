@@ -14,10 +14,10 @@ export function RemoveAlertDialog({ secretaryId, open, setOpen }: { secretaryId:
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
-            <AlertDialogContent>
+            <AlertDialogContent className="max-w-[350px] lg:max-w-[425px] rounded-lg">
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Etes vous sure de continuer ?</AlertDialogTitle>
-                    <AlertDialogDescription>
+                    <AlertDialogTitle className="text-left">Etes vous sure de continuer ?</AlertDialogTitle>
+                    <AlertDialogDescription className="text-left">
                         Cette action est irreversible. Cette secrétaire sera definitivement supprimé des serveurs.
                     </AlertDialogDescription>
                 </AlertDialogHeader>

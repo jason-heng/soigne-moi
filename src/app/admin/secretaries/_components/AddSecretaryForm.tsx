@@ -21,7 +21,7 @@ export default function AddSecretaryForm() {
     }, [state])
 
     return (
-        <Card className='overflow-y-auto relative space-y-3 w-[35%]'>
+        <Card className='overflow-y-auto relative space-y-3 lg:w-[35%]'>
             <CardHeader className='pb-2 sticky top-0 bg-background'>
                 <CardTitle className='text-xl text-primary'>Ajouter une secrétaire</CardTitle>
             </CardHeader>
@@ -48,7 +48,7 @@ export default function AddSecretaryForm() {
                         {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
                     </div>
                 </CardContent>
-                <CardFooter className='absolute right-0 bottom-0'>
+                <CardFooter className='flex justify-end lg:absolute lg:right-0 lg:bottom-0'>
                     <SubmitButton>Ajouter</SubmitButton>
                 </CardFooter>
             </form>

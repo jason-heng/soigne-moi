@@ -21,7 +21,7 @@ export default function EditPasswordDialog({ secretaryId, open, setOpen }: { sec
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="max-w-[350px] lg:max-w-[425px] rounded-lg">
                 <DialogHeader>
                     <DialogTitle>Changer le mot de passe</DialogTitle>
                 </DialogHeader>
