@@ -75,7 +75,7 @@ export async function getIncomingStay() {
     })
 }
 
-function calculateOverbookedDates(stays: { start: Date, end: Date }[]) {
+export function findOverbookedDates(stays: { start: Date, end: Date }[]) {
     const dates: Record<string, number> = {}
 
     for (const stay of stays) {
@@ -133,7 +133,7 @@ export async function getDoctors() {
     })
 
     const parsedDoctors = doctors.map(doctor => {
-        const overbookedDates = calculateOverbookedDates(doctor.stays)
+        const overbookedDates = findOverbookedDates(doctor.stays)
 
         const workingDays: WeekDay[] = []
 
