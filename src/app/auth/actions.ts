@@ -2,6 +2,7 @@
 
 import prisma from "@/_lib/db"
 import { createSession } from "@/_lib/session"
+import { FormState, fromErrorToFormState, toFormState } from "@/_lib/to-form-state"
 import bcrypt from "bcrypt"
 import { z } from "zod"
 
@@ -14,89 +15,80 @@ const SignupFormSchema = z.object({
     repeatPassword: z.string()
 })
 
-export async function signup(_: any, formData: FormData) {
-    const validationResult = SignupFormSchema.safeParse({
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        address: formData.get('address'),
-        email: formData.get('email'),
-        password: formData.get('password'),
-        repeatPassword: formData.get('repeatPassword'),
-    })
+export async function signup(state: FormState, formData: FormData): Promise<FormState> {
+    try {
+        const { firstName, lastName, address, email, password, repeatPassword } = SignupFormSchema.parse({
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            address: formData.get('address'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+            repeatPassword: formData.get('repeatPassword'),
+        })
+    
+        if (password !== repeatPassword) return toFormState("ERROR", {
+            fieldErrors: {
+                repeatPassword: ["Mot de passes differents !"]
+            }
+        })
+    
+        const hashedPassword = await bcrypt.hash(password, 10)
+    
+        const user = await prisma.user.create({
+            data: {
+                firstName,
+                lastName,
+                address,
+                email,
+                password: hashedPassword
+            }
+        })
+    
+        await createSession({ id: user.id, firstName: user.firstName, admin: false }, '/patient')
 
-    if (!validationResult.success) {
-        return {
-            errors: validationResult.error.flatten().fieldErrors
-        }
+        return toFormState("SUCCESS", {
+            message: "Compte crée !",
+            redirect: "/patient"
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
-
-    const { firstName, lastName, address, email, password, repeatPassword } = validationResult.data
-
-    if (password !== repeatPassword) return {
-        errors: {
-            firstName: undefined,
-            lastName: undefined,
-            address: undefined,
-            email: undefined,
-            password: undefined,
-            repeatPassword: "Mot de passes differents !",
-        }
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    const user = await prisma.user.create({
-        data: {
-            firstName,
-            lastName,
-            address,
-            email,
-            password: hashedPassword
-        }
-    })
-
-    await createSession({ id: user.id, firstName: user.firstName, admin: false }, '/patient')
 }
 
 const LoginFormSchema = z.object({
-    email: z.string().email("Email invalide !"),
-    password: z.string().min(1, "Mot de passe invalide !")
+    email: z.string({ required_error: "Email requis." }).email("Email invalide."),
+    password: z.string({ required_error: "Mot de passe requis." }).min(1, "Mot de passe requis.")
 })
 
-export async function login(_: any, formData: FormData) {
-    const validationResult = LoginFormSchema.safeParse({
-        email: formData.get('email'),
-        password: formData.get('password'),
-    })
+export async function login(state: FormState, formData: FormData): Promise<FormState> {
+    try {
+        const { email, password } = LoginFormSchema.parse({
+            email: formData.get('email'),
+            password: formData.get('password'),
+        })
 
-    if (!validationResult.success) {
-        return {
-            errors: validationResult.error.flatten().fieldErrors
-        }
+        const user = await prisma.user.findUnique({ where: { email } })
+
+        if (!user) return toFormState("ERROR", {
+            fieldErrors: {
+                email: ["Utilisateur introuvable !"]
+            }
+        })
+
+        const correctPassword = await bcrypt.compare(password, user.password)
+        if (!correctPassword) return toFormState("ERROR", {
+            fieldErrors: {
+                password: ["Mot de passe incorrect !"]
+            }
+        })
+
+        await createSession({ id: user.id, firstName: user.firstName, admin: user.admin }, user.admin ? '/admin' : '/patient')
+
+        return toFormState("SUCCESS", {
+            message: "Connecté !",
+            redirect: user.admin ? '/admin' : '/patient'
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
-
-    const { email, password } = validationResult.data
-
-    const user = await prisma.user.findUnique({
-        where: {
-            email
-        }
-    })
-
-    if (!user) return {
-        errors: {
-            email: "Utilisateur introuvable !",
-            password: undefined
-        }
-    }
-
-    const correctPassword = await bcrypt.compare(password, user.password)
-    if (!correctPassword) return {
-        errors: {
-            email: undefined,
-            password: "Mot de passe incorrect !"
-        }
-    }
-
-    await createSession({ id: user.id, firstName: user.firstName, admin: user.admin }, user.admin ? '/admin' : '/patient')
 }
