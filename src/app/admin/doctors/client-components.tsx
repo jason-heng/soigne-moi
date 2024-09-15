@@ -1,63 +1,88 @@
 "use client"
 
+import { FieldError } from "@/components/field-error";
 import SubmitButton from "@/components/submit-button";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Button, buttonVariants } from '@/components/ui/button';
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/password-input";
 import { getDoctor, getDoctors } from '@/data/doctors';
+import { useFormReset } from "@/hooks/use-form-reset";
+import { useToastMessage } from "@/hooks/use-toast-message";
+import { EMPTY_FORM_STATE } from "@/lib/to-form-state";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
-import toast from "react-hot-toast";
 import { addDoctor, editDoctorPassword, editTimeTable, removeDoctor } from "./actions";
 import { DoctorCard } from "./server-components";
 
 export function AddDoctorForm() {
-    const [state, action] = useFormState(addDoctor, null)
+    const [state, action] = useFormState(addDoctor, EMPTY_FORM_STATE)
 
-    const formRef = useRef<HTMLFormElement>(null);
-
-    useEffect(() => {
-        if (state?.success) {
-            toast.success('Docteur ajouté !')
-        }
-    }, [state])
+    useToastMessage(state)
+    const formRef = useFormReset(state)
 
     return (
         <Card className='overflow-y-auto relative lg:w-[35%]'>
-            <CardHeader className='lg:pb-1 bg-background'>
+            <CardHeader className='bg-background'>
                 <CardTitle className='text-xl text-primary'>Ajouter un docteur</CardTitle>
             </CardHeader>
             <form action={action} ref={formRef}>
-                <CardContent className="space-y-3 lg:space-y-0">
-                    <div>
-                        <Label htmlFor="lastName">Nom</Label>
-                        <Input type="text" placeholder="Le nom du docteur" autoComplete='off' name='lastName' />
-                        {state?.errors?.lastName && <p className='text-sm text-destructive'>{state.errors.lastName}</p>}
+                <CardContent className="space-y-3">
+                    <div className="flex gap-2">
+                        <div className="flex-1">
+                            <Label htmlFor="last-name" className="text-muted-foreground">Nom</Label>
+                            <Input
+                                name="last-name"
+                                id="last-name"
+                                type="text"
+                                placeholder="Le nom du docteur"
+                            />
+                            <FieldError formState={state} name="lastName" />
+                        </div>
+                        <div className="flex-1">
+                            <Label htmlFor="first-name" className="text-muted-foreground">Prénom</Label>
+                            <Input
+                                name="first-name"
+                                id="first-name"
+                                type="text"
+                                placeholder="Le prénom du docteur"
+                            />
+                            <FieldError formState={state} name="firstName" />
+                        </div>
                     </div>
                     <div>
-                        <Label htmlFor="firstName">Prénom</Label>
-                        <Input type="text" placeholder="Le prénom du docteur" autoComplete='off' name='firstName' />
-                        {state?.errors?.firstName && <p className='text-sm text-destructive'>{state.errors.firstName}</p>}
+                        <Label htmlFor="speciality" className="text-muted-foreground">Spécialité</Label>
+                        <Input
+                            name="speciality"
+                            id="speciality"
+                            type="text"
+                            placeholder="La spécialité du docteur"
+                        />
+                        <FieldError formState={state} name="speciality" />
                     </div>
                     <div>
-                        <Label htmlFor="speciality">Specialité</Label>
-                        <Input type="text" placeholder="La specialité du docteur" autoComplete='off' name='speciality' />
-                        {state?.errors?.speciality && <p className='text-sm text-destructive'>{state.errors.speciality}</p>}
+                        <Label htmlFor="registration-number" className="text-muted-foreground">Matricule</Label>
+                        <Input
+                            name="registration-number"
+                            id="registration-number"
+                            type="number"
+                            placeholder="Le matricule du docteur"
+                        />
+                        <FieldError formState={state} name="registrationNumber" />
                     </div>
                     <div>
-                        <Label htmlFor="registrationNumber">Matricule</Label>
-                        <Input type="number" placeholder="Le matricule du docteur" autoComplete='off' name='registrationNumber' />
-                        {state?.errors?.registrationNumber && <p className='text-sm text-destructive'>{state.errors.registrationNumber}</p>}
-                    </div>
-                    <div>
-                        <Label htmlFor="password">Mot de passe</Label>
-                        <Input type="password" placeholder="Le mot de passe du docteur" autoComplete='new-password' name="password" />
-                        {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
+                        <Label htmlFor="password" className="text-muted-foreground">Mot de passe</Label>
+                        <PasswordInput
+                            name="password"
+                            id="password"
+                            placeholder="Le mot de passe du docteur"
+                        />
+                        <FieldError formState={state} name="password" />
                     </div>
                 </CardContent>
                 <CardFooter className='flex justify-end lg:absolute lg:right-0 lg:bottom-0'>
@@ -92,12 +117,13 @@ export function DoctorsList({ doctors }: { doctors: Awaited<ReturnType<typeof ge
 }
 
 export function EditPasswordDialog({ doctorId }: { doctorId: number }) {
-    const [state, action] = useFormState(editDoctorPassword, null)
+    const [state, action] = useFormState(editDoctorPassword.bind(null, doctorId), EMPTY_FORM_STATE)
     const [open, setOpen] = useState(false)
 
+    useToastMessage(state)
+
     useEffect(() => {
-        if (state?.success) {
-            toast.success('Mot de passe modifié !')
+        if (state.status === "SUCCESS") {
             setOpen(false)
         }
     }, [state])
@@ -113,7 +139,6 @@ export function EditPasswordDialog({ doctorId }: { doctorId: number }) {
                 </DialogHeader>
                 <form action={action}>
                     <div className="grid gap-2 py-4">
-                        <input type="text" className='hidden' name='doctor-id' value={doctorId} />
                         <Label htmlFor="name" >
                             Nouveau mot de passe
                         </Label>
@@ -122,7 +147,7 @@ export function EditPasswordDialog({ doctorId }: { doctorId: number }) {
                             name="password"
                             className="col-span-3"
                         />
-                        {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
+                        <FieldError formState={state} name="password" />
                     </div>
                     <DialogFooter>
                         <SubmitButton>Sauvegarder</SubmitButton>
@@ -134,15 +159,15 @@ export function EditPasswordDialog({ doctorId }: { doctorId: number }) {
 }
 
 export function EditTimeTableDialog({ doctor }: { doctor: NonNullable<Awaited<ReturnType<typeof getDoctor>>> }) {
-    const [state, action] = useFormState(editTimeTable, null)
+    const [state, action] = useFormState(editTimeTable.bind(null, doctor.id), EMPTY_FORM_STATE)
     const [open, setOpen] = useState(false)
 
+    useToastMessage(state)
+
     useEffect(() => {
-        if (state?.success) {
-            toast.success("Emploi du temps modifié !")
+        if (state.status === "SUCCESS") {
             setOpen(false)
         }
-
     }, [state])
 
     return (
@@ -237,12 +262,10 @@ export function EditTimeTableDialog({ doctor }: { doctor: NonNullable<Awaited<Re
 }
 
 export function RemoveAlertDialog({ doctorId }: { doctorId: number }) {
+    const [state, action] = useFormState(removeDoctor.bind(null, doctorId), EMPTY_FORM_STATE)
     const [open, setOpen] = useState(false)
 
-    async function handleConfirm() {
-        await removeDoctor(doctorId)
-        toast.success('Docteur retiré !')
-    }
+    useToastMessage(state)
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
@@ -258,7 +281,9 @@ export function RemoveAlertDialog({ doctorId }: { doctorId: number }) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction className={buttonVariants({ variant: "destructive" })} onClick={handleConfirm}>Confirmer</AlertDialogAction>
+                    <form action={action}>
+                        <SubmitButton variant="destructive">Confirmer</SubmitButton>
+                    </form>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

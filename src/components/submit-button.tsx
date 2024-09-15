@@ -1,11 +1,18 @@
 "use client"
 
+import { VariantProps } from 'class-variance-authority'
 import { Loader2 } from 'lucide-react'
 import { ComponentPropsWithoutRef } from 'react'
 import { useFormStatus } from 'react-dom'
-import { Button } from './ui/button'
+import { Button, buttonVariants } from './ui/button'
 
-export default function SubmitButton({ disabled, children, ...props }: ComponentPropsWithoutRef<"button">) {
+export interface SubmitButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+    asChild?: boolean
+}
+
+export default function SubmitButton({ disabled, children, ...props }: SubmitButtonProps) {
     const { pending } = useFormStatus()
 
     return (

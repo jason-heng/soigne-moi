@@ -3,79 +3,69 @@
 import { getUser } from "@/data/users";
 import prisma from "@/lib/prisma";
 import { deleteSession } from "@/lib/session";
+import { FormState, fromErrorToFormState, toFormState } from "@/lib/to-form-state";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const AddDoctorFormSchema = z.object({
-    firstName: z.string().min(1, "Prénom invalide !"),
-    lastName: z.string().min(1, "Nom invalide !"),
-    speciality: z.string().min(1, "Spécialité invalide !"),
-    registrationNumber: z.coerce.number().min(1, "Matricule invalide !"),
-    password: z.string().min(1, "Mot de passe invalide !"),
+    firstName: z.string().min(1, "Prénom requis."),
+    lastName: z.string().min(1, "Nom requis."),
+    speciality: z.string().min(1, "Spécialité requisé."),
+    registrationNumber: z.coerce.number().min(1, "Matricule requis."),
+    password: z.string().min(1, "Mot de passe requis."),
 });
 
-export async function addDoctor(_: any, formData: FormData) {
+export async function addDoctor(state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
+
     if (!user.admin) {
         deleteSession()
         redirect('/auth')
     }
 
-    const validationResult = AddDoctorFormSchema.safeParse({
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        speciality: formData.get('speciality'),
-        registrationNumber: formData.get('registrationNumber'),
-        password: formData.get('password'),
-    });
+    try {
+        const { firstName, lastName, speciality, registrationNumber, password } = AddDoctorFormSchema.parse({
+            firstName: formData.get('first-name'),
+            lastName: formData.get('last-name'),
+            speciality: formData.get('speciality'),
+            registrationNumber: formData.get('registration-number'),
+            password: formData.get('password'),
+        });
 
-    if (!validationResult.success) return {
-        errors: validationResult.error.flatten().fieldErrors
-    }
+        const registrationNumberUsed = await prisma.doctor.count({ where: { registrationNumber } })
 
-    const { firstName, lastName, speciality, registrationNumber, password } = validationResult.data
+        if (registrationNumberUsed) return toFormState("ERROR", {
+            fieldErrors: {
+                registrationNumber: ["Matricule déja utilisé !"],
+            }
+        })
 
-    const registrationNumberUsed = await prisma.doctor.count({
-        where: {
-            registrationNumber
-        }
-    })
+        const hashedPassword = await bcrypt.hash(password, 10)
 
-    if (registrationNumberUsed) return {
-        errors: {
-            firstName: undefined,
-            lastName: undefined,
-            speciality: undefined,
-            registrationNumber: "Matricule déja utilisé !",
-            password: undefined,
-        }
-    }
+        await prisma.doctor.create({
+            data: {
+                registrationNumber,
+                firstName,
+                lastName,
+                speciality,
+                password: hashedPassword,
+            }
+        })
 
-    const hashedPassword = await bcrypt.hash(password, 10)
+        revalidatePath("/admin/doctors")
 
-    const newDoctor = {
-        registrationNumber,
-        firstName,
-        lastName,
-        speciality,
-        password: hashedPassword,
-    }
-
-    await prisma.doctor.create({
-        data: newDoctor
-    })
-
-    revalidatePath("/admin/doctors")
-
-    return {
-        success: true
+        return toFormState("SUCCESS", {
+            message: "Docteur ajouté !",
+            reset: true
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
 }
 
 const EditTimeTableFormSchema = z.object({
-    doctorId: z.coerce.number().min(1, "Identifiant invalide !"),
     worksSunday: z.boolean(),
     worksMonday: z.boolean(),
     worksTuesday: z.boolean(),
@@ -85,51 +75,47 @@ const EditTimeTableFormSchema = z.object({
     worksSaturday: z.boolean(),
 });
 
-export async function editTimeTable(_: any, formData: FormData) {
+export async function editTimeTable(doctorId: number, state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
+
     if (!user.admin) {
         deleteSession()
         redirect('/auth')
     }
 
-    const validationResult = EditTimeTableFormSchema.safeParse({
-        doctorId: formData.get('doctor-id'),
-        worksSunday: formData.get('works-sunday') === 'on',
-        worksMonday: formData.get('works-monday') === 'on',
-        worksTuesday: formData.get('works-tuesday') === 'on',
-        worksWednesday: formData.get('works-wednesday') === 'on',
-        worksThursday: formData.get('works-thursday') === 'on',
-        worksFriday: formData.get('works-friday') === 'on',
-        worksSaturday: formData.get('works-saturday') === 'on',
-    });
+    try {
+        const data = EditTimeTableFormSchema.parse({
+            worksSunday: formData.get('works-sunday') === 'on',
+            worksMonday: formData.get('works-monday') === 'on',
+            worksTuesday: formData.get('works-tuesday') === 'on',
+            worksWednesday: formData.get('works-wednesday') === 'on',
+            worksThursday: formData.get('works-thursday') === 'on',
+            worksFriday: formData.get('works-friday') === 'on',
+            worksSaturday: formData.get('works-saturday') === 'on',
+        });
 
-    if (!validationResult.success) return {
-        errors: validationResult.error.flatten().fieldErrors
-    }
+        const doctorExists = await prisma.doctor.count({ where: { id: doctorId } })
 
-    const { doctorId, worksSunday, worksMonday, worksFriday, worksSaturday, worksThursday, worksTuesday, worksWednesday } = validationResult.data
+        if (!doctorExists) return toFormState("ERROR", {
+            message: "Docteur introuvable !"
+        })
 
-    await prisma.doctor.update({
-        where: { id: doctorId },
-        data: {
-            worksSunday,
-            worksMonday,
-            worksTuesday,
-            worksWednesday,
-            worksThursday,
-            worksFriday,
-            worksSaturday,
-        },
-    })
+        await prisma.doctor.update({
+            where: { id: doctorId },
+            data,
+        })
 
-    revalidatePath('/admin/doctors')
+        revalidatePath('/admin/doctors')
 
-    return {
-        success: true
+        return toFormState("SUCCESS", {
+            message: "Emploi du temps modifié !"
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
 }
 
-export async function removeDoctor(doctorId: number) {
+export async function removeDoctor(doctorId: number, state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
 
     if (!user.admin) {
@@ -138,56 +124,51 @@ export async function removeDoctor(doctorId: number) {
     }
 
     await prisma.doctor.delete({
-        where: { id: doctorId },
+        where: { id: doctorId }
     })
 
     revalidatePath('/admin/doctors')
+
+    return toFormState("SUCCESS", {
+        message: "Docteur retiré !"
+    })
 }
 
 const EditDoctorPasswordFormSchema = z.object({
-    password: z.string().min(1, "Mot de passe invalide !"),
-    doctorId: z.coerce.number().min(1, "Identifiant invalide !")
+    password: z.string().min(1, "Mot de passe requis."),
 })
 
-export async function editDoctorPassword(_: any, formData: FormData) {
-
+export async function editDoctorPassword(doctorId: number, state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
+
     if (!user.admin) {
         deleteSession()
         redirect('/auth')
     }
 
-    const validationResult = EditDoctorPasswordFormSchema.safeParse({
-        password: formData.get('password'),
-        doctorId: formData.get('doctor-id')
-    });
+    try {
+        const { password } = EditDoctorPasswordFormSchema.parse({
+            password: formData.get('password'),
+        });
 
+        const doctorExists = await prisma.doctor.count({ where: { id: doctorId } })
 
-    if (!validationResult.success) return {
-        errors: validationResult.error.flatten().fieldErrors
-    }
+        if (!doctorExists) return toFormState("ERROR", {
+            message: "Docteur introuvable !"
+        })
 
-    const { password, doctorId } = validationResult.data
+        const hashedPassword = await bcrypt.hash(password, 10)
 
+        await prisma.doctor.update({
+            where: { id: doctorId },
+            data: { password: hashedPassword },
+        })
 
-    if (!(await prisma.doctor.count({ where: { id: doctorId } }))) return {
-        errors: {
-            doctorId: "Docteur introuvable !",
-            password: undefined,
-        }
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    await prisma.doctor.update({
-        where: { id: doctorId },
-        data: { password: hashedPassword },
-    })
-
-    revalidatePath("/admin/doctors")
-
-    return {
-        success: true
+        return toFormState("SUCCESS", {
+            message: "Mot de passe modifié !"
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
 }
 
