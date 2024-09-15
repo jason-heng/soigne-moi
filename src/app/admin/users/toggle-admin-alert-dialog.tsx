@@ -1,15 +1,23 @@
 "use client"
 
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { Dispatch, SetStateAction } from "react"
-import toast from "react-hot-toast"
+import SubmitButton from "@/components/submit-button"
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import { useToastMessage } from "@/hooks/use-toast-message"
+import { EMPTY_FORM_STATE } from "@/lib/to-form-state"
+import { Dispatch, SetStateAction, useEffect } from "react"
+import { useFormState } from "react-dom"
 import { setAdmin } from "./actions"
 
 export function ToggleAdminAlertDialog({ userId, isAdmin, open, setOpen }: { userId: number, isAdmin: boolean, open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
-    async function handleConfirm() {
-        await setAdmin(userId, !isAdmin)
-        toast.success(isAdmin ? "L'utilisateur n'est plus un administrateur !" : "L'utilisateur est devenu un administrateur !")
-    }
+    const [state, action] = useFormState(setAdmin.bind(null, userId, !isAdmin), EMPTY_FORM_STATE)
+
+    useToastMessage(state)
+
+    useEffect(() => {
+        if (state.status === "SUCCESS") {
+            setOpen(false)
+        }
+    }, [state])
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
@@ -22,7 +30,9 @@ export function ToggleAdminAlertDialog({ userId, isAdmin, open, setOpen }: { use
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleConfirm}>Confirmer</AlertDialogAction>
+                    <form action={action}>
+                        <SubmitButton >Confirmer</SubmitButton>
+                    </form>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
