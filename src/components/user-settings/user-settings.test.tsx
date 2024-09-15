@@ -14,6 +14,10 @@ jest.mock("@/data/users", () => ({
     getUser: () => ({})
 }))
 
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
+
 describe("User Settings", () => {
     it("renders the heading", async () => {
         render(await UserSettings())

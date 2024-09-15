@@ -16,6 +16,10 @@ jest.mock("./actions", () => ({
     removeSecretary: () => null
 }))
 
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
+
 describe("Admin Secretaries Page", () => {
     it("renders the no users message", async () => {
         const mockSecretaries: SecretaryColumn[] = []

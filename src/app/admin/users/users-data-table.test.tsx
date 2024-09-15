@@ -1,8 +1,18 @@
 import '@testing-library/jest-dom';
 
 import { DataTable } from '@/components/ui/data-table';
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen, within } from '@testing-library/react';
 import { UserColumn, usersColumns } from './columns';
+
+jest.mock("react-dom", () => ({
+    ...jest.requireActual("react-dom"),
+    useFormState: () => [EMPTY_FORM_STATE, null],
+}));
+
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
 
 jest.mock("./actions", () => ({
     setAdmin: () => null

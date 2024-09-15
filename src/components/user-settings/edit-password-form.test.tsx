@@ -10,6 +10,10 @@ jest.mock("react-dom", () => ({
     useFormStatus: () => ({ pending: false })
 }));
 
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
+
 jest.mock("./actions", () => ({
     editPassword: () => null
 }))

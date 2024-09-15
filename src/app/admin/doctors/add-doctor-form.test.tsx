@@ -10,6 +10,10 @@ jest.mock("react-dom", () => ({
     useFormStatus: () => ({ pending: false })
 }));
 
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
+
 jest.mock("./actions", () => ({
     addDoctor: () => null,
 }))
@@ -28,7 +32,7 @@ describe("Add Doctor Form", () => {
 
         const lastNameLabel = screen.getByText("Nom");
         const firstNameLabel = screen.getByText("Prénom");
-        const specialityLabel = screen.getByText("Specialité");
+        const specialityLabel = screen.getByText("Spécialité");
         const registrationNumberLabel = screen.getByText("Matricule");
         const passwordLabel = screen.getByText("Mot de passe");
 
@@ -40,7 +44,7 @@ describe("Add Doctor Form", () => {
 
         const lastNameInput = screen.getByPlaceholderText("Le nom du docteur");
         const firstNameInput = screen.getByPlaceholderText("Le prénom du docteur");
-        const specialityInput = screen.getByPlaceholderText("La specialité du docteur");
+        const specialityInput = screen.getByPlaceholderText("La spécialité du docteur");
         const registrationNumberInput = screen.getByPlaceholderText("Le matricule du docteur");
         const passwordInput = screen.getByPlaceholderText("Le mot de passe du docteur");
 

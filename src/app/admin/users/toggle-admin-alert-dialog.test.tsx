@@ -1,7 +1,18 @@
 import '@testing-library/jest-dom';
 
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen } from '@testing-library/react';
 import { ToggleAdminAlertDialog } from './toggle-admin-alert-dialog';
+
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
+
+jest.mock("react-dom", () => ({
+    ...jest.requireActual("react-dom"),
+    useFormState: () => [EMPTY_FORM_STATE, null],
+    useFormStatus: () => ({ pending: false })
+}));
 
 jest.mock("./actions", () => ({
     setAdmin: () => null
