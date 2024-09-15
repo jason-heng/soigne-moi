@@ -33,7 +33,7 @@ export function NavBarButtons({ session, className }: { session: UserSession | n
                 :
                 <>
                     <Link href="/auth?tab=signup" className="text-slate-800 opacity-80 hover:text-primary transition-all p-3">S&apos;inscrire</Link>
-                    <Link href="/auth" className={buttonVariants({ variant: "default", className: "w-full" })}>Se Connecter</Link>
+                    <Link href="/auth" className={buttonVariants({ variant: "default", className: "w-full" })}>Se connecter</Link>
                 </>}
         </div>
     )
