@@ -2,63 +2,59 @@
 
 import { getUser } from "@/data/users";
 import prisma from "@/lib/prisma";
+import { FormState, fromErrorToFormState, toFormState } from "@/lib/to-form-state";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const EditPasswordFormSchema = z.object({
-    newPassword: z.string().min(1, "Mot de passe invalide !"),
+    newPassword: z.string().min(1, "Nouveau mot de passe requis."),
     repeatNewPassword: z.string(),
     password: z.string()
 })
 
-export async function editPassword(_: any, formData: FormData) {
+export async function editPassword(state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
 
-    const validationResult = EditPasswordFormSchema.safeParse({
-        newPassword: formData.get('new-password'),
-        repeatNewPassword: formData.get('repeat-new-password'),
-        password: formData.get('password'),
-    })
+    try {
+        const { newPassword, repeatNewPassword, password } = EditPasswordFormSchema.parse({
+            newPassword: formData.get('new-password'),
+            repeatNewPassword: formData.get('repeat-new-password'),
+            password: formData.get('password'),
+        })
 
-    if (!validationResult.success) {
-        return {
-            errors: validationResult.error.flatten().fieldErrors
-        }
-    }
 
-    const { newPassword, repeatNewPassword, password } = validationResult.data
+        if (newPassword !== repeatNewPassword) return toFormState("ERROR", {
+            fieldErrors: {
+                repeatNewPassword: ["Nouveaux mots de passe différents !"]
+            }
+        })
 
-    if (newPassword !== repeatNewPassword) return {
-        errors: {
-            newPassword: undefined,
-            repeatNewPassword: "Mot de passes differents !",
-            password: undefined,
-        }
-    }
+        const correctPassword = await bcrypt.compare(password, user.password)
 
-    const correctPassword = await bcrypt.compare(password, user.password)
-    if (!correctPassword) return {
-        errors: {
-            newPassword: undefined,
-            repeatNewPassword: undefined,
-            password: "Mot de passe incorrect !"
-        }
-    }
+        if (!correctPassword) return toFormState("ERROR", {
+            fieldErrors: {
+                password: ["Mot de passe actuel incorrect !"]
+            }
+        })
 
-    const newHashedPassword = await bcrypt.hash(newPassword, 10)
+        const newHashedPassword = await bcrypt.hash(newPassword, 10)
 
-    await prisma.user.update({
-        where: {
-            id: user.id
-        },
-        data: {
-            password: newHashedPassword
-        }
-    })
+        await prisma.user.update({
+            where: {
+                id: user.id
+            },
+            data: {
+                password: newHashedPassword
+            }
+        })
 
-    return {
-        success: true
+        return toFormState("SUCCESS", {
+            message: "Mot de passe modifié !",
+            reset: true
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
 }
 
@@ -69,39 +65,30 @@ const EditInfoFormSchema = z.object({
     address: z.string().min(1, "Adresse invalide !"),
 })
 
-export async function editInfo(_: any, formData: FormData) {
+export async function editInfo(state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
 
-    const validationResult = EditInfoFormSchema.safeParse({
-        firstName: formData.get('first-name'),
-        lastName: formData.get('last-name'),
-        email: formData.get('email'),
-        address: formData.get('address'),
-    })
-
-    if (!validationResult.success) {
-        return {
-            errors: validationResult.error.flatten().fieldErrors
-        }
-    }
-
-    const { firstName, lastName, email, address } = validationResult.data
-
-    await prisma.user.update({
-        where: {
-            id: user.id
-        },
-        data: {
-            firstName,
-            lastName,
-            email,
-            address
-        }
-    })
-
-    revalidatePath('/patient/settings')
-
-    return {
-        success: true
+    try {
+        const data = EditInfoFormSchema.parse({
+            firstName: formData.get('first-name'),
+            lastName: formData.get('last-name'),
+            email: formData.get('email'),
+            address: formData.get('address'),
+        })
+    
+        await prisma.user.update({
+            where: {
+                id: user.id
+            },
+            data
+        })
+    
+        revalidatePath('/patient', "layout")
+    
+        return toFormState("SUCCESS", {
+            message: "Informations personnelles modifiées !"
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
 }

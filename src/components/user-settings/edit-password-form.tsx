@@ -3,21 +3,18 @@
 import SubmitButton from "@/components/submit-button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useEffect, useRef } from "react"
+import { useFormReset } from "@/hooks/use-form-reset"
+import { useToastMessage } from "@/hooks/use-toast-message"
+import { EMPTY_FORM_STATE } from "@/lib/to-form-state"
 import { useFormState } from "react-dom"
-import toast from "react-hot-toast"
+import { FieldError } from "../field-error"
 import { editPassword } from "./actions"
 
 export default function EditPasswordForm() {
-    const [state, action] = useFormState(editPassword, null)
-    const formRef = useRef<HTMLFormElement>(null);
+    const [state, action] = useFormState(editPassword, EMPTY_FORM_STATE)
 
-    useEffect(() => {
-        if (state?.success) {
-            toast.success('Mot de passe modifié !')
-            formRef.current?.reset()
-        }
-    }, [state])
+    useToastMessage(state)
+    const formRef = useFormReset(state)
 
     return (
         <form className='flex flex-col gap-4 max-w-[260px]' action={action} ref={formRef}>
@@ -25,17 +22,17 @@ export default function EditPasswordForm() {
             <div className='w-full'>
                 <Label>Nouveau mot de passe:</Label>
                 <Input type="password" placeholder='Entrez un nouveau mot de passe...' name='new-password' />
-                {state?.errors?.newPassword && <p className='text-sm text-destructive'>{state?.errors.newPassword}</p>}
+                <FieldError formState={state} name="newPassword" />
             </div>
             <div className='w-full'>
                 <Label>Confirmer le mot de passe:</Label>
                 <Input type="password" placeholder='Répétez le nouveau mot de passe...' name='repeat-new-password' />
-                {state?.errors?.repeatNewPassword && <p className='text-sm text-destructive'>{state?.errors.repeatNewPassword}</p>}
+                <FieldError formState={state} name="repeatNewPassword" />
             </div>
             <div className='w-full'>
                 <Label>Mot de passe actuel:</Label>
                 <Input type="password" placeholder='Entrez votre mot de passe actuel...' name='password' id="password" />
-                {state?.errors?.password && <p className='text-sm text-destructive'>{state?.errors.password}</p>}
+                <FieldError formState={state} name="password" />
             </div>
             <SubmitButton className='w-full mt-2'>Changer le mot de passe</SubmitButton>
         </form>
