@@ -22,7 +22,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(({ classNam
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-muted-foreground hover:text-muted-foreground"
                 onClick={() => setShowPassword(prev => !prev)}
             >
                 {showPassword ? (
@@ -30,7 +30,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(({ classNam
                 ) : (
                     <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
                 )}
-                <span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
+                <span className="sr-only">{showPassword ? 'Cacher le mot de passe' : 'Afficher le mot de passe'}</span>
             </Button>
 
             {/* hides browsers password toggles */}
