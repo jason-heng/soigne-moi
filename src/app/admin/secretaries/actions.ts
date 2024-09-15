@@ -3,19 +3,20 @@
 import { getUser } from "@/data/users";
 import prisma from "@/lib/prisma";
 import { deleteSession } from "@/lib/session";
+import { FormState, fromErrorToFormState, toFormState } from "@/lib/to-form-state";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const NewSecretaryFormSchema = z.object({
-    lastName: z.string().min(1, "Nom invalide !"),
-    firstName: z.string().min(1, "Prénom invalide !"),
-    email: z.string().email("Email invalide !"),
-    password: z.string().min(1, "Mot de passe invalide !")
+    lastName: z.string().min(1, "Nom requis."),
+    firstName: z.string().min(1, "Prénom requis."),
+    email: z.string().email("Email invalide."),
+    password: z.string().min(1, "Mot de passe requis.")
 });
 
-export async function addSecretary(_: any, formData: FormData) {
+export async function addSecretary(state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
 
     if (!user.admin) {
@@ -23,47 +24,45 @@ export async function addSecretary(_: any, formData: FormData) {
         redirect('/auth')
     }
 
-    const validationResult = NewSecretaryFormSchema.safeParse({
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        email: formData.get('email'),
-        password: formData.get('password'),
-    })
+    try {
+        const { firstName, lastName, email, password } = NewSecretaryFormSchema.parse({
+            firstName: formData.get('first-name'),
+            lastName: formData.get('last-name'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+        })
 
-    if (!validationResult.success) return { errors: validationResult.error.flatten().fieldErrors }
+        const emailUsed = await prisma.secretary.findUnique({ where: { email } })
 
-    const { firstName, lastName, email, password } = validationResult.data
+        if (emailUsed) return toFormState("ERROR", {
+            fieldErrors: {
+                email: ['Email déja utilisé !'],
+            }
+        })
 
-    if (await prisma.secretary.findUnique({
-        where: { email }
-    })) return {
-        errors: {
-            firstName: undefined,
-            lastName: undefined,
-            email: 'Email déja utilisé !',
-            password: undefined,
-        }
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        await prisma.secretary.create({
+            data: {
+                firstName,
+                lastName,
+                email,
+                password: hashedPassword
+            }
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    await prisma.secretary.create({
-        data: {
-            firstName,
-            lastName,
-            email,
-            password: hashedPassword
-        }
-    })
 
     revalidatePath("/admin/secretaries")
 
-    return {
-        success: true
-    }
+    return toFormState("SUCCESS", {
+        message: "Secrétaire ajoutée !",
+        reset: true
+    })
 }
 
-export async function removeSecretary(id: number) {
+export async function removeSecretary(secretaryId: number, state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
 
     if (!user.admin) {
@@ -71,23 +70,24 @@ export async function removeSecretary(id: number) {
         redirect('/auth')
     }
 
-    await prisma.secretary.delete({
-        where: {
-            id
-        }
-    })
+    try {
+        await prisma.secretary.delete({ where: { id: secretaryId } })
+    } catch (error) {
+        return fromErrorToFormState(error)
+    }
 
     revalidatePath('/admin/secretaries')
 
-    return { success: true }
+    return toFormState("SUCCESS", {
+        message: "Secrétaire retiré !"
+    })
 }
 
 const EditSecretaryPasswordFormSchema = z.object({
     password: z.string().min(1, "Mot de passe invalide !"),
-    secretaryId: z.coerce.number().min(1, "Identifiant invalide !")
 })
 
-export async function editSecretaryPassword(_: any, formData: FormData) {
+export async function editSecretaryPassword(secretaryId: number, state: FormState, formData: FormData): Promise<FormState> {
     const user = await getUser()
 
     if (!user.admin) {
@@ -95,35 +95,30 @@ export async function editSecretaryPassword(_: any, formData: FormData) {
         redirect('/auth')
     }
 
-    const validationResult = EditSecretaryPasswordFormSchema.safeParse({
-        password: formData.get('password'),
-        secretaryId: formData.get('secretary-id')
-    });
+    try {
+        const { password } = EditSecretaryPasswordFormSchema.parse({
+            password: formData.get('password'),
+        });
 
+        const secretaryExists = await prisma.secretary.count({ where: { id: secretaryId } })
 
-    if (!validationResult.success) return {
-        errors: validationResult.error.flatten().fieldErrors
+        if (!secretaryExists) return toFormState("ERROR", {
+            message: "Secrétaire introuvable !"
+        })
+
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        await prisma.secretary.update({
+            where: { id: secretaryId },
+            data: { password: hashedPassword },
+        })
+    } catch (error) {
+        return fromErrorToFormState(error)
     }
-
-    const { password, secretaryId } = validationResult.data
-
-    if (!(await prisma.secretary.count({ where: { id: secretaryId } }))) return {
-        errors: {
-            doctorId: "Secrétaire introuvable !",
-            password: undefined,
-        }
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    await prisma.secretary.update({
-        where: { id: secretaryId },
-        data: { password: hashedPassword },
-    })
 
     revalidatePath("/admin/secretaries")
 
-    return {
-        success: true
-    }
+    return toFormState("SUCCESS", {
+        message: "Mot de passe modifié !"
+    })
 }

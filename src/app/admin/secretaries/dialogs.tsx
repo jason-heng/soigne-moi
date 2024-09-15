@@ -1,22 +1,24 @@
 "use client"
 
+import { FieldError } from '@/components/field-error'
 import SubmitButton from '@/components/submit-button'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { buttonVariants } from "@/components/ui/button"
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PasswordInput } from '@/components/ui/password-input'
+import { useToastMessage } from '@/hooks/use-toast-message'
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useFormState } from 'react-dom'
-import toast from 'react-hot-toast'
 import { editSecretaryPassword, removeSecretary } from './actions'
 
 export function EditPasswordDialog({ secretaryId, open, setOpen }: { secretaryId: number, open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
-    const [state, action] = useFormState(editSecretaryPassword, null)
+    const [state, action] = useFormState(editSecretaryPassword.bind(null, secretaryId), EMPTY_FORM_STATE)
+
+    useToastMessage(state)
 
     useEffect(() => {
-        if (state?.success) {
-            toast.success('Mot de passe modifié !')
+        if (state.status === "SUCCESS") {
             setOpen(false)
         }
     }, [state])
@@ -29,14 +31,13 @@ export function EditPasswordDialog({ secretaryId, open, setOpen }: { secretaryId
                 </DialogHeader>
                 <form action={action}>
                     <div className="py-4">
-                        <input type="text" className='hidden' name='secretary-id' value={secretaryId} />
-                        <Label htmlFor="name" >Nouveau mot de passe</Label>
-                        <Input
-                            type='password'
+                        <Label htmlFor="name" className='text-muted-foreground'>Nouveau mot de passe</Label>
+                        <PasswordInput
+                            id="password"
                             name="password"
-                            className="col-span-3"
+                            placeholder='Le nouveau mot de passe de la secrétaire'
                         />
-                        {state?.errors?.password && <p className='text-sm text-destructive'>{state.errors.password}</p>}
+                        <FieldError formState={state} name='password' />
                     </div>
                     <DialogFooter>
                         <SubmitButton>Modifier</SubmitButton>
@@ -48,10 +49,15 @@ export function EditPasswordDialog({ secretaryId, open, setOpen }: { secretaryId
 }
 
 export function RemoveAlertDialog({ secretaryId, open, setOpen }: { secretaryId: number, open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
-    async function handleConfirm() {
-        await removeSecretary(secretaryId)
-        toast.success('Secrétaire retirée !')
-    }
+    const [state, action] = useFormState(removeSecretary.bind(null, secretaryId), EMPTY_FORM_STATE)
+
+    useToastMessage(state)
+
+    useEffect(() => {
+        if (state.status === "SUCCESS") {
+            setOpen(false)
+        }
+    }, [state])
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
@@ -64,7 +70,9 @@ export function RemoveAlertDialog({ secretaryId, open, setOpen }: { secretaryId:
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction className={buttonVariants({ variant: "destructive" })} onClick={handleConfirm}>Confirmer</AlertDialogAction>
+                    <form action={action}>
+                        <SubmitButton variant="destructive">Confirmer</SubmitButton>
+                    </form>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

@@ -53,16 +53,16 @@ export async function addDoctor(state: FormState, formData: FormData): Promise<F
                 password: hashedPassword,
             }
         })
-
-        revalidatePath("/admin/doctors")
-
-        return toFormState("SUCCESS", {
-            message: "Docteur ajouté !",
-            reset: true
-        })
     } catch (error) {
         return fromErrorToFormState(error)
     }
+
+    revalidatePath("/admin/doctors")
+
+    return toFormState("SUCCESS", {
+        message: "Docteur ajouté !",
+        reset: true
+    })
 }
 
 const EditTimeTableFormSchema = z.object({
@@ -104,15 +104,15 @@ export async function editTimeTable(doctorId: number, state: FormState, formData
             where: { id: doctorId },
             data,
         })
-
-        revalidatePath('/admin/doctors')
-
-        return toFormState("SUCCESS", {
-            message: "Emploi du temps modifié !"
-        })
     } catch (error) {
         return fromErrorToFormState(error)
     }
+
+    revalidatePath('/admin/doctors')
+
+    return toFormState("SUCCESS", {
+        message: "Emploi du temps modifié !"
+    })
 }
 
 export async function removeDoctor(doctorId: number, state: FormState, formData: FormData): Promise<FormState> {
@@ -123,9 +123,11 @@ export async function removeDoctor(doctorId: number, state: FormState, formData:
         redirect('/auth')
     }
 
-    await prisma.doctor.delete({
-        where: { id: doctorId }
-    })
+    try {
+        await prisma.doctor.delete({ where: { id: doctorId } })
+    } catch (error) {
+        return fromErrorToFormState(error)
+    }
 
     revalidatePath('/admin/doctors')
 
@@ -163,12 +165,12 @@ export async function editDoctorPassword(doctorId: number, state: FormState, for
             where: { id: doctorId },
             data: { password: hashedPassword },
         })
-
-        return toFormState("SUCCESS", {
-            message: "Mot de passe modifié !"
-        })
     } catch (error) {
         return fromErrorToFormState(error)
     }
+
+    return toFormState("SUCCESS", {
+        message: "Mot de passe modifié !"
+    })
 }
 
