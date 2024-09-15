@@ -7,8 +7,8 @@ interface FieldErrorProps {
 
 export function FieldError({ formState, name }: FieldErrorProps) {
     return (
-        <span className="text-xs text-red-400">
+        <p className="text-xs text-red-400">
             {formState.fieldErrors[name]?.[0]}
-        </span>
+        </p>
     );
 };

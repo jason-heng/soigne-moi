@@ -1,16 +1,21 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { AddStayForm } from './add-stay-form';
+import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 
 jest.mock("./actions", () => ({
     createStay: () => [() => { }, null]
 }))
+
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
 
 describe("Add Stay Form", () => {
     it("renders the title", () => {

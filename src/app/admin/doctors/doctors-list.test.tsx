@@ -4,7 +4,7 @@ import { DoctorsList } from './client-components';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 

@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { AddDoctorForm } from './client-components';
+import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 

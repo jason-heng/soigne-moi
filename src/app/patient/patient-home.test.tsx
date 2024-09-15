@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import PatientHome from './page';
+import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 const mockUser = {
     firstName: "Julien"
@@ -8,7 +9,7 @@ const mockUser = {
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 
@@ -21,6 +22,10 @@ jest.mock("./data", () => ({
     getCurrentStay: () => null,
     getIncomingStay: () => null
 }))
+
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
 
 describe("Patient Home", () => {
     it("renders the heading", async () => {

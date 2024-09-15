@@ -1,11 +1,13 @@
 import '@testing-library/jest-dom';
+
+import { DataTable } from '@/_components/ui/data-table';
+import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 import { render, screen, within } from '@testing-library/react';
 import { SecretaryColumn, secretariesColumns } from './columns';
-import { DataTable } from '@/_components/ui/data-table';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 

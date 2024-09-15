@@ -1,11 +1,13 @@
-import { getDoctor } from '@/_data/doctors';
 import '@testing-library/jest-dom';
+
+import { getDoctor } from '@/_data/doctors';
+import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 import { render, screen } from '@testing-library/react';
 import { DoctorCard } from './server-components';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 
