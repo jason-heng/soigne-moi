@@ -1,6 +1,6 @@
-import { countDoctors } from '@/_data/doctors'
-import { getStays } from '@/_data/stays'
-import { countUsers, getUser } from '@/_data/users'
+import { countDoctors } from '@/data/doctors'
+import { getStays } from '@/data/stays'
+import { countUsers, getUser } from '@/data/users'
 import { DoctorsCard, PatientsCard, SecretariesCard, StaysCard, StaysEvolutionCard } from './components'
 
 export default async function AdminHome() {

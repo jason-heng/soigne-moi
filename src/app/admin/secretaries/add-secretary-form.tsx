@@ -1,9 +1,9 @@
 "use client"
 
-import SubmitButton from '@/_components/submit-button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/_components/ui/card';
-import { Input } from '@/_components/ui/input';
-import { Label } from '@/_components/ui/label';
+import SubmitButton from '@/components/submit-button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 import { toast } from 'react-hot-toast';

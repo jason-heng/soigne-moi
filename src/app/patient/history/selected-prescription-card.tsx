@@ -1,7 +1,7 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card"
-import { Input } from "@/_components/ui/input"
-import { getMyStays } from "@/_data/stays"
-import { formatDate } from "@/_lib/utils"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { getMyStays } from "@/data/stays"
+import { formatDate } from "@/lib/utils"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
 

@@ -1,14 +1,14 @@
 "use client"
 
-import SubmitButton from "@/_components/submit-button";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/_components/ui/alert-dialog";
-import { Button, buttonVariants } from '@/_components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/_components/ui/card";
-import { Checkbox } from "@/_components/ui/checkbox";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/_components/ui/dialog';
-import { Input } from "@/_components/ui/input";
-import { Label } from "@/_components/ui/label";
-import { getDoctor, getDoctors } from '@/_data/doctors';
+import SubmitButton from "@/components/submit-button";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { getDoctor, getDoctors } from '@/data/doctors';
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";

@@ -1,10 +1,11 @@
-import { getMyStays } from '@/_data/stays';
-import { formatDate } from '@/_lib/utils';
 import '@testing-library/jest-dom';
+
+import { getMyStays } from '@/data/stays';
+import { formatDate } from '@/lib/utils';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { StaysCard } from './stays-card';
 
-jest.mock('../../../_data/stays', () => ({
+jest.mock('@/data/stays', () => ({
     getMyStays: () => []
 }));
 

@@ -1,4 +1,4 @@
-import { getMyStays } from '@/_data/stays'
+import { getMyStays } from '@/data/stays'
 import { HistoryCard } from './history-card'
 
 export default async function PatientHistory() {

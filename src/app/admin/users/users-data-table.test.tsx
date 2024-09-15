@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
+
+import { DataTable } from '@/components/ui/data-table';
 import { render, screen, within } from '@testing-library/react';
 import { UserColumn, usersColumns } from './columns';
-import { DataTable } from '@/_components/ui/data-table';
 
 jest.mock("./actions", () => ({
     setAdmin: () => null

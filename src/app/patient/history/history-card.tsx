@@ -1,6 +1,6 @@
 "use client"
 
-import { getMyStays } from "@/_data/stays"
+import { getMyStays } from "@/data/stays"
 import { useEffect, useState } from "react"
 import { SelectedPrescriptionCard } from "./selected-prescription-card"
 import { StaysCard } from "./stays-card"

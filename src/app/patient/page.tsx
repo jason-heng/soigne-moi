@@ -1,4 +1,4 @@
-import { getUser } from '@/_data/users'
+import { getUser } from '@/data/users'
 import { AddStayForm } from './add-stay-form'
 import { CurrentPrescriptionCard, CurrentStayCard, IncomingStayCard } from './components'
 import { getCurrentStay, getDoctors, getIncomingStay } from './data'

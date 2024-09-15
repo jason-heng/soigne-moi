@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+
 import { render, screen } from '@testing-library/react';
 import { CurrentStayCard } from './components';
 import { CurrentStay } from './data';

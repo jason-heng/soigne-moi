@@ -1,10 +1,10 @@
-import 'server-only'
+import 'server-only';
 
-import prisma from "@/_lib/db";
+import prisma from '@/lib/prisma';
+import { encrypt } from "@/lib/session";
+import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import bcrypt from "bcrypt";
-import { encrypt } from "@/_lib/session";
 
 const DoctorLoginFormSchema = z.object({
     registrationNumber: z.coerce.number().min(1, 'Matricule invalide !'),

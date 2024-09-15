@@ -1,5 +1,5 @@
-import prisma from "@/_lib/db";
-import { decryptSecretaryCookie } from "@/_lib/session";
+import prisma from "@/lib/prisma";
+import { decryptSecretaryCookie } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -60,9 +60,9 @@ export async function GET(req: NextRequest) {
                     userId: true,
                 }
             },
-                
-            }
-        })
+
+        }
+    })
 
     if (!patients) return NextResponse.json({}, { status: 404 })
 

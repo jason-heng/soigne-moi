@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/_components/ui/card";
-import { formatDate } from "@/_lib/utils";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatDate } from "@/lib/utils";
 import { CurrentStay, IncomingStay } from "./data";
 
 export function CurrentPrescriptionCard({ stay }: { stay: CurrentStay }) {

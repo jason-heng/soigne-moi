@@ -1,4 +1,4 @@
-import { getDoctors } from '@/_data/doctors'
+import { getDoctors } from '@/data/doctors'
 import { AddDoctorForm, DoctorsList } from './client-components'
 
 export default async function page() {

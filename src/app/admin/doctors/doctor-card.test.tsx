@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
-import { getDoctor } from '@/_data/doctors';
-import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
+import { getDoctor } from '@/data/doctors';
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen } from '@testing-library/react';
 import { DoctorCard } from './server-components';
 

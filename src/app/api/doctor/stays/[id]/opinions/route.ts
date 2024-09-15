@@ -1,7 +1,7 @@
-import prisma from "@/_lib/db";
+import prisma from "@/lib/prisma";
+import { decryptDoctorCookie } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { decryptDoctorCookie } from "@/_lib/session";
 
 interface UrlParams {
     id: string

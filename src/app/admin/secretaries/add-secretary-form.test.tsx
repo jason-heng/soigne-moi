@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
+
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen } from '@testing-library/react';
 import { AddSecretaryForm } from './add-secretary-form';
-import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),

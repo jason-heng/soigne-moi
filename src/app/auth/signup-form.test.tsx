@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
+
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen } from "@testing-library/react";
 import { SignupForm } from './components';
-import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 jest.mock("next/navigation", () => ({
     useRouter: jest.fn()
@@ -13,8 +14,8 @@ jest.mock("react-dom", () => ({
     useFormStatus: () => ({ pending: false })
 }));
 
-jest.mock("./actions", () => ({
-    login: () => null
+jest.mock("@/actions/auth", () => ({
+    signup: () => null
 }));
 
 describe("Signup Form", () => {

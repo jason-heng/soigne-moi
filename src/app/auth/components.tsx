@@ -1,16 +1,16 @@
 "use client"
 
-import { FieldError } from "@/_components/field-error"
-import SubmitButton from "@/_components/submit-button"
-import { Input } from "@/_components/ui/input"
-import { Label } from "@/_components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/_components/ui/tabs"
-import { EMPTY_FORM_STATE } from "@/_lib/to-form-state"
+import { login, signup } from "@/actions/auth"
+import { FieldError } from "@/components/field-error"
+import SubmitButton from "@/components/submit-button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { PasswordInput } from "@/components/ui/password-input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useToastMessage } from "@/hooks/use-toast-message"
+import { EMPTY_FORM_STATE } from "@/lib/to-form-state"
 import { useRouter } from "next/navigation"
 import { useFormState } from "react-dom"
-import { login, signup } from "./actions"
-import { PasswordInput } from "@/_components/ui/password-input"
-import { useToastMessage } from "@/hooks/use-toast-message"
 
 export function TabsLayout({ tab }: { tab: "signup" | "login" }) {
     const router = useRouter()

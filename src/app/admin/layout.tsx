@@ -1,4 +1,4 @@
-import { SideBar, SideBarLink } from "@/_components/side-bar";
+import { SideBar, SideBarLink } from "@/components/side-bar";
 import { faGears, faHouse, faUser, faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
 import { PropsWithChildren } from "react";
 

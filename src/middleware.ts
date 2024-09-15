@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { decryptUserCookie } from "./_lib/session";
+import { decryptUserCookie } from "./lib/session";
 
 export default async function middleware(req: NextRequest) {
     const authRoutes = ['/auth']

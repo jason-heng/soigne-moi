@@ -1,4 +1,4 @@
-import { FormState } from '@/_lib/to-form-state';
+import { FormState } from '@/lib/to-form-state';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { toast } from 'react-hot-toast';

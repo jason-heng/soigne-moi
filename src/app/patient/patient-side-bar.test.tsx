@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 
-import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen } from '@testing-library/react';
 import PatientDashboardLayout from './layout';
 
@@ -13,7 +13,7 @@ jest.mock("react-dom", () => ({
     useFormState: () => [EMPTY_FORM_STATE, null],
 }));
 
-jest.mock("../../_lib/actions", () => ({
+jest.mock("@/actions/auth", () => ({
     logout: () => null
 }))
 

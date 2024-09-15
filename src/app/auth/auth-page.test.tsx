@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
+
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen } from "@testing-library/react";
 import AuthPage from "./page";
-import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
@@ -9,7 +10,7 @@ jest.mock("react-dom", () => ({
     useFormStatus: () => ({ pending: false })
 }));
 
-jest.mock("./actions", () => ({
+jest.mock("@/actions/auth", () => ({
     login: () => null
 }));
 

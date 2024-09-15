@@ -1,11 +1,11 @@
 "use client"
 
-import SubmitButton from '@/_components/submit-button'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/_components/ui/alert-dialog"
-import { buttonVariants } from "@/_components/ui/button"
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/_components/ui/dialog'
-import { Input } from '@/_components/ui/input'
-import { Label } from '@/_components/ui/label'
+import SubmitButton from '@/components/submit-button'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import { buttonVariants } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useFormState } from 'react-dom'
 import toast from 'react-hot-toast'

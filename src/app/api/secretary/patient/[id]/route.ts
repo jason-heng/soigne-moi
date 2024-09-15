@@ -1,5 +1,5 @@
-import prisma from "@/_lib/db";
-import { decryptSecretaryCookie } from "@/_lib/session";
+import prisma from "@/lib/prisma";
+import { decryptSecretaryCookie } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 
 interface UrlParams {

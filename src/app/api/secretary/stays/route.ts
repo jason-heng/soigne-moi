@@ -1,5 +1,5 @@
-import prisma from "@/_lib/db";
-import { decryptSecretaryCookie } from "@/_lib/session";
+import prisma from "@/lib/prisma";
+import { decryptSecretaryCookie } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
                         lastName: true
                     }
                 }
-                
+
             }
         })
 
@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
     const staysList = stays.map(stay => ({
         id: stay.id,
         patient: stay.patient,
-        doctor : stay.doctor,
+        doctor: stay.doctor,
         reason: stay.reason,
         start: stay.start,
         end: stay.end,

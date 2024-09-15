@@ -1,4 +1,4 @@
-import { getDoctor } from "@/_data/doctors"
+import { getDoctor } from "@/data/doctors"
 import { EditPasswordDialog, EditTimeTableDialog, RemoveAlertDialog } from "./client-components"
 
 export function DoctorCard({ doctor }: { doctor: NonNullable<Awaited<ReturnType<typeof getDoctor>>> }) {

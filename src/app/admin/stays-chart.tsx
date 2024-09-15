@@ -7,7 +7,7 @@ import {
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
-} from "@/_components/ui/chart"
+} from "@/components/ui/chart"
 import { Stay } from "@prisma/client"
 
 const chartConfig = {

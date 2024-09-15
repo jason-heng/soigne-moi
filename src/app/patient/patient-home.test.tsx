@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
+
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen } from '@testing-library/react';
 import PatientHome from './page';
-import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 const mockUser = {
     firstName: "Julien"
@@ -13,7 +14,7 @@ jest.mock("react-dom", () => ({
     useFormStatus: () => ({ pending: false })
 }));
 
-jest.mock("../../_data/users", () => ({
+jest.mock("@/data/users", () => ({
     getUser: () => mockUser
 }))
 

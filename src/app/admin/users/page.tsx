@@ -1,5 +1,5 @@
-import { DataTable } from "@/_components/ui/data-table"
-import { getUser, getUsers } from "@/_data/users"
+import { DataTable } from "@/components/ui/data-table"
+import { getUser, getUsers } from "@/data/users"
 import { usersColumns } from "./columns"
 
 export default async function AdminUsersPage() {

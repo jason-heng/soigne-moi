@@ -1,10 +1,11 @@
-import Docteur from '@/_components/svgs/Docteur'
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import { About, Card, Doctors, Footer, Hero, NavBar, Services } from './components'
-import Image from 'next/image'
 
-jest.mock("../_lib/session", () => ({
+import Docteur from '@/components/svgs/Docteur'
+import { render, screen } from '@testing-library/react'
+import Image from 'next/image'
+import { About, Card, Doctors, Footer, Hero, NavBar, Services } from './components'
+
+jest.mock("@/lib/session", () => ({
     getSession: async () => null
 }))
 

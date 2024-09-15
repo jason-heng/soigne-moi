@@ -1,6 +1,5 @@
-import prisma from "@/_lib/db";
-import { decryptDoctorCookie } from "@/_lib/session";
-import { revalidatePath } from "next/cache";
+import prisma from "@/lib/prisma";
+import { decryptDoctorCookie } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 

@@ -1,5 +1,5 @@
-import { DataTable } from "@/_components/ui/data-table"
-import { getSecretaries } from "@/_data/secretaries"
+import { DataTable } from "@/components/ui/data-table"
+import { getSecretaries } from "@/data/secretaries"
 import { AddSecretaryForm } from "./add-secretary-form"
 import { secretariesColumns } from "./columns"
 

@@ -1,9 +1,10 @@
-import { getMyStays } from '@/_data/stays';
 import '@testing-library/jest-dom';
+
+import { getMyStays } from '@/data/stays';
 import { render, screen } from '@testing-library/react';
 import { HistoryCard } from './history-card';
 
-jest.mock('../../../_data/stays', () => ({
+jest.mock('@/data/stays', () => ({
     getMyStays: () => mockStays
 }));
 

@@ -1,8 +1,8 @@
 "use server"
 
-import { getUser } from "@/_data/users";
-import prisma from "@/_lib/db";
-import { FormState, fromErrorToFormState, toFormState } from "@/_lib/to-form-state";
+import { getUser } from "@/data/users";
+import prisma from "@/lib/prisma";
+import { FormState, fromErrorToFormState, toFormState } from "@/lib/to-form-state";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 

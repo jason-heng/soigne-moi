@@ -1,10 +1,11 @@
 "use server"
 
-import { getUser } from "@/_data/users";
-import { logout } from "@/_lib/actions";
-import prisma from "@/_lib/db";
+import { getUser } from "@/data/users";
+import prisma from "@/lib/prisma";
+import { deleteSession } from "@/lib/session";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const AddDoctorFormSchema = z.object({
@@ -17,7 +18,10 @@ const AddDoctorFormSchema = z.object({
 
 export async function addDoctor(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user.admin) logout()
+    if (!user.admin) {
+        deleteSession()
+        redirect('/auth')
+    }
 
     const validationResult = AddDoctorFormSchema.safeParse({
         firstName: formData.get('firstName'),
@@ -83,7 +87,10 @@ const EditTimeTableFormSchema = z.object({
 
 export async function editTimeTable(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user.admin) logout()
+    if (!user.admin) {
+        deleteSession()
+        redirect('/auth')
+    }
 
     const validationResult = EditTimeTableFormSchema.safeParse({
         doctorId: formData.get('doctor-id'),
@@ -124,7 +131,11 @@ export async function editTimeTable(_: any, formData: FormData) {
 
 export async function removeDoctor(doctorId: number) {
     const user = await getUser()
-    if (!user.admin) logout()
+
+    if (!user.admin) {
+        deleteSession()
+        redirect('/auth')
+    }
 
     await prisma.doctor.delete({
         where: { id: doctorId },
@@ -141,7 +152,10 @@ const EditDoctorPasswordFormSchema = z.object({
 export async function editDoctorPassword(_: any, formData: FormData) {
 
     const user = await getUser()
-    if (!user.admin) logout()
+    if (!user.admin) {
+        deleteSession()
+        redirect('/auth')
+    }
 
     const validationResult = EditDoctorPasswordFormSchema.safeParse({
         password: formData.get('password'),

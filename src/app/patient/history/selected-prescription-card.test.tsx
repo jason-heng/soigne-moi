@@ -1,9 +1,10 @@
-import { formatDate } from '@/_lib/utils';
 import '@testing-library/jest-dom';
+
+import { formatDate } from '@/lib/utils';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { SelectedPrescriptionCard } from './selected-prescription-card';
 
-jest.mock('../../../_data/stays', () => ({
+jest.mock('@/data/stays', () => ({
     getMyStays: () => []
 }));
 

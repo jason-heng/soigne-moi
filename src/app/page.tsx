@@ -1,4 +1,4 @@
-import { getSession } from "@/_lib/session";
+import { getSession } from "@/lib/session";
 import { About, Doctors, Footer, Hero, NavBar, Services } from "./components";
 
 export default async function LandingPage() {

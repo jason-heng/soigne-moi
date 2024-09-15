@@ -1,6 +1,6 @@
-import prisma from "@/_lib/db"
-import { verifySession } from "@/_lib/session"
-import { formatDate, parseDate, WeekDay } from "@/_lib/utils"
+import prisma from "@/lib/prisma"
+import { verifySession } from "@/lib/session"
+import { formatDate, parseDate, WeekDay } from "@/lib/utils"
 
 export type CurrentStay = Awaited<ReturnType<typeof getCurrentStay>>
 

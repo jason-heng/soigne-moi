@@ -1,24 +1,25 @@
-import { getStays } from '@/_data/stays';
-import { Stay } from '@prisma/client';
 import '@testing-library/jest-dom';
+
+import { getStays } from '@/data/stays';
+import { Stay } from '@prisma/client';
 import { render, screen } from '@testing-library/react';
 import { DoctorsCard, PatientsCard, SecretariesCard, StaysCard } from './components';
 import AdminHome from './page';
 
-jest.mock("../../_data/users", () => ({
+jest.mock("@/data/users", () => ({
     getUser: () => ({ firstName: "John" }),
     countUsers: jest.fn(),
 }))
 
-jest.mock("../../_data/secretaries", () => ({
+jest.mock("@/data/secretaries", () => ({
     countSecretaries: jest.fn(),
 }))
 
-jest.mock("../../_data/doctors", () => ({
+jest.mock("@/data/doctors", () => ({
     countDoctors: jest.fn(),
 }))
 
-jest.mock("../../_data/stays", () => ({
+jest.mock("@/data/stays", () => ({
     getStays: jest.fn(),
 }));
 

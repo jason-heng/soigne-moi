@@ -1,6 +1,6 @@
 import { findOverbookedDates } from "./data"
 
-jest.mock("../../_lib/session", () => ({
+jest.mock("@/lib/session", () => ({
     verifySession: () => { }
 }))
 

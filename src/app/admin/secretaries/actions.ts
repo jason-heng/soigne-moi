@@ -1,10 +1,11 @@
 "use server"
 
-import { getUser } from "@/_data/users";
-import { logout } from "@/_lib/actions";
-import prisma from "@/_lib/db";
+import { getUser } from "@/data/users";
+import prisma from "@/lib/prisma";
+import { deleteSession } from "@/lib/session";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const NewSecretaryFormSchema = z.object({
@@ -16,7 +17,11 @@ const NewSecretaryFormSchema = z.object({
 
 export async function addSecretary(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user.admin) logout()
+
+    if (!user.admin) {
+        deleteSession()
+        redirect('/auth')
+    }
 
     const validationResult = NewSecretaryFormSchema.safeParse({
         firstName: formData.get('firstName'),
@@ -60,7 +65,11 @@ export async function addSecretary(_: any, formData: FormData) {
 
 export async function removeSecretary(id: number) {
     const user = await getUser()
-    if (!user.admin) logout()
+
+    if (!user.admin) {
+        deleteSession()
+        redirect('/auth')
+    }
 
     await prisma.secretary.delete({
         where: {
@@ -80,7 +89,11 @@ const EditSecretaryPasswordFormSchema = z.object({
 
 export async function editSecretaryPassword(_: any, formData: FormData) {
     const user = await getUser()
-    if (!user.admin) logout()
+
+    if (!user.admin) {
+        deleteSession()
+        redirect('/auth')
+    }
 
     const validationResult = EditSecretaryPasswordFormSchema.safeParse({
         password: formData.get('password'),

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
-import { DataTable } from '@/_components/ui/data-table';
-import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
+import { DataTable } from '@/components/ui/data-table';
+import { EMPTY_FORM_STATE } from '@/lib/to-form-state';
 import { render, screen, within } from '@testing-library/react';
 import { SecretaryColumn, secretariesColumns } from './columns';
 

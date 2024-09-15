@@ -1,4 +1,4 @@
-import { FormState } from '@/_lib/to-form-state';
+import { FormState } from '@/lib/to-form-state';
 import { useEffect, useRef } from 'react';
 
 export function useFormReset(formState: FormState) {
