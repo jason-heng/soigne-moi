@@ -3,8 +3,10 @@ import { decryptDoctorCookie } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-interface UrlParams {
-    id: string
+interface RouteProps {
+    params: {
+        id: string
+    }
 }
 
 const EditPrescriptionEndFormSchema = z.object({
@@ -12,7 +14,7 @@ const EditPrescriptionEndFormSchema = z.object({
     end: z.string().datetime("Date de fin invalide !"),
 })
 
-export async function PUT(req: NextRequest, { params }: { params: UrlParams }) {
+export async function PUT(req: NextRequest, { params }: RouteProps) {
     const cookie = req.headers.get('Authorization')?.replace('Bearer ', '')
     const session = await decryptDoctorCookie(cookie || '')
 
@@ -62,7 +64,7 @@ const AddDrugFormSchema = z.object({
     dosage: z.string().min(1, 'Posologie invalide !'),
 })
 
-export async function POST(req: NextRequest, { params }: { params: UrlParams }) {
+export async function POST(req: NextRequest, { params }: RouteProps) {
     const cookie = req.headers.get('Authorization')?.replace('Bearer ', '')
     const session = await decryptDoctorCookie(cookie || '')
 

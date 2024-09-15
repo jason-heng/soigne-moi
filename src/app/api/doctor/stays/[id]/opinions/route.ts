@@ -3,8 +3,10 @@ import { decryptDoctorCookie } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-interface UrlParams {
-    id: string
+interface RouteProps {
+    params: {
+        id: string
+    }
 }
 
 const AddOpinionFormSchema = z.object({
@@ -13,7 +15,7 @@ const AddOpinionFormSchema = z.object({
     description: z.string().min(1, 'Description invalide !'),
 })
 
-export async function POST(req: NextRequest, { params }: { params: UrlParams }) {
+export async function POST(req: NextRequest, { params }: RouteProps) {
     const cookie = req.headers.get('Authorization')?.replace('Bearer ', '')
     const session = await decryptDoctorCookie(cookie || '')
 

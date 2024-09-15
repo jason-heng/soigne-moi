@@ -2,11 +2,13 @@ import prisma from "@/lib/prisma";
 import { decryptSecretaryCookie } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 
-interface UrlParams {
-    id: string
+interface RouteProps {
+    params: {
+        id: string
+    }
 }
 
-export async function GET(req: NextRequest, { params }: { params: UrlParams }) {
+export async function GET(req: NextRequest, { params }: RouteProps) {
     const cookie = req.headers.get('Authorization')?.replace('Bearer ', '')
     const session = await decryptSecretaryCookie(cookie || '')
 
