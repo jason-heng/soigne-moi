@@ -1,10 +1,15 @@
 import '@testing-library/jest-dom';
 import { render, screen } from "@testing-library/react";
 import { LoginForm } from './components';
+import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
+
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn()
+}));
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 
@@ -24,12 +29,12 @@ describe("Login Form", () => {
     it("renders the inputs", () => {
         render(<LoginForm />)
 
-        const emailInput = screen.getByPlaceholderText("Email")
+        const emailInput = screen.getByLabelText("Email")
 
         expect(emailInput).toBeInTheDocument()
         expect(emailInput).not.toBeDisabled()
 
-        const passwordInput = screen.getByPlaceholderText("Mot de passe")
+        const passwordInput = screen.getByPlaceholderText("votre mot de passe")
 
         expect(passwordInput).toBeInTheDocument()
         expect(passwordInput).not.toBeDisabled()
@@ -38,7 +43,7 @@ describe("Login Form", () => {
     it("renders the submit button", () => {
         render(<LoginForm />)
 
-        const loginButton = screen.getByRole("button", { name: "Se Connecter" })
+        const loginButton = screen.getByRole("button", { name: "Se connecter" })
 
         expect(loginButton).toBeInTheDocument()
         expect(loginButton).not.toBeDisabled()

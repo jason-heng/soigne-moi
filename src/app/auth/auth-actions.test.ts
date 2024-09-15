@@ -106,62 +106,62 @@ describe("Login", () => {
 describe("Signup", () => {
     it("returns invalid firstName", async () => {
         const mockFormData = new FormData()
-        mockFormData.append('firstName', "") // prénom entré est invalide
-        mockFormData.append('lastName', "john")
+        mockFormData.append('first-name', "") // prénom entré est invalide
+        mockFormData.append('last-name', "john")
         mockFormData.append('email', "john.doe@gmail.com")
         mockFormData.append('address', "21 rue paris")
         mockFormData.append('password', 'test123')
-        mockFormData.append('repeatPassword', 'test123')
+        mockFormData.append('repeat-password', 'test123')
 
         const state = await signup(EMPTY_FORM_STATE, mockFormData)
 
         expect(state.fieldErrors).toEqual({
-            firstName: ["Prénom invalide !"]
+            firstName: ["Prénom requis."]
         })
     })
 
     it("returns invalid email", async () => {
         const mockFormData = new FormData()
-        mockFormData.append('firstName', "hamid")
-        mockFormData.append('lastName', "john")
+        mockFormData.append('first-name', "hamid")
+        mockFormData.append('last-name', "john")
         mockFormData.append('email', "john.doe") // email est invalide
         mockFormData.append('address', "21 rue paris")
         mockFormData.append('password', 'test123')
-        mockFormData.append('repeatPassword', 'test123')
+        mockFormData.append('repeat-password', 'test123')
 
         const state = await signup(EMPTY_FORM_STATE, mockFormData)
 
         expect(state.fieldErrors).toEqual({
-            email: ["Email invalide !"]
+            email: ["Email requis."]
         })
     })
 
     it("returns invalid password", async () => {
         // tout est valide sauf le mot de passe
         const mockFormData = new FormData()
-        mockFormData.append('firstName', "john")
-        mockFormData.append('lastName', "john")
+        mockFormData.append('first-name', "john")
+        mockFormData.append('last-name', "john")
         mockFormData.append('email', "john.doe@gmail.com")
         mockFormData.append('address', "21 rue paris")
         mockFormData.append('password', '')
-        mockFormData.append('repeatPassword', 'test123')
+        mockFormData.append('repeat-password', 'test123')
 
         const state = await signup(EMPTY_FORM_STATE, mockFormData)
 
         expect(state.fieldErrors).toEqual({
-            password: ["Mot de passe invalide !"]
+            password: ["Mot de passe requis."]
         })
     })
 
     it("returns passwords don't match", async () => {
         // tout est valide mais les deux mot de passe ne sont pas identiques
         const mockFormData = new FormData()
-        mockFormData.append('firstName', "john")
-        mockFormData.append('lastName', "john")
+        mockFormData.append('first-name', "john")
+        mockFormData.append('last-name', "john")
         mockFormData.append('email', "john.doe@gmail.com")
         mockFormData.append('address', "21 rue paris")
         mockFormData.append('password', 'test123')
-        mockFormData.append('repeatPassword', 'test321')
+        mockFormData.append('repeat-password', 'test321')
 
         const state = await signup(EMPTY_FORM_STATE, mockFormData)
 
@@ -172,12 +172,12 @@ describe("Signup", () => {
 
     it("signs up", async () => {
         const mockFormData = new FormData()
-        mockFormData.append('firstName', "john")
-        mockFormData.append('lastName', "john")
+        mockFormData.append('first-name', "john")
+        mockFormData.append('last-name', "john")
         mockFormData.append('email', "john.doe@gmail.com")
         mockFormData.append('address', "21 rue paris")
         mockFormData.append('password', 'test123')
-        mockFormData.append('repeatPassword', 'test123')
+        mockFormData.append('repeat-password', 'test123')
 
         const state = await signup(EMPTY_FORM_STATE, mockFormData)
 

@@ -77,11 +77,9 @@ export async function decryptSecretaryCookie(cookie: string) {
 }
 
 
-export async function createSession(user: { id: number, firstName: string, admin: boolean }, redirectUrl: string) {
+export async function createSession(user: { id: number, firstName: string, admin: boolean }) {
     const cookie = await encrypt({ user })
-
     cookies().set(cookieHelper.name, cookie, { ...cookieHelper.options })
-    redirect(redirectUrl)
 }
 
 export async function getSession() {

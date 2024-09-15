@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
 import { render, screen } from "@testing-library/react";
 import AuthPage from "./page";
+import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 
@@ -32,15 +33,6 @@ describe("Auth Page", () => {
         const welcomeHeading = screen.getByRole("heading", { level: 2, name: "Bienvenue !" })
 
         expect(welcomeHeading).toBeInTheDocument()
-    })
-
-    it("renders welcome message", () => {
-        render(<AuthPage />)
-
-        const welcomeMessage = screen.getByRole("paragraph")
-
-        expect(welcomeMessage).toBeInTheDocument()
-        expect(welcomeMessage).toHaveTextContent("Heureux de vous voir parmi nous !")
     })
 
     it("reacts to search params: login", () => {

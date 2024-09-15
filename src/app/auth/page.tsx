@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader } from '@/_components/ui/card'
 import Link from 'next/link'
 import { TabsLayout } from './components'
 
@@ -6,12 +7,15 @@ export default function AuthPage({ searchParams }: { searchParams?: { [key: stri
 
     return (
         <main className='flex justify-center items-center h-screen'>
-            <div className='flex flex-col items-center shadow-2xl rounded-lg p-5'>
-                <Link href="/" className='text-primary text-xl font-bold mb-5'><h1>SoigneMoi</h1></Link>
-                <h2 className='text-2xl font-bold'>Bienvenue !</h2>
-                <p className='text-center text-muted-foreground'>Heureux de vous voir<br /> parmi nous !</p>
-                <TabsLayout tab={tab} />
-            </div>
+            <Card className='flex flex-col shadow-xl p-2'>
+                <CardHeader className='items-center p-3'>
+                    <Link href="/" className='text-primary text-xl font-bold'>SoigneMoi</Link>
+                    <h2 className='text-2xl font-bold'>Bienvenue !</h2>
+                </CardHeader>
+                <CardContent>
+                    <TabsLayout tab={tab} />
+                </CardContent>
+            </Card>
         </main>
     )
 }

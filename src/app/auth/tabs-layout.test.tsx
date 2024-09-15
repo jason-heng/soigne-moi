@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
 import { render, screen } from "@testing-library/react";
 import { TabsLayout } from './components';
+import { EMPTY_FORM_STATE } from '@/_lib/to-form-state';
 
 jest.mock("react-dom", () => ({
     ...jest.requireActual("react-dom"),
-    useFormState: () => [() => { }, null],
+    useFormState: () => [EMPTY_FORM_STATE, null],
     useFormStatus: () => ({ pending: false })
 }));
 
@@ -34,7 +35,7 @@ describe("Login Tab", () => {
     it("renders the form", () => {
         render(<TabsLayout tab='login' />)
 
-        const loginButton = screen.getByRole("button", { name: "Se Connecter" })
+        const loginButton = screen.getByRole("button", { name: "Se connecter" })
 
         expect(loginButton).toBeInTheDocument()
     })

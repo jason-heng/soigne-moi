@@ -7,33 +7,33 @@ import bcrypt from "bcrypt"
 import { z } from "zod"
 
 const SignupFormSchema = z.object({
-    firstName: z.string().min(1, "Prénom invalide !"),
-    lastName: z.string().min(1, "Nom invalide !"),
-    address: z.string().min(1, "Adresse invalide !"),
-    email: z.string().email("Email invalide !"),
-    password: z.string().min(1, "Mot de passe invalide !"),
-    repeatPassword: z.string()
+    firstName: z.string({ required_error: "Prénom requis."}).min(1, "Prénom requis."),
+    lastName: z.string({ required_error: "Nom requis."}).min(1, "Nom requis."),
+    address: z.string({ required_error: "Adresse requis."}).min(1, "Adresse requis."),
+    email: z.string({ required_error: "Email requis."}).email("Email requis."),
+    password: z.string({ required_error: "Mot de passe requis."}).min(1, "Mot de passe requis."),
+    repeatPassword: z.string({ required_error: "Confirmation de mot de passe requise." })
 })
 
 export async function signup(state: FormState, formData: FormData): Promise<FormState> {
     try {
         const { firstName, lastName, address, email, password, repeatPassword } = SignupFormSchema.parse({
-            firstName: formData.get('firstName'),
-            lastName: formData.get('lastName'),
+            firstName: formData.get('first-name'),
+            lastName: formData.get('last-name'),
             address: formData.get('address'),
             email: formData.get('email'),
             password: formData.get('password'),
-            repeatPassword: formData.get('repeatPassword'),
+            repeatPassword: formData.get('repeat-password'),
         })
-    
+
         if (password !== repeatPassword) return toFormState("ERROR", {
             fieldErrors: {
                 repeatPassword: ["Mot de passes differents !"]
             }
         })
-    
+
         const hashedPassword = await bcrypt.hash(password, 10)
-    
+
         const user = await prisma.user.create({
             data: {
                 firstName,
@@ -43,8 +43,8 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
                 password: hashedPassword
             }
         })
-    
-        await createSession({ id: user.id, firstName: user.firstName, admin: false }, '/patient')
+
+        await createSession({ id: user.id, firstName: user.firstName, admin: false })
 
         return toFormState("SUCCESS", {
             message: "Compte crée !",
@@ -82,7 +82,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
             }
         })
 
-        await createSession({ id: user.id, firstName: user.firstName, admin: user.admin }, user.admin ? '/admin' : '/patient')
+        await createSession({ id: user.id, firstName: user.firstName, admin: user.admin })
 
         return toFormState("SUCCESS", {
             message: "Connecté !",

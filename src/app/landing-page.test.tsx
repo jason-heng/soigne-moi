@@ -81,7 +81,7 @@ describe("Nav Bar", () => {
     it("renders the login link", async () => {
         render(<NavBar session={null} />)
 
-        const loginLink = screen.getByRole("link", { name: "Se Connecter" })
+        const loginLink = screen.getByRole("link", { name: "Se connecter" })
 
         expect(loginLink).toBeInTheDocument()
         expect(loginLink).toHaveAttribute("href", "/auth")

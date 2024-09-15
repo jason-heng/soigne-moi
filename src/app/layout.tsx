@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <body className={inter.className}>
-        <Toaster position="top-center" />
+        <Toaster position="bottom-center" />
         {children}
       </body>
     </html>
